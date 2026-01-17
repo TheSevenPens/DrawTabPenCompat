@@ -89,6 +89,10 @@
             <input type="checkbox" id="one-per-line">
             <label for="one-per-line">One per line</label>
         </div>
+        <div id="search-area" style="display:none; margin-top: 10px;">
+            <input type="text" id="search-input" placeholder="Search devices..."
+                style="width: 100%; max-width: 400px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
         <p id="error-msg"></p>
     </div>
 
@@ -109,7 +113,9 @@
             const tableBody = document.querySelector('#compat-table tbody');
             const showNamesCheckbox = document.getElementById('show-names');
             const onePerLineCheckbox = document.getElementById('one-per-line');
+            const searchInput = document.getElementById('search-input');
             const optionsArea = document.getElementById('options-area');
+            const searchArea = document.getElementById('search-area');
             const errorMsg = document.getElementById('error-msg');
 
             let compatibilityRows = [];
@@ -118,6 +124,7 @@
 
             showNamesCheckbox.addEventListener('change', renderTable);
             onePerLineCheckbox.addEventListener('change', renderTable);
+            searchInput.addEventListener('input', renderTable);
 
             // Try to fetch automatically
             fetch('wacom-pen-compat.xml')
@@ -168,6 +175,7 @@
                     // Cleanup UI if successful
                     document.querySelector('.controls p').style.display = 'none';
                     optionsArea.style.display = 'block';
+                    searchArea.style.display = 'block';
                 } catch (err) {
                     showError("Error parsing XML: " + err.message);
                 }
@@ -176,16 +184,31 @@
             function renderTable() {
                 const showNames = showNamesCheckbox.checked;
                 const onePerLine = onePerLineCheckbox.checked;
+                const searchTerm = searchInput.value.toLowerCase().trim();
                 tableBody.innerHTML = ''; // Clear existing
 
                 compatibilityRows.forEach(row => {
-                    const tr = document.createElement('tr');
-
                     const tabletNode = row.querySelector('tablet');
                     const penNode = row.querySelector('pen');
 
                     const tablets = extractItems(tabletNode);
                     const pens = extractItems(penNode);
+
+                    // Filter Logic
+                    if (searchTerm) {
+                        const allItems = [...tablets, ...pens];
+                        const match = allItems.some(item => {
+                            const id = item.toLowerCase();
+                            let name = '';
+                            if (tabletDefs.has(item)) name = tabletDefs.get(item).toLowerCase();
+                            else if (penDefs.has(item)) name = penDefs.get(item).toLowerCase();
+
+                            return id.includes(searchTerm) || name.includes(searchTerm);
+                        });
+                        if (!match) return; // Skip row if no match
+                    }
+
+                    const tr = document.createElement('tr');
 
                     tr.innerHTML = `
                         <td>${formatItems(tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>

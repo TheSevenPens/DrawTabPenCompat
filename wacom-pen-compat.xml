@@ -180,7 +180,7 @@
         <tabletdef familyid="PTK-x40" id="PTK-1240" name="Wacom Intuos4 XL" type="pentab"/>
 
         <tabletdef familyid="PTZ-x30" id="PTZ-430" name="Wacom Intuos3 4x5" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-431WL" name="Wacom Intuos3 4x6" type="pentab"/>
+        <tabletdef familyid="PTZ-x30" id="PTZ-431W" name="Wacom Intuos3 4x6" type="pentab"/>
         <tabletdef familyid="PTZ-x30" id="PTZ-630" name="Wacom Intuos3 6x8" type="pentab"/>
         <tabletdef familyid="PTZ-x30" id="PTZ-631W" name="Wacom Intuos3 6x11" type="pentab"/>
         <tabletdef familyid="PTZ-x30" id="PTZ-930" name="Wacom Intuos3 9x12" type="pentab"/>
