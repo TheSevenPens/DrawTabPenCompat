@@ -1,0 +1,141 @@
+<compat>
+    <pairs>
+        <compatrow>
+            <tablet>
+                DTH-A116 DTH-A140
+            </tablet>
+            <pen>
+                ACP-500 ACP-501E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                DTK-168 DTK-246 DTH-246
+            </tablet>
+            <pen>
+                ACP-500 KP-501E KP-701E KP-504E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                PTH-470 PTH-670 PTH-870
+            </tablet>
+            <pen>
+                ACP-500 KP-501E KP-701E KP-504E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                PTH-460 PTH-660 PTH-860
+            </tablet>
+            <pen>
+                KP-501E KP-400E KP-701E KP-504E KP-301E KP-505 KP-503E KP-300E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                PTH-451 PTH-651 PTH-851
+                    PTH-450 PTH-650 PTH-850 PTK-450 PTK-650
+                    PTK-440 PTK-540WL PTK-640 PTK-640 PTK-1240
+            </tablet>
+            <pen>
+                KP-501E KP-503E KP-400E KP-701E KP-300E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                PTZ-430 PTZ-431W PTZ-630 PTZ-631W PTZ-930 PTZ-1230 PTZ-1231W
+            </tablet>
+            <pen>
+                ZP-501E ZP-400E ZP-300E ZP-600 ZP-130
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                CTL-4100 CTL-4100WL CTL-6100 CTL-6100WL
+            </tablet>
+            <pen> LP-1100K</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                CTL-490 CTL-690 CTH-490 CTH-690
+                    CTL-472 CTL-672
+            </tablet>
+            <pen>
+                LP-190K LP-190
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                CTL-480 CTL-680 CTH-480 CTH-680 
+                    CTL-470 CTH-470 CTH-670
+                    CTL-471 CTL-671 CTH-461 CTH-661 
+                    CTL-460 CTL-660 CTH-460
+            </tablet>
+            <pen>
+                LP-180 LP-180E
+                    LP-171
+                    LP-170 LP-170E
+                    LP-161E 
+                    LP-160 LP-160E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                CTC-6110WL CTC-4110WL
+            </tablet>
+            <pen>
+                CP-913 CP-923
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTH-271</tablet>
+            <pen>
+                ACP-500 KP-504E KP-400E KP-501E KP-701E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTH-167</tablet>
+            <pen> KP-504E</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTC-133</tablet>
+            <pen> CP-913</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                DTH-134 DTC-121
+            </tablet>
+            <pen> CP-923</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTH-135</tablet>
+            <pen>
+                ACP-500
+                    CP-913 CP-923
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTK-1660</tablet>
+            <pen>
+                KP-504E KP-301E KP-501E KP-300E KP-400E KP-701E KP-503E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTK-2260</tablet>
+            <pen>
+                KP-504E KP-301E KP-501E KP-300E KP-400E KP-701E KP-503E KP-505
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>DTK-2100</tablet>
+            <pen>KP-501E</pen>
+        </compatrow>
+    </pairs>
+    <tabletdefs>
+        <tabletdef id="PTH-660" name="Wacom Intuos Pro M 2017" type="pentab"/>
+    </tabletdefs>
+    <pendefs>
+        <pendef id="KP-504E" name="Wacom Pro Pen 2"/>
+    </pendefs>
+</compat>

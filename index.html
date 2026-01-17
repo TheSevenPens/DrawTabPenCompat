@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wacom Pen Compatibility Viewer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        #error-msg {
+            color: #d32f2f;
+            margin-top: 10px;
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #555;
+            width: 50%;
+        }
+        tr:hover {
+            background-color: #fafafa;
+        }
+        .device-tag {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            margin: 2px;
+            white-space: nowrap;
+        }
+        .device-tag.tablet {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Wacom Compatibility Table</h1>
+    
+    <div class="controls">
+        <p>Loading <code>wacom-pen-compat.xml</code>...</p>
+        <div id="manual-load" style="display:none;">
+            <p>Could not auto-load the file (likely due to browser security restrictions).</p>
+            <label for="file-input">Please select <strong>wacom-pen-compat.xml</strong> manually:</label>
+            <br><br>
+            <input type="file" id="file-input" accept=".xml">
+        </div>
+        <p id="error-msg"></p>
+    </div>
+
+    <table id="compat-table">
+        <thead>
+            <tr>
+                <th>Tablets</th>
+                <th>Pens</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.querySelector('#compat-table tbody');
+            const manualLoadDiv = document.getElementById('manual-load');
+            const fileInput = document.getElementById('file-input');
+            const errorMsg = document.getElementById('error-msg');
+
+            // Try to fetch automatically
+            fetch('wacom-pen-compat.xml')
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.text();
+                })
+                .then(xmlString => {
+                    processXML(xmlString);
+                    document.querySelector('.controls p').style.display = 'none'; // Hide loading text
+                })
+                .catch(err => {
+                    console.warn('Auto-load failed:', err);
+                    document.querySelector('.controls p').style.display = 'none';
+                    manualLoadDiv.style.display = 'block';
+                });
+
+            // Handle manual file selection
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (e) => processXML(e.target.result);
+                reader.onerror = () => showError("Failed to read file");
+                reader.readAsText(file);
+            });
+
+            function showError(msg) {
+                errorMsg.textContent = msg;
+                errorMsg.style.display = 'block';
+            }
+
+            function processXML(xmlText) {
+                try {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+                    
+                    const parserError = xmlDoc.querySelector('parsererror');
+                    if (parserError) {
+                        throw new Error('XML parsing failed');
+                    }
+
+                    const compatRows = xmlDoc.querySelectorAll('compatrow');
+                    renderTable(compatRows);
+                    
+                    // Cleanup UI if successful
+                    if (manualLoadDiv.style.display === 'block') {
+                        manualLoadDiv.style.display = 'none';
+                        document.querySelector('.controls').style.display = 'none';
+                    }
+                } catch (err) {
+                    showError("Error parsing XML: " + err.message);
+                }
+            }
+
+            function renderTable(rows) {
+                tableBody.innerHTML = ''; // Clear existing
+                
+                rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    
+                    const tabletNode = row.querySelector('tablet');
+                    const penNode = row.querySelector('pen');
+                    
+                    const tablets = extractItems(tabletNode);
+                    const pens = extractItems(penNode);
+                    
+                    tr.innerHTML = `
+                        <td>${formatItems(tablets, 'device-tag tablet')}</td>
+                        <td>${formatItems(pens, 'device-tag')}</td>
+                    `;
+                    
+                    tableBody.appendChild(tr);
+                });
+            }
+
+            function extractItems(node) {
+                if (!node) return [];
+                // Get text, replace newlines with spaces, trim, then split by spaces
+                const text = node.textContent || '';
+                return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            }
+
+            function formatItems(items, className) {
+                return items.map(item => `<span class="${className}">${item}</span>`).join('');
+            }
+        });
+    </script>
+  </body>
+</html>

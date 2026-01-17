@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "serve",
+      "type": "shell",
+      "command": "npx -y http-server . -p 8080 -c-1",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting up",
+          "endsPattern": "Hit CTRL-C to stop"
+        }
+      },
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+  ]
+}

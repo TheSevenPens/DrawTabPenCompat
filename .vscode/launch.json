@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "request": "launch",
+            "name": "Launch Compat Viewer",
+            "url": "http://localhost:8080/index.html",
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "serve"
+        },
+        {
+            "type": "pwa-msedge",
+            "request": "launch",
+            "name": "Launch Compat Viewer (Edge)",
+            "url": "http://localhost:8080/index.html",
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "serve"
+        }
+    ]
+}
