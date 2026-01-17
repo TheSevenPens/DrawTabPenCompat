@@ -83,7 +83,12 @@
 
     <div class="controls">
         <p>Loading <code>wacom-pen-compat.xml</code>...</p>
-
+        <div id="options-area" style="display:none; margin-bottom: 5px;">
+            <input type="checkbox" id="show-names">
+            <label for="show-names" style="margin-right: 15px;">Show names</label>
+            <input type="checkbox" id="one-per-line">
+            <label for="one-per-line">One per line</label>
+        </div>
         <p id="error-msg"></p>
     </div>
 
@@ -102,8 +107,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const tableBody = document.querySelector('#compat-table tbody');
-
+            const showNamesCheckbox = document.getElementById('show-names');
+            const onePerLineCheckbox = document.getElementById('one-per-line');
+            const optionsArea = document.getElementById('options-area');
             const errorMsg = document.getElementById('error-msg');
+
+            let compatibilityRows = [];
+            let tabletDefs = new Map();
+            let penDefs = new Map();
+
+            showNamesCheckbox.addEventListener('change', renderTable);
+            onePerLineCheckbox.addEventListener('change', renderTable);
 
             // Try to fetch automatically
             fetch('wacom-pen-compat.xml')
@@ -139,21 +153,32 @@
                         throw new Error('XML parsing failed');
                     }
 
-                    const compatRows = xmlDoc.querySelectorAll('compatrow');
-                    renderTable(compatRows);
+                    compatibilityRows = Array.from(xmlDoc.querySelectorAll('compatrow'));
+
+                    // Parse Definitions
+                    xmlDoc.querySelectorAll('tabletdef').forEach(def => {
+                        tabletDefs.set(def.getAttribute('id'), def.getAttribute('name'));
+                    });
+                    xmlDoc.querySelectorAll('pendef').forEach(def => {
+                        penDefs.set(def.getAttribute('id'), def.getAttribute('name'));
+                    });
+
+                    renderTable();
 
                     // Cleanup UI if successful
-                    // Cleanup UI if successful
-                    document.querySelector('.controls').style.display = 'none';
+                    document.querySelector('.controls p').style.display = 'none';
+                    optionsArea.style.display = 'block';
                 } catch (err) {
                     showError("Error parsing XML: " + err.message);
                 }
             }
 
-            function renderTable(rows) {
+            function renderTable() {
+                const showNames = showNamesCheckbox.checked;
+                const onePerLine = onePerLineCheckbox.checked;
                 tableBody.innerHTML = ''; // Clear existing
 
-                rows.forEach(row => {
+                compatibilityRows.forEach(row => {
                     const tr = document.createElement('tr');
 
                     const tabletNode = row.querySelector('tablet');
@@ -163,8 +188,8 @@
                     const pens = extractItems(penNode);
 
                     tr.innerHTML = `
-                        <td>${formatItems(tablets, 'device-tag tablet')}</td>
-                        <td>${formatItems(pens, 'device-tag')}</td>
+                        <td>${formatItems(tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>
+                        <td>${formatItems(pens, 'device-tag', penDefs, showNames, onePerLine)}</td>
                     `;
 
                     tableBody.appendChild(tr);
@@ -178,8 +203,15 @@
                 return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
             }
 
-            function formatItems(items, className) {
-                return items.map(item => `<span class="${className}">${item}</span>`).join('');
+            function formatItems(items, className, defsMap, showNames, onePerLine) {
+                const separator = onePerLine ? '<br>' : '';
+                return items.map(item => {
+                    let label = item;
+                    if (showNames && defsMap && defsMap.has(item)) {
+                        label = `${defsMap.get(item)} (${item})`;
+                    }
+                    return `<span class="${className}">${label}</span>`;
+                }).join(separator);
             }
         });
     </script>
