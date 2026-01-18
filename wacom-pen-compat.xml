@@ -131,12 +131,63 @@
             <tablet>DTK-2100</tablet>
             <pen>KP-501E</pen>
         </compatrow>
+        <compatrow>
+            <tablet>
+                GD-0405-U
+                GD-0405-R
+                GD-0405-A
+                GD-0608-U
+                GD-0608-R
+                GD-0608-A
+                GD-0912-U
+                GD-0912-R
+                GD-0912-A
+                GD-1212-U
+                GD-1212-R
+                GD-1218-U
+                GD-1218-R
+            </tablet>
+            <pen>GP-300E GP-400E GP-110 GP-120</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                XD-0405-U
+                XD-0405-R
+                XD-0608-U
+                XD-0608-R
+                XD-0912-U
+                XD-0912-R
+                XD-1212-U
+                XD-1212-R
+                XD-1218-U
+                XD-1218-R
+            </tablet>
+            <pen>XP-501E XP-400E XP-300E XP-110 XP-120</pen>
+        </compatrow>
+      <compatrow>
+            <tablet>
+                PTZ-430
+                PTZ-431W
+                PTZ-630
+                PTZ-631W
+                PTZ-930
+                PTZ-1230
+                PTZ-1231W
+            </tablet>
+            <pen>ZP-501E ZP-400E ZP-300E ZP-600 ZP-130</pen>
+        </compatrow>
     </pairs>
     <tabletfamilydefs>
-        <tabletfamilydef id="PTH-x60" name="Wacom Intuos Pro 2017"/>
-        <tabletfamilydef id="PTK-x70" name="Wacom Intuos Pro 2025" />
-        <tabletfamilydef id="PTH-x51" name="Wacom Intuos Pro 2013" />
+        <tabletfamilydef id="WacomIntuosProGen8" name="Wacom Intuos Pro 2025" />
+        <tabletfamilydef id="WacomIntuosProGen7" name="Wacom Intuos Pro 2017"/>
+        <tabletfamilydef id="WacomIntuosProGen6" name="Wacom Intuos Pro 2013" />
+        <tabletfamilydef id="WacomIntuosProGen5" name="Wacom Intuos5" />
+        <tabletfamilydef id="WacomIntuosProGen4" name="Wacom Intuos4" />
+        <tabletfamilydef id="WacomIntuosProGen3" name="Wacom Intuos3" />
+        <tabletfamilydef id="WacomIntuosProGen2" name="Wacom Intuos2" />
+        <tabletfamilydef id="WacomIntuosProGen1" name="Wacom Intuos1" />
         <tabletfamilydef id="CTL-x72" name="One By Wacom" />
+        <tabletfamilydef id="WacomIntuos5" name="Wacom Intuos5" />
     </tabletfamilydefs>
 
     <tabletdefs>
@@ -168,63 +219,95 @@
         <tabletdef familyid="CTX-x110" id="CTC-4110WL" name="Wacom One S" type="pentablet"/>
         <tabletdef familyid="CTX-x110" id="CTC-6110WL" name="Wacom One M" type="pentablet"/>
 
-        <tabletdef familyid="PTH-x51" id="PTH-851" name="Wacom Intuos Pro L 2013" type="pentab"/>
-        <tabletdef familyid="PTH-x51" id="PTH-651" name="Wacom Intuos Pro M 2013" type="pentab"/>
-        <tabletdef familyid="PTH-x51" id="PTH-451" name="Wacom Intuos Pro S 2013" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-U" name="Wacom Intuos 4x5 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-R" name="Wacom Intuos 4x5 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-A" name="Wacom Intuos 4x5 (ADB)" type="pentab"/>
+        
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0608-U" name="Wacom Intuos 6x8 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0608-R" name="Wacom Intuos 6x8 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0608-A" name="Wacom Intuos 6x8 (ADB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0912-U" name="Wacom Intuos 9x12 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0912-R" name="Wacom Intuos 9x12 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-0912-A" name="Wacom Intuos 9x12 (ADB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-1212-U" name="Wacom Intuos 12x12 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-1212-R" name="Wacom Intuos 12x12 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-1218-U" name="Wacom Intuos 12x18 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen1" id="GD-1218-R" name="Wacom Intuos 12x18 (Serial)" type="pentab"/>
 
-        <tabletdef familyid="PTx-x50" id="PTH-850" name="Wacom Intuos5 touch L" type="pentab"/>
-        <tabletdef familyid="PTx-x50" id="PTH-650" name="Wacom Intuos5 touch M" type="pentab"/>
-        <tabletdef familyid="PTx-x50" id="PTK-650" name="Wacom Intuos5 M" type="pentab"/>
-        <tabletdef familyid="PTx-x50" id="PTH-450" name="Wacom Intuos5 touch S" type="pentab"/>
-        <tabletdef familyid="PTx-x50" id="PTK-450" name="Wacom Intuos5 S" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0405-U" name="Wacom Intuos2 4x5 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0405-R" name="Wacom Intuos2 4x5 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0608-U" name="Wacom Intuos2 6x8 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0608-R" name="Wacom Intuos2 6x8 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0912-U" name="Wacom Intuos2 9x12 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-0912-R" name="Wacom Intuos2 9x12 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-1212-U" name="Wacom Intuos2 12x12 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-1212-R" name="Wacom Intuos2 12x12 (Serial)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-1218-U" name="Wacom Intuos2 12x18 (USB)" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen2" id="XD-1218-R" name="Wacom Intuos2 12x18 (Serial)" type="pentab"/>
 
-        <tabletdef familyid="PTH-x60" id="PTH-860" name="Wacom Intuos Pro L 2017" type="pentab"/>
-        <tabletdef familyid="PTH-x60" id="PTH-660" name="Wacom Intuos Pro M 2017" type="pentab"/>
-        <tabletdef familyid="PTH-x60" id="PTH-460" name="Wacom Intuos Pro S 2017" type="pentab"/>
-        <tabletdef familyid="PTK-x70" id="PTH-870" name="Wacom Intuos Pro L 2025" type="pentab"/>
-        <tabletdef familyid="PTK-x70" id="PTH-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
-        <tabletdef familyid="PTK-x70" id="PTH-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-430" name="Wacom Intuos3 4x5" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-431W" name="Wacom Intuos3 4x6" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-630" name="Wacom Intuos3 6x8" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-631W" name="Wacom Intuos3 6x11" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-930" name="Wacom Intuos3 9x12" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-1230" name="Wacom Intuos3 12x12" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen3" id="PTZ-1231W" name="Wacom Intuos3 12x19" type="pentab"/>
 
-        <tabletdef familyid="PTK-x40" id="PTK-440" name="Wacom Intuos4 Small" type="pentab"/>
-        <tabletdef familyid="PTK-x40" id="PTK-540WL" name="Wacom Intuos4 Wireless" type="pentab"/>
-        <tabletdef familyid="PTK-x40" id="PTK-640" name="Wacom Intuos4 Medium" type="pentab"/>
-        <tabletdef familyid="PTK-x40" id="PTK-840" name="Wacom Intuos4 Large" type="pentab"/>
-        <tabletdef familyid="PTK-x40" id="PTK-1240" name="Wacom Intuos4 XL" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen4" id="PTK-440" name="Wacom Intuos4 Small" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen4" id="PTK-540WL" name="Wacom Intuos4 Wireless" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen4" id="PTK-640" name="Wacom Intuos4 Medium" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen4" id="PTK-840" name="Wacom Intuos4 Large" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen4" id="PTK-1240" name="Wacom Intuos4 XL" type="pentab"/>
 
-        <tabletdef familyid="PTZ-x30" id="PTZ-430" name="Wacom Intuos3 4x5" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-431W" name="Wacom Intuos3 4x6" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-630" name="Wacom Intuos3 6x8" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-631W" name="Wacom Intuos3 6x11" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-930" name="Wacom Intuos3 9x12" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-1230" name="Wacom Intuos3 12x12" type="pentab"/>
-        <tabletdef familyid="PTZ-x30" id="PTZ-1231W" name="Wacom Intuos3 12x19" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen5" id="PTH-850" name="Wacom Intuos5 touch L" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen5" id="PTH-650" name="Wacom Intuos5 touch M" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen5" id="PTK-650" name="Wacom Intuos5 M" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen5" id="PTH-450" name="Wacom Intuos5 touch S" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen5" id="PTK-450" name="Wacom Intuos5 S" type="pentab"/>
+
+        <tabletdef familyid="WacomIntuosProGen6" id="PTH-851" name="Wacom Intuos Pro L 2013" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen6" id="PTH-651" name="Wacom Intuos Pro M 2013" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen6" id="PTH-451" name="Wacom Intuos Pro S 2013" type="pentab"/>
+
+        <tabletdef familyid="WacomIntuosProGen7" id="PTH-860" name="Wacom Intuos Pro L 2017" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen7" id="PTH-660" name="Wacom Intuos Pro M 2017" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen7" id="PTH-460" name="Wacom Intuos Pro S 2017" type="pentab"/>
+
+
+        <tabletdef familyid="WacomIntuosProGen8" id="PTH-870" name="Wacom Intuos Pro L 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen8" id="PTH-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen8" id="PTH-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
+
+
 
     </tabletdefs>
 
     <penfamilydefs>
-        <penfamilydef id="WacomProPenGen1" name="Wacom Pro Pen Gen1" />
-        <penfamilydef id="WacomProPenGen2" name="Wacom Pro Pen Gen2" />
-        <penfamilydef id="WacomProPenGen3" name="Wacom Pro Pen Gen3" />
+        <penfamilydef id="WacomProPenGen1" name="Wacom Pro Pens Gen1" />
+        <penfamilydef id="WacomProPenGen2" name="Wacom Pro Pens Gen2" />
+        <penfamilydef id="WacomProPenGen3" name="Wacom Pro Pens Gen3" />
+        <penfamilydef id="WacomIntuos3Pen" name="Wacom Intuos3 Pens" />        
     </penfamilydefs>
+
     <pendefs>
-        <pendef id="KP-132" name="Wacom Finetip Pen for Intuos Pro" year=""/>
+        <pendef familyid="" id="KP-132" name="Wacom Finetip Pen for Intuos Pro" year=""/>
 
-        <pendef id="EP-150E" name="Wacom Bamboo Pen" year="2007"/>
-        <pendef id="LP-170" name="Wacom Bamboo Pen" year="2012"/>
-        <pendef id="LP-170E" name="Wacom Bamboo Pen" year="2012"/>
-        <pendef id="LP-190" name="Wacom 2K Pen" year="2015"/>
-        <pendef id="LP-190K" name="Wacom 2K Pen" year="2015"/>
-        <pendef id="LP-1100K" name="Wacom 4K Pen" year="2018"/>
+        <pendef familyid="" id="EP-150E" name="Wacom Bamboo Pen" year="2007"/>
+        <pendef familyid="" id="LP-170" name="Wacom Bamboo Pen" year="2012"/>
+        <pendef familyid="" id="LP-170E" name="Wacom Bamboo Pen" year="2012"/>
+        <pendef familyid="" id="LP-190" name="Wacom 2K Pen" year="2015"/>
+        <pendef familyid="" id="LP-190K" name="Wacom 2K Pen" year="2015"/>
+        <pendef familyid="" id="LP-1100K" name="Wacom 4K Pen" year="2018"/>
 
-        <pendef id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
+        <pendef familyid="" id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
 
-        <pendef id="GP-300E" name="Wacom Intuos1 Pen" year=""/>
+        <pendef familyid="" id="GP-300E" name="Wacom Intuos1 Pen" year=""/>
 
-        <pendef id="ZP-130" name="Wacom Intuos3 Ink Pen" year=""/>
-        <pendef id="ZP-600" name="Wacom Intuos3 Art Marker Pen" year=""/>
-        <pendef id="ZP-300E" name="Wacom Intuos3 Classic Pen" year=""/>
-        <pendef id="ZP-400E" name="Wacom Intuos3 Airbrush Pen" year=""/>
-        <pendef id="ZP-501E" name="Wacom Intuos3 Grip Pen" year=""/>
+        <pendef familyid="WacomIntuos3Pen" id="ZP-130" name="Wacom Intuos3 Ink Pen" year=""/>
+        <pendef familyid="WacomIntuos3Pen" id="ZP-600" name="Wacom Intuos3 Art Marker Pen" year=""/>
+        <pendef familyid="WacomIntuos3Pen" id="ZP-300E" name="Wacom Intuos3 Classic Pen" year=""/>
+        <pendef familyid="WacomIntuos3Pen" id="ZP-400E" name="Wacom Intuos3 Airbrush Pen" year=""/>
+        <pendef familyid="WacomIntuos3Pen" id="ZP-501E" name="Wacom Intuos3 Grip Pen" year=""/>
 
         <pendef familyid="WacomProPenGen1" id="KP-300E" name="Wacom Classic Pen for Intuos 4/5" year=""/>
         <pendef familyid="WacomProPenGen1" id="KP-400E" name="Wacom Airbrush Pen" year=""/>
@@ -236,14 +319,13 @@
         <pendef familyid="WacomProPenGen2" id="KP-301E" name="Wacom Pro Pen Slim" year=""/>
         <pendef familyid="WacomProPenGen2" id="KP-504E" name="Wacom Pro Pen 2" year="2017"/>
 
-        <pendef id="KP-130" name="Wacom Intuos 4 Inking Pen" year=""/>
-        <pendef id="KP-133" name="Wacom Ballpoint Pen for Intuos Pro" year=""/>
+        <pendef familyid="" id="KP-130" name="Wacom Intuos 4 Inking Pen" year=""/>
+        <pendef familyid="" id="KP-133" name="Wacom Ballpoint Pen for Intuos Pro" year=""/>
 
         <pendef familyid="WacomProPenGen3" id="ACP-500" name="Wacom Pro Pen 3" year="2022"/>
         <pendef familyid="WacomProPenGen3" id="ACP-501E" name="Wacom Pro Pen 3E" year="2022"/>
 
-        <pendef id="CP-913" name="Wacom One Pen" year="2020"/>
-        <pendef id="CP-923" name="Wacom One Standard Pen" year="2023" />
-        <pendef id="CP-923" name="Wacom One Standard Pen" year="" />
+        <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
+        <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="" />
     </pendefs>
 </compat>
