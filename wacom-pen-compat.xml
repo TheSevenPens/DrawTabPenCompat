@@ -326,6 +326,6 @@
         <pendef familyid="WacomProPenGen3" id="ACP-501E" name="Wacom Pro Pen 3E" year="2022"/>
 
         <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
-        <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="" />
+        <pendef familyid="" id="CP-913" name="Wacom One Pen" year="" />
     </pendefs>
 </compat>
