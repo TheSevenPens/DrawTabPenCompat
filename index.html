@@ -119,6 +119,7 @@
         </tbody>
     </table>
 
+    <script src="xml-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const tableBody = document.querySelector('#compat-table tbody');
@@ -141,14 +142,15 @@
             searchInput.addEventListener('input', renderTable);
 
             // Try to fetch automatically
-            fetch('wacom-pen-compat.xml')
-                .then(response => {
-                    if (!response.ok) throw new Error("Network response was not ok");
-                    return response.text();
-                })
-                .then(xmlString => {
-                    processXML(xmlString);
+            fetchAndParseXML('wacom-pen-compat.xml')
+                .then(data => {
+                    compatibilityRows = data.rows;
+                    tabletDefs = data.tabletDefs;
+                    penDefs = data.penDefs;
+                    renderTable();
                     document.querySelector('.controls p').style.display = 'none'; // Hide loading text
+                    optionsArea.style.display = 'block';
+                    searchArea.style.display = 'block';
                 })
                 .catch(err => {
                     console.error('Auto-load failed:', err);
@@ -164,42 +166,7 @@
                 errorMsg.style.display = 'block';
             }
 
-            function processXML(xmlText) {
-                try {
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-                    const parserError = xmlDoc.querySelector('parsererror');
-                    if (parserError) {
-                        throw new Error('XML parsing failed');
-                    }
-
-                    compatibilityRows = Array.from(xmlDoc.querySelectorAll('compatrow'));
-
-                    // Parse Definitions
-                    xmlDoc.querySelectorAll('tabletdef').forEach(def => {
-                        tabletDefs.set(def.getAttribute('id'), {
-                            name: def.getAttribute('name'),
-                            familyId: def.getAttribute('familyid') || ''
-                        });
-                    });
-                    xmlDoc.querySelectorAll('pendef').forEach(def => {
-                        penDefs.set(def.getAttribute('id'), {
-                            name: def.getAttribute('name'),
-                            familyId: def.getAttribute('familyid') || ''
-                        });
-                    });
-
-                    renderTable();
-
-                    // Cleanup UI if successful
-                    document.querySelector('.controls p').style.display = 'none';
-                    optionsArea.style.display = 'block';
-                    searchArea.style.display = 'block';
-                } catch (err) {
-                    showError("Error parsing XML: " + err.message);
-                }
-            }
 
             function renderTable() {
                 const showNames = showNamesCheckbox.checked;
