@@ -164,10 +164,16 @@
 
                     // Parse Definitions
                     xmlDoc.querySelectorAll('tabletdef').forEach(def => {
-                        tabletDefs.set(def.getAttribute('id'), def.getAttribute('name'));
+                        tabletDefs.set(def.getAttribute('id'), {
+                            name: def.getAttribute('name'),
+                            familyId: def.getAttribute('familyid') || ''
+                        });
                     });
                     xmlDoc.querySelectorAll('pendef').forEach(def => {
-                        penDefs.set(def.getAttribute('id'), def.getAttribute('name'));
+                        penDefs.set(def.getAttribute('id'), {
+                            name: def.getAttribute('name'),
+                            familyId: def.getAttribute('familyid') || ''
+                        });
                     });
 
                     renderTable();
@@ -200,19 +206,23 @@
                         const match = allItems.some(item => {
                             const id = item.toLowerCase();
                             let name = '';
-                            if (tabletDefs.has(item)) name = tabletDefs.get(item).toLowerCase();
-                            else if (penDefs.has(item)) name = penDefs.get(item).toLowerCase();
+                            if (tabletDefs.has(item)) name = tabletDefs.get(item).name.toLowerCase();
+                            else if (penDefs.has(item)) name = penDefs.get(item).name.toLowerCase();
 
                             return id.includes(searchTerm) || name.includes(searchTerm);
                         });
                         if (!match) return; // Skip row if no match
                     }
 
+                    // Sort items
+                    const sortedTablets = sortItems(tablets, tabletDefs);
+                    const sortedPens = sortItems(pens, penDefs);
+
                     const tr = document.createElement('tr');
 
                     tr.innerHTML = `
-                        <td>${formatItems(tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>
-                        <td>${formatItems(pens, 'device-tag', penDefs, showNames, onePerLine)}</td>
+                        <td>${formatItems(sortedTablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>
+                        <td>${formatItems(sortedPens, 'device-tag', penDefs, showNames, onePerLine)}</td>
                     `;
 
                     tableBody.appendChild(tr);
@@ -231,10 +241,27 @@
                 return items.map(item => {
                     let label = item;
                     if (showNames && defsMap && defsMap.has(item)) {
-                        label = `${defsMap.get(item)} (${item})`;
+                        const def = defsMap.get(item);
+                        label = `${def.name} (${item})`;
                     }
                     return `<span class="${className}">${label}</span>`;
                 }).join(separator);
+            }
+
+            function sortItems(items, defsMap) {
+                return items.sort((a, b) => {
+                    const defA = defsMap.get(a) || { familyId: '', name: '' };
+                    const defB = defsMap.get(b) || { familyId: '', name: '' };
+
+                    // Sort by familyId first
+                    if (defA.familyId < defB.familyId) return -1;
+                    if (defA.familyId > defB.familyId) return 1;
+
+                    // Then by ID
+                    if (a < b) return -1;
+                    if (a > b) return 1;
+                    return 0;
+                });
             }
         });
     </script>
