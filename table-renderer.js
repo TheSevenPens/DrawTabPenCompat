@@ -20,80 +20,23 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
 
     let displayRows = [];
 
-    if (viewMode === 'by-pen') {
-        // Aggregate by Pen ID
-        const penToTablets = new Map();
-
-        compatibilityRows.forEach(row => {
-            const tabletNode = row.querySelector('tablet');
-            const penNode = row.querySelector('pen');
-            const tablets = extractItems(tabletNode); // Raw IDs
-            const pens = extractItems(penNode);       // Raw IDs
-
-            pens.forEach(p => {
-                if (!penToTablets.has(p)) penToTablets.set(p, new Set());
-                tablets.forEach(t => penToTablets.get(p).add(t));
-            });
-        });
-
-        // Create rows from map
-        penToTablets.forEach((tabletSet, penId) => {
-            const sortedPens = [penId]; // Single pen ID
-            const sortedTablets = sortItems(Array.from(tabletSet), tabletDefs);
-            displayRows.push({ tablets: sortedTablets, pens: sortedPens });
-        });
-        // Sort aggregation rows by the Pen
-        displayRows.sort((a, b) => compareDeviceIds(a.pens[0], b.pens[0], penDefs));
-
-    } else if (viewMode === 'by-tablet') {
-        // Aggregate by Tablet ID
-        const tabletToPens = new Map();
-
-        compatibilityRows.forEach(row => {
-            const tabletNode = row.querySelector('tablet');
-            const penNode = row.querySelector('pen');
-            const tablets = extractItems(tabletNode);
-            const pens = extractItems(penNode);
-
-            tablets.forEach(t => {
-                if (!tabletToPens.has(t)) tabletToPens.set(t, new Set());
-                pens.forEach(p => tabletToPens.get(t).add(p));
-            });
-        });
-
-        // Create rows from map
-        tabletToPens.forEach((penSet, tabletId) => {
-            const sortedTablets = [tabletId];
-            const sortedPens = sortItems(Array.from(penSet), penDefs);
-            displayRows.push({ tablets: sortedTablets, pens: sortedPens });
-        });
-        // Sort aggregation rows by the Tablet
-        displayRows.sort((a, b) => compareDeviceIds(a.tablets[0], b.tablets[0], tabletDefs));
-
-    } else {
-        // Grouped or Ungrouped (row-based processing)
-        compatibilityRows.forEach(row => {
-            const tabletNode = row.querySelector('tablet');
-            const penNode = row.querySelector('pen');
-
-            // Extract and Sort immediately
-            const tablets = sortItems(extractItems(tabletNode), tabletDefs);
-            const pens = sortItems(extractItems(penNode), penDefs);
-
-            if (viewMode === 'grouped') {
-                displayRows.push({ tablets, pens });
-            } else {
-                // Ungrouped: 1 Tablet x 1 Pen
-                tablets.forEach(t => {
-                    pens.forEach(p => {
-                        displayRows.push({ tablets: [t], pens: [p] });
-                    });
-                });
-            }
-        });
+    switch (viewMode) {
+        case 'by-pen':
+            displayRows = getRowsByPen(compatibilityRows, tabletDefs, penDefs);
+            break;
+        case 'by-tablet':
+            displayRows = getRowsByTablet(compatibilityRows, tabletDefs, penDefs);
+            break;
+        case 'ungrouped':
+            displayRows = getRowsUngrouped(compatibilityRows, tabletDefs, penDefs);
+            break;
+        case 'grouped':
+        default:
+            displayRows = getRowsGrouped(compatibilityRows, tabletDefs, penDefs);
+            break;
     }
 
-    // 2. Filter and Render
+    // Filter and Render
     displayRows.forEach(row => {
         // Filter Logic
         if (searchTerm) {
@@ -116,6 +59,85 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
         `;
         tableBody.appendChild(tr);
     });
+}
+
+function getRowsByPen(compatibilityRows, tabletDefs, penDefs) {
+    const penToTablets = new Map();
+
+    compatibilityRows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        const penNode = row.querySelector('pen');
+        const tablets = extractItems(tabletNode);
+        const pens = extractItems(penNode);
+
+        pens.forEach(p => {
+            if (!penToTablets.has(p)) penToTablets.set(p, new Set());
+            tablets.forEach(t => penToTablets.get(p).add(t));
+        });
+    });
+
+    const displayRows = [];
+    penToTablets.forEach((tabletSet, penId) => {
+        const sortedPens = [penId];
+        const sortedTablets = sortItems(Array.from(tabletSet), tabletDefs);
+        displayRows.push({ tablets: sortedTablets, pens: sortedPens });
+    });
+
+    return displayRows.sort((a, b) => compareDeviceIds(a.pens[0], b.pens[0], penDefs));
+}
+
+function getRowsByTablet(compatibilityRows, tabletDefs, penDefs) {
+    const tabletToPens = new Map();
+
+    compatibilityRows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        const penNode = row.querySelector('pen');
+        const tablets = extractItems(tabletNode);
+        const pens = extractItems(penNode);
+
+        tablets.forEach(t => {
+            if (!tabletToPens.has(t)) tabletToPens.set(t, new Set());
+            pens.forEach(p => tabletToPens.get(t).add(p));
+        });
+    });
+
+    const displayRows = [];
+    tabletToPens.forEach((penSet, tabletId) => {
+        const sortedTablets = [tabletId];
+        const sortedPens = sortItems(Array.from(penSet), penDefs);
+        displayRows.push({ tablets: sortedTablets, pens: sortedPens });
+    });
+
+    return displayRows.sort((a, b) => compareDeviceIds(a.tablets[0], b.tablets[0], tabletDefs));
+}
+
+function getRowsGrouped(compatibilityRows, tabletDefs, penDefs) {
+    const displayRows = [];
+    compatibilityRows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        const penNode = row.querySelector('pen');
+        const tablets = sortItems(extractItems(tabletNode), tabletDefs);
+        const pens = sortItems(extractItems(penNode), penDefs);
+        displayRows.push({ tablets, pens });
+    });
+    return displayRows;
+}
+
+function getRowsUngrouped(compatibilityRows, tabletDefs, penDefs) {
+    const displayRows = [];
+    compatibilityRows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        const penNode = row.querySelector('pen');
+        const tablets = sortItems(extractItems(tabletNode), tabletDefs);
+        const pens = sortItems(extractItems(penNode), penDefs);
+
+        tablets.forEach(t => {
+            pens.forEach(p => {
+                displayRows.push({ tablets: [t], pens: [p] });
+            });
+        });
+    });
+    return displayRows;
 }
 
 function extractItems(node) {
