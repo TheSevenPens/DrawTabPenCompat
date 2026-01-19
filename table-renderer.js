@@ -80,14 +80,36 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
         statsBar.textContent = `Showing ${filteredRows.length} rows | ${visibleTablets.size} of ${totalUniqueTablets.size} Tablets | ${visiblePens.size} of ${totalUniquePens.size} Pens`;
     }
 
+    // Update Header
+    const headerRow = document.querySelector('#compat-table thead tr');
+    if (headerRow) {
+        if (viewMode === 'by-pen') {
+            headerRow.innerHTML = `<th>#</th><th>Pens</th><th>Tablets</th>`;
+        } else {
+            headerRow.innerHTML = `<th>#</th><th>Tablets</th><th>Pens</th>`;
+        }
+    }
+
     // 3. Render
     filteredRows.forEach((row, index) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td style="text-align: center; color: #888;">${index + 1}</td>
-            <td>${formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>
-            <td>${formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine)}</td>
-        `;
+
+        const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine);
+        const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine);
+
+        if (viewMode === 'by-pen') {
+            tr.innerHTML = `
+                <td style="text-align: center; color: #888;">${index + 1}</td>
+                <td>${penCell}</td>
+                <td>${tabletCell}</td>
+            `;
+        } else {
+            tr.innerHTML = `
+                <td style="text-align: center; color: #888;">${index + 1}</td>
+                <td>${tabletCell}</td>
+                <td>${penCell}</td>
+            `;
+        }
         tableBody.appendChild(tr);
     });
 }
