@@ -317,9 +317,7 @@
         <pendef familyid="" id="LP-190K" name="Wacom 2K Pen" year="2015"/>
         <pendef familyid="" id="LP-1100K" name="Wacom 4K Pen" year="2018"/>
 
-        <pendef familyid="" id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
 
-        <pendef familyid="" id="GP-300E" name="Wacom Intuos1 Pen" year=""/>
 
         <pendef familyid="WacomIntuos3Pen" id="ZP-130" name="Wacom Intuos3 Ink Pen" year=""/>
         <pendef familyid="WacomIntuos3Pen" id="ZP-600" name="Wacom Intuos3 Art Marker Pen" year=""/>
@@ -346,14 +344,14 @@
         <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
         <pendef familyid="" id="CP-913" name="Wacom One Pen" year="" />
 
-        <pendef familyid="" id="GP-110" name="" year="" />
-        <pendef familyid="" id="GP-120" name="" year="" />
-        <pendef familyid="" id="GP-400E" name="" year="" />
-        <pendef familyid="" id="KP-300E" name="" year="" />
+        <pendef familyid="WacomIntuos1Pen" id="GP-110" name="Wacom Intuos Inking Pen" year="" />
+        <pendef familyid="WacomIntuos1Pen" id="GP-120" name="Wacom Intuos Stroke Pen" year="" />
+        <pendef familyid="WacomIntuos1Pen" id="GP-300E" name="Wacom Intuos Classic Pen" year=""/>
+        <pendef familyid="WacomIntuos1Pen" id="GP-400E" name="Wacom Intuos Airbrush Pen" year="" />
+
         <pendef familyid="" id="UP-911E" name="" year="" />
-        <pendef familyid="" id="XP-400E" name="" year="" />
-        <pendef familyid="" id="LP-160" name="" year="" />
-        <pendef familyid="" id="LP-160E" name="" year="" />
+        <pendef familyid="" id="LP-160" name="Wacom Bamboo CTL Pen" year="" />
+        <pendef familyid="" id="LP-160E" name="Wacom Bamboo CTH Pen" year="" />
         <pendef familyid="" id="LP-161E" name="" year="" />
         <pendef familyid="" id="LP-171" name="" year="" />
         <pendef familyid="" id="LP-180" name="" year="" />
@@ -361,8 +359,11 @@
         <pendef familyid="" id="LP-110" name="" year="" />
         <pendef familyid="" id="LP-120" name="" year="" />
         <pendef familyid="" id="LP-300E" name="" year="" />
-        <pendef familyid="" id="XP-110" name="" year="" />
-        <pendef familyid="" id="XP-120" name="" year="" />
-        <pendef familyid="" id="XP-300E" name="" year="" />
+
+        <pendef familyid="WacomIntuos2Pen" id="XP-110" name="Wacom Intuos2 Ink Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-120" name="Wacom Intuos2 Strok Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-300E" name="Wacom Intuos2 Classic Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-400E" name="Wacom Intuos2 Airbrush Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
     </pendefs>
 </compat>
