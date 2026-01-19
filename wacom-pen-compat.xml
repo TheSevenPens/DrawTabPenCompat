@@ -15,7 +15,7 @@
             </tablet>
             <pen>
                 ACP-500 
-                ACP-501 
+                ACP-501E 
                 KP-504E
                 KP-301E
                 KP-505
@@ -325,6 +325,23 @@
         <pendef familyid="" id="LP-1100K" name="Wacom 4K Pen" year="2018"/>
 
 
+        <pendef familyid="" id="KP-130" name="Wacom Intuos 4 Inking Pen" year=""/>
+        <pendef familyid="" id="KP-133" name="Wacom Ballpoint Pen for Intuos Pro" year=""/>
+
+
+
+        <pendef familyid="WacomProPenGen3" id="ACP-500" name="Wacom Pro Pen 3" year="2022"/>
+        <pendef familyid="WacomProPenGen3" id="ACP-501E" name="Wacom Pro Pen 3E" year="2025"/>
+
+        <pendef familyid="WacomProPenGen2" id="KP-505" name="Wacom Pro Pen 3D" year="" />
+        <pendef familyid="WacomProPenGen2" id="KP-301E" name="Wacom Pro Pen Slim" year=""/>
+        <pendef familyid="WacomProPenGen2" id="KP-504E" name="Wacom Pro Pen 2" year="2017"/>
+
+        <pendef familyid="WacomProPenGen1" id="KP-503E" name="Wacom Pro Pen" year="2013"/>
+        <pendef familyid="WacomProPenGen1" id="KP-300E" name="Wacom Classic Pen" year=""/>
+        <pendef familyid="WacomProPenGen1" id="KP-701E" name="Wacom Art Pen" year=""/>
+        <pendef familyid="WacomProPenGen1" id="KP-400E" name="Wacom Airbrush Pen" year=""/>
+        <pendef familyid="WacomProPenGen1" id="KP-501E" name="Wacom Grip Pen" year="2009"/>
 
         <pendef familyid="WacomIntuos3Pen" id="ZP-130" name="Wacom Intuos3 Ink Pen" year=""/>
         <pendef familyid="WacomIntuos3Pen" id="ZP-600" name="Wacom Intuos3 Art Marker Pen" year=""/>
@@ -332,29 +349,20 @@
         <pendef familyid="WacomIntuos3Pen" id="ZP-400E" name="Wacom Intuos3 Airbrush Pen" year=""/>
         <pendef familyid="WacomIntuos3Pen" id="ZP-501E" name="Wacom Intuos3 Grip Pen" year=""/>
 
-        <pendef familyid="WacomProPenGen1" id="KP-300E" name="Wacom Classic Pen for Intuos 4/5" year=""/>
-        <pendef familyid="WacomProPenGen1" id="KP-400E" name="Wacom Airbrush Pen" year=""/>
-        <pendef familyid="WacomProPenGen1" id="KP-503E" name="Wacom Pro Pen" year="2013"/>
-        <pendef familyid="WacomProPenGen1" id="KP-501E" name="Wacom Grip Pen" year="2009"/>
-        <pendef familyid="WacomProPenGen1" id="KP-701E" name="Wacom Art Pen" year=""/>
+        <pendef familyid="WacomIntuos2Pen" id="XP-110" name="Wacom Intuos2 Ink Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-120" name="Wacom Intuos2 Stroke Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-300E" name="Wacom Intuos2 Classic Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-400E" name="Wacom Intuos2 Airbrush Pen" year="" />
+        <pendef familyid="WacomIntuos2Pen" id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
 
-        <pendef familyid="WacomProPenGen2" id="KP-505" name="Wacom Pro Pen 3D" year="" />
-        <pendef familyid="WacomProPenGen2" id="KP-301E" name="Wacom Pro Pen Slim" year=""/>
-        <pendef familyid="WacomProPenGen2" id="KP-504E" name="Wacom Pro Pen 2" year="2017"/>
-
-        <pendef familyid="" id="KP-130" name="Wacom Intuos 4 Inking Pen" year=""/>
-        <pendef familyid="" id="KP-133" name="Wacom Ballpoint Pen for Intuos Pro" year=""/>
-
-        <pendef familyid="WacomProPenGen3" id="ACP-500" name="Wacom Pro Pen 3" year="2022"/>
-        <pendef familyid="WacomProPenGen3" id="ACP-501E" name="Wacom Pro Pen 3E" year="2022"/>
-
-        <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
-        <pendef familyid="" id="CP-913" name="Wacom One Pen" year="" />
 
         <pendef familyid="WacomIntuos1Pen" id="GP-110" name="Wacom Intuos Inking Pen" year="" />
         <pendef familyid="WacomIntuos1Pen" id="GP-120" name="Wacom Intuos Stroke Pen" year="" />
         <pendef familyid="WacomIntuos1Pen" id="GP-300E" name="Wacom Intuos Classic Pen" year=""/>
         <pendef familyid="WacomIntuos1Pen" id="GP-400E" name="Wacom Intuos Airbrush Pen" year="" />
+
+        <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
+        <pendef familyid="" id="CP-913" name="Wacom One Pen" year="" />
 
         <pendef familyid="" id="UP-911E" name="" year="" />
         <pendef familyid="" id="LP-160" name="Wacom Bamboo CTL Pen" year="" />
@@ -367,10 +375,5 @@
         <pendef familyid="" id="LP-120" name="" year="" />
         <pendef familyid="" id="LP-300E" name="" year="" />
 
-        <pendef familyid="WacomIntuos2Pen" id="XP-110" name="Wacom Intuos2 Ink Pen" year="" />
-        <pendef familyid="WacomIntuos2Pen" id="XP-120" name="Wacom Intuos2 Strok Pen" year="" />
-        <pendef familyid="WacomIntuos2Pen" id="XP-300E" name="Wacom Intuos2 Classic Pen" year="" />
-        <pendef familyid="WacomIntuos2Pen" id="XP-400E" name="Wacom Intuos2 Airbrush Pen" year="" />
-        <pendef familyid="WacomIntuos2Pen" id="XP-501E" name="Wacom Intuos2 Grip Pen" year=""/>
     </pendefs>
 </compat>
