@@ -36,7 +36,7 @@
             <tablet>
                 PTH-451 PTH-651 PTH-851
                     PTH-450 PTH-650 PTH-850 PTK-450 PTK-650
-                    PTK-440 PTK-540WL PTK-640 PTK-640 PTK-1240
+                    PTK-440 PTK-540WL PTK-640 PTK-840 PTK-1240
             </tablet>
             <pen>
                 KP-501E KP-503E KP-400E KP-701E KP-300E
@@ -344,5 +344,24 @@
 
         <pendef familyid="" id="CP-923" name="Wacom One Standard Pen" year="2023" />
         <pendef familyid="" id="CP-913" name="Wacom One Pen" year="" />
+
+        <pendef familyid="" id="GP-110" name="" year="" />
+        <pendef familyid="" id="GP-120" name="" year="" />
+        <pendef familyid="" id="GP-400E" name="" year="" />
+        <pendef familyid="" id="KP-300E" name="" year="" />
+        <pendef familyid="" id="UP-911E" name="" year="" />
+        <pendef familyid="" id="XP-400E" name="" year="" />
+        <pendef familyid="" id="LP-160" name="" year="" />
+        <pendef familyid="" id="LP-160E" name="" year="" />
+        <pendef familyid="" id="LP-161E" name="" year="" />
+        <pendef familyid="" id="LP-171" name="" year="" />
+        <pendef familyid="" id="LP-180" name="" year="" />
+        <pendef familyid="" id="LP-180E" name="" year="" />
+        <pendef familyid="" id="LP-110" name="" year="" />
+        <pendef familyid="" id="LP-120" name="" year="" />
+        <pendef familyid="" id="LP-300E" name="" year="" />
+        <pendef familyid="" id="XP-110" name="" year="" />
+        <pendef familyid="" id="XP-120" name="" year="" />
+        <pendef familyid="" id="XP-300E" name="" year="" />
     </pendefs>
 </compat>
