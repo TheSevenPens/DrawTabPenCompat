@@ -9,7 +9,7 @@ async function fetchAndParseXML(url) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
     }
     const xmlText = await response.text();
-    
+
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
@@ -36,6 +36,25 @@ async function fetchAndParseXML(url) {
             familyId: def.getAttribute('familyid') || ''
         });
     });
+
+    // Check for missing tablet definitions
+    const missingTabletDefs = new Set();
+    rows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        if (tabletNode) {
+            const text = tabletNode.textContent || '';
+            const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            items.forEach(item => {
+                if (!tabletDefs.has(item)) {
+                    missingTabletDefs.add(item);
+                }
+            });
+        }
+    });
+
+    if (missingTabletDefs.size > 0) {
+        console.warn('Missing tablet definitions:', Array.from(missingTabletDefs).sort());
+    }
 
     return { rows, tabletDefs, penDefs };
 }

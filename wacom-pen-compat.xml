@@ -216,8 +216,8 @@
         <tabletdef familyid="CTL-x100" id="CTL-6100" name="Wacom Intuos M" type="pentablet"/>
         <tabletdef familyid="CTL-x100" id="CTL-6100WL" name="Wacom Intuos M BT" type="pentablet"/>
 
-        <tabletdef familyid="CTX-x110" id="CTC-4110WL" name="Wacom One S" type="pentablet"/>
-        <tabletdef familyid="CTX-x110" id="CTC-6110WL" name="Wacom One M" type="pentablet"/>
+        <tabletdef familyid="CTC-x110" id="CTC-4110WL" name="Wacom One S" type="pentablet"/>
+        <tabletdef familyid="CTC-x110" id="CTC-6110WL" name="Wacom One M" type="pentablet"/>
 
         <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-U" name="Wacom Intuos 4x5 (USB)" type="pentab"/>
         <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-R" name="Wacom Intuos 4x5 (Serial)" type="pentab"/>
@@ -278,7 +278,24 @@
         <tabletdef familyid="WacomIntuosProGen8" id="PTK-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
         <tabletdef familyid="WacomIntuosProGen8" id="PTK-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
 
-
+        <tabletdef familyid="" id="CTH-460" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-461" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-470" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-480" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-490" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-661" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-670" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-680" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTH-690" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-460" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-470" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-471" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-480" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-490" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-660" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-671" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-680" name="" type="pentab"/>
+        <tabletdef familyid="" id="CTL-690" name="" type="pentab"/>
 
     </tabletdefs>
 

@@ -210,7 +210,9 @@ function formatItems(items, className, defsMap, showNames, onePerLine) {
         let label = item;
         if (showNames && defsMap && defsMap.has(item)) {
             const def = defsMap.get(item);
-            label = `${def.name} (${item})`;
+            if (def.name) {
+                label = `${def.name} (${item})`;
+            }
         }
         return `<span class="${className}">${label}</span>`;
     }).join(separator);
