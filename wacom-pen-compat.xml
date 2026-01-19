@@ -18,7 +18,7 @@
         </compatrow>
         <compatrow>
             <tablet>
-                PTH-470 PTH-670 PTH-870
+                PTK-470 PTK-670 PTK-870
             </tablet>
             <pen>
                 ACP-500 KP-501E KP-701E KP-504E
@@ -274,9 +274,9 @@
         <tabletdef familyid="WacomIntuosProGen7" id="PTH-460" name="Wacom Intuos Pro S 2017" type="pentab"/>
 
 
-        <tabletdef familyid="WacomIntuosProGen8" id="PTH-870" name="Wacom Intuos Pro L 2025" type="pentab"/>
-        <tabletdef familyid="WacomIntuosProGen8" id="PTH-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
-        <tabletdef familyid="WacomIntuosProGen8" id="PTH-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen8" id="PTK-870" name="Wacom Intuos Pro L 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen8" id="PTK-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
+        <tabletdef familyid="WacomIntuosProGen8" id="PTK-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
 
 
 

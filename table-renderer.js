@@ -10,11 +10,16 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
     const onePerLineCheckbox = document.getElementById('one-per-line');
     const searchInput = document.getElementById('search-input');
     const viewModeSelect = document.getElementById('view-mode-select');
+    const statsBar = document.getElementById('stats-bar');
 
     const showNames = showNamesCheckbox ? showNamesCheckbox.checked : true;
     const onePerLine = onePerLineCheckbox ? onePerLineCheckbox.checked : false;
     const viewMode = viewModeSelect ? viewModeSelect.value : 'grouped';
-    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const rawSearchTerm = searchInput ? searchInput.value.trim() : '';
+
+    // Parse search terms and convert to Regex for glob support
+    const searchTerms = parseSearchTokens(rawSearchTerm);
+    const searchRegexes = searchTerms.map(createGlobRegex);
 
     tableBody.innerHTML = ''; // Clear existing
 
@@ -36,29 +41,82 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
             break;
     }
 
-    // Filter and Render
-    displayRows.forEach(row => {
-        // Filter Logic
-        if (searchTerm) {
-            const allItems = [...row.tablets, ...row.pens];
-            const match = allItems.some(item => {
-                const id = item.toLowerCase();
+    // 1. Filter rows
+    const filteredRows = displayRows.filter(row => {
+        if (searchRegexes.length === 0) return true;
+
+        const allItems = [...row.tablets, ...row.pens];
+        // Check if EVERY regex matches AT LEAST ONE item in the row
+        return searchRegexes.every(regex => {
+            return allItems.some(item => {
+                const id = item; // ID is case-sensitive or standard, but regex is 'i'
                 let name = '';
-                if (tabletDefs.has(item)) name = tabletDefs.get(item).name.toLowerCase();
-                else if (penDefs.has(item)) name = penDefs.get(item).name.toLowerCase();
+                if (tabletDefs.has(item)) name = tabletDefs.get(item).name;
+                else if (penDefs.has(item)) name = penDefs.get(item).name;
 
-                return id.includes(searchTerm) || name.includes(searchTerm);
+                return regex.test(id) || (name && regex.test(name));
             });
-            if (!match) return; // Skip row if no match
-        }
+        });
+    });
 
+    // 2. Calculate Stats
+    const visibleTablets = new Set();
+    const visiblePens = new Set();
+    filteredRows.forEach(row => {
+        row.tablets.forEach(t => visibleTablets.add(t));
+        row.pens.forEach(p => visiblePens.add(p));
+    });
+
+    const totalUniqueTablets = tabletDefs.size;
+    const totalUniquePens = penDefs.size;
+
+    if (statsBar) {
+        statsBar.textContent = `Showing ${filteredRows.length} rows | ${visibleTablets.size}/${totalUniqueTablets} Tablets | ${visiblePens.size}/${totalUniquePens} Pens`;
+    }
+
+    // 3. Render
+    filteredRows.forEach((row, index) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
+            <td style="text-align: center; color: #888;">${index + 1}</td>
             <td>${formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine)}</td>
             <td>${formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine)}</td>
         `;
         tableBody.appendChild(tr);
     });
+}
+
+/**
+ * Parses a search string into tokens, respecting double quotes.
+ * @param {string} input 
+ * @returns {string[]}
+ */
+function parseSearchTokens(input) {
+    if (!input) return [];
+    const tokens = [];
+    const regex = /"([^"]+)"|(\S+)/g;
+    let match;
+    while ((match = regex.exec(input)) !== null) {
+        if (match[1]) {
+            tokens.push(match[1]);
+        } else if (match[2]) {
+            tokens.push(match[2]);
+        }
+    }
+    return tokens;
+}
+
+/**
+ * Creates a RegExp from a glob pattern.
+ * @param {string} pattern 
+ * @returns {RegExp}
+ */
+function createGlobRegex(pattern) {
+    // Escape special regex chars except * and ?
+    // Then replace * with .* and ? with .
+    const escaped = pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&');
+    const globPattern = escaped.replace(/\*/g, '.*').replace(/\?/g, '.');
+    return new RegExp(globPattern, 'i'); // Case-insensitive
 }
 
 function getRowsByPen(compatibilityRows, tabletDefs, penDefs) {
@@ -142,7 +200,6 @@ function getRowsUngrouped(compatibilityRows, tabletDefs, penDefs) {
 
 function extractItems(node) {
     if (!node) return [];
-    // Get text, replace newlines with spaces, trim, then split by spaces
     const text = node.textContent || '';
     return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
 }
@@ -176,11 +233,9 @@ function sortItems(items, defsMap) {
         const defA = defsMap.get(a) || { familyId: '', name: '' };
         const defB = defsMap.get(b) || { familyId: '', name: '' };
 
-        // Sort by familyId first
         if (defA.familyId < defB.familyId) return -1;
         if (defA.familyId > defB.familyId) return 1;
 
-        // Then by ID
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
