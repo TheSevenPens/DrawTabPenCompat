@@ -67,11 +67,17 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
         row.pens.forEach(p => visiblePens.add(p));
     });
 
-    const totalUniqueTablets = tabletDefs.size;
-    const totalUniquePens = penDefs.size;
+    const totalUniqueTablets = new Set();
+    const totalUniquePens = new Set();
+    compatibilityRows.forEach(row => {
+        const tabletNode = row.querySelector('tablet');
+        const penNode = row.querySelector('pen');
+        extractItems(tabletNode).forEach(t => totalUniqueTablets.add(t));
+        extractItems(penNode).forEach(p => totalUniquePens.add(p));
+    });
 
     if (statsBar) {
-        statsBar.textContent = `Showing ${filteredRows.length} rows | ${visibleTablets.size}/${totalUniqueTablets} Tablets | ${visiblePens.size}/${totalUniquePens} Pens`;
+        statsBar.textContent = `Showing ${filteredRows.length} rows | ${visibleTablets.size} of ${totalUniqueTablets.size} Tablets | ${visiblePens.size} of ${totalUniquePens.size} Pens`;
     }
 
     // 3. Render
