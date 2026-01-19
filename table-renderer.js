@@ -97,21 +97,83 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
         const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine);
         const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine);
 
+        const copyBtn = `<button class="copy-btn" onclick="copyRowToClipboard(${index})">Copy</button>`;
+
         if (viewMode === 'by-pen') {
             tr.innerHTML = `
-                <td style="text-align: center; color: #888;">${index + 1}</td>
+                <td style="text-align: center; color: #888;">
+                    ${index + 1}
+                    ${copyBtn}
+                </td>
                 <td>${penCell}</td>
                 <td>${tabletCell}</td>
             `;
         } else {
             tr.innerHTML = `
-                <td style="text-align: center; color: #888;">${index + 1}</td>
+                <td style="text-align: center; color: #888;">
+                    ${index + 1}
+                    ${copyBtn}
+                </td>
                 <td>${tabletCell}</td>
                 <td>${penCell}</td>
             `;
         }
         tableBody.appendChild(tr);
     });
+
+    // Store data for copy function
+    window.currentTableData = {
+        rows: filteredRows,
+        viewMode,
+        tabletDefs,
+        penDefs,
+        showNames,
+        onePerLine
+    };
+}
+
+/**
+ * Copies the content of a row to the clipboard.
+ * @param {number} index - Index of the row in filteredRows.
+ */
+function copyRowToClipboard(index) {
+    const { rows, viewMode, tabletDefs, penDefs, showNames, onePerLine } = window.currentTableData;
+    const row = rows[index];
+    if (!row) return;
+
+    const tablets = formatItemsText(row.tablets, tabletDefs, showNames, onePerLine);
+    const pens = formatItemsText(row.pens, penDefs, showNames, onePerLine);
+
+    let textToCopy = '';
+    if (viewMode === 'by-pen') {
+        textToCopy = `Pens:\n${pens}\n\nTablets:\n${tablets}`;
+    } else {
+        textToCopy = `Tablets:\n${tablets}\n\nPens:\n${pens}`;
+    }
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        // Optional: Visual feedback could be added here
+        console.log('Copied to clipboard');
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
+
+/**
+ * Formats items as plain text for clipboard.
+ */
+function formatItemsText(items, defsMap, showNames, onePerLine) {
+    const separator = onePerLine ? '\n' : ', ';
+    return items.map(item => {
+        let label = item;
+        if (showNames && defsMap && defsMap.has(item)) {
+            const def = defsMap.get(item);
+            if (def.name) {
+                label = `${def.name} (${item})`;
+            }
+        }
+        return label;
+    }).join(separator);
 }
 
 /**
