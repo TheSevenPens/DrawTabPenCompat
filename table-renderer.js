@@ -6,13 +6,13 @@
  * @param {Map} penDefs - Map of pen definitions.
  */
 function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
-    const showNamesCheckbox = document.getElementById('show-names');
+    const showIdsOnlyCheckbox = document.getElementById('show-ids-only');
     const onePerLineCheckbox = document.getElementById('one-per-line');
     const searchInput = document.getElementById('search-input');
     const viewModeSelect = document.getElementById('view-mode-select');
     const statsBar = document.getElementById('stats-bar');
 
-    const showNames = showNamesCheckbox ? showNamesCheckbox.checked : true;
+    const showNames = showIdsOnlyCheckbox ? !showIdsOnlyCheckbox.checked : true;
     const onePerLine = onePerLineCheckbox ? onePerLineCheckbox.checked : false;
     const viewMode = viewModeSelect ? viewModeSelect.value : 'grouped';
     const rawSearchTerm = searchInput ? searchInput.value.trim() : '';
