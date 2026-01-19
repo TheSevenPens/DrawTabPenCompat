@@ -18,17 +18,14 @@
             <label for="show-names" style="margin-right: 15px;">Show names</label>
             <input type="checkbox" id="one-per-line">
             <label for="one-per-line">One per line</label>
-            <span style="margin-left: 15px; border-left: 1px solid #ccc; padding-left: 15px;">
-                <strong>View:</strong>
-                <input type="radio" id="view-grouped" name="view-mode" value="grouped" checked>
-                <label for="view-grouped">Compact Grouped</label>
-                <input type="radio" id="view-by-tablet" name="view-mode" value="by-tablet">
-                <label for="view-by-tablet">Group by tablet</label>
-                <input type="radio" id="view-by-pen" name="view-mode" value="by-pen">
-                <label for="view-by-pen">Group by pen</label>
-                <input type="radio" id="view-ungrouped" name="view-mode" value="ungrouped">
-                <label for="view-ungrouped">Ungrouped</label>
-            </span>
+            <label for="view-mode-select"
+                style="margin-left: 15px; border-left: 1px solid #ccc; padding-left: 15px;">View:</label>
+            <select id="view-mode-select" style="margin-left: 5px; padding: 4px;">
+                <option value="grouped">Compact Grouped</option>
+                <option value="by-tablet">Group by tablet</option>
+                <option value="by-pen">Group by pen</option>
+                <option value="ungrouped">Ungrouped</option>
+            </select>
         </div>
         <div id="search-area" style="display:none; margin-top: 10px;">
             <input type="text" id="search-input" placeholder="Search devices..."
@@ -69,9 +66,7 @@
 
             showNamesCheckbox.addEventListener('change', updateTable);
             onePerLineCheckbox.addEventListener('change', updateTable);
-            document.querySelectorAll('input[name="view-mode"]').forEach(radio => {
-                radio.addEventListener('change', updateTable);
-            });
+            document.getElementById('view-mode-select').addEventListener('change', updateTable);
             searchInput.addEventListener('input', updateTable);
 
             // Try to fetch automatically

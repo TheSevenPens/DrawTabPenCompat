@@ -9,11 +9,11 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
     const showNamesCheckbox = document.getElementById('show-names');
     const onePerLineCheckbox = document.getElementById('one-per-line');
     const searchInput = document.getElementById('search-input');
-    const viewModeInput = document.querySelector('input[name="view-mode"]:checked');
+    const viewModeSelect = document.getElementById('view-mode-select');
 
     const showNames = showNamesCheckbox ? showNamesCheckbox.checked : true;
     const onePerLine = onePerLineCheckbox ? onePerLineCheckbox.checked : false;
-    const viewMode = viewModeInput ? viewModeInput.value : 'grouped';
+    const viewMode = viewModeSelect ? viewModeSelect.value : 'grouped';
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
     tableBody.innerHTML = ''; // Clear existing
