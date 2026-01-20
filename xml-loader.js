@@ -23,20 +23,30 @@ async function fetchAndParseXML(url) {
     const penDefs = new Map();
     const penFamilyDefs = new Map();
     const tabletFamilyDefs = new Map();
+    const familyToPens = new Map(); // Map<FamilyID, Set<PenID>>
 
     // Parse Definitions
     xmlDoc.querySelectorAll('tabletdef').forEach(def => {
-        tabletDefs.set(def.getAttribute('id'), {
+        const id = def.getAttribute('id');
+        tabletDefs.set(id, {
             name: def.getAttribute('name'),
             familyId: def.getAttribute('familyid') || ''
         });
     });
 
     xmlDoc.querySelectorAll('pendef').forEach(def => {
-        penDefs.set(def.getAttribute('id'), {
+        const id = def.getAttribute('id');
+        const familyId = def.getAttribute('familyid') || '';
+        penDefs.set(id, {
             name: def.getAttribute('name'),
-            familyId: def.getAttribute('familyid') || ''
+            familyId: familyId
         });
+        if (familyId) {
+            if (!familyToPens.has(familyId)) {
+                familyToPens.set(familyId, new Set());
+            }
+            familyToPens.get(familyId).add(id);
+        }
     });
 
     xmlDoc.querySelectorAll('penfamilydef').forEach(def => {
@@ -47,41 +57,69 @@ async function fetchAndParseXML(url) {
         tabletFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
     });
 
-    // Check for missing tablet definitions and pen definitions
+    // Process Rows & Validation
     const missingTabletDefs = new Set();
     const missingPenDefs = new Map(); // Map<PenID, Set<TabletID>>
     const usedTablets = new Set();
     const usedPens = new Set();
 
-    rows.forEach(row => {
+    const processedRows = rows.map(row => {
         const tabletNode = row.querySelector('tablet');
-        let currentRowTablets = [];
+        const penNode = row.querySelector('pen');
+        const penFamilyNode = row.querySelector('penfamily');
+
+        const rowTablets = new Set();
+        const rowPens = new Set();
+
+        // Tablets
         if (tabletNode) {
             const text = tabletNode.textContent || '';
             const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-            currentRowTablets = items;
-            items.forEach(item => {
-                usedTablets.add(item);
-                if (!tabletDefs.has(item)) {
-                    missingTabletDefs.add(item);
+            items.forEach(id => rowTablets.add(id));
+        }
+
+        // Pens (Direct)
+        if (penNode) {
+            const text = penNode.textContent || '';
+            const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            items.forEach(id => rowPens.add(id));
+        }
+
+        // Pen Families (Expansion)
+        if (penFamilyNode) {
+            const text = penFamilyNode.textContent || '';
+            const families = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            families.forEach(familyId => {
+                if (familyToPens.has(familyId)) {
+                    familyToPens.get(familyId).forEach(penId => rowPens.add(penId));
+                } else {
+                    console.warn(`Unknown pen family '${familyId}' used in compatibility row.`);
                 }
             });
         }
 
-        const penNode = row.querySelector('pen');
-        if (penNode) {
-            const text = penNode.textContent || '';
-            const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-            items.forEach(item => {
-                usedPens.add(item);
-                if (!penDefs.has(item)) {
-                    if (!missingPenDefs.has(item)) {
-                        missingPenDefs.set(item, new Set());
-                    }
-                    currentRowTablets.forEach(t => missingPenDefs.get(item).add(t));
+        const tabletArray = Array.from(rowTablets);
+        const penArray = Array.from(rowPens);
+
+        // Validation Logic
+        tabletArray.forEach(id => {
+            usedTablets.add(id);
+            if (!tabletDefs.has(id)) {
+                missingTabletDefs.add(id);
+            }
+        });
+
+        penArray.forEach(id => {
+            usedPens.add(id);
+            if (!penDefs.has(id)) {
+                if (!missingPenDefs.has(id)) {
+                    missingPenDefs.set(id, new Set());
                 }
-            });
-        }
+                tabletArray.forEach(t => missingPenDefs.get(id).add(t));
+            }
+        });
+
+        return { tablets: tabletArray, pens: penArray };
     });
 
     if (missingTabletDefs.size > 0) {
@@ -121,5 +159,5 @@ async function fetchAndParseXML(url) {
         console.warn('Unused pen definitions:', unusedPenDefs.sort());
     }
 
-    return { rows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs };
+    return { rows: processedRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs };
 }

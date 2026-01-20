@@ -72,10 +72,8 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, pe
     const totalUniqueTablets = new Set();
     const totalUniquePens = new Set();
     compatibilityRows.forEach(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        extractItems(tabletNode).forEach(t => totalUniqueTablets.add(t));
-        extractItems(penNode).forEach(p => totalUniquePens.add(p));
+        row.tablets.forEach(t => totalUniqueTablets.add(t));
+        row.pens.forEach(p => totalUniquePens.add(p));
     });
 
     if (statsBar) {
@@ -215,10 +213,8 @@ function getRowsByPen(compatibilityRows, tabletDefs, penDefs) {
     const penToTablets = new Map();
 
     compatibilityRows.forEach(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        const tablets = extractItems(tabletNode);
-        const pens = extractItems(penNode);
+        const tablets = row.tablets;
+        const pens = row.pens;
 
         pens.forEach(p => {
             if (!penToTablets.has(p)) penToTablets.set(p, new Set());
@@ -240,10 +236,8 @@ function getRowsByTablet(compatibilityRows, tabletDefs, penDefs) {
     const tabletToPens = new Map();
 
     compatibilityRows.forEach(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        const tablets = extractItems(tabletNode);
-        const pens = extractItems(penNode);
+        const tablets = row.tablets;
+        const pens = row.pens;
 
         tablets.forEach(t => {
             if (!tabletToPens.has(t)) tabletToPens.set(t, new Set());
@@ -264,10 +258,8 @@ function getRowsByTablet(compatibilityRows, tabletDefs, penDefs) {
 function getRowsGrouped(compatibilityRows, tabletDefs, penDefs) {
     const displayRows = [];
     compatibilityRows.forEach(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        const tablets = sortItems(extractItems(tabletNode), tabletDefs);
-        const pens = sortItems(extractItems(penNode), penDefs);
+        const tablets = sortItems(row.tablets, tabletDefs);
+        const pens = sortItems(row.pens, penDefs);
         displayRows.push({ tablets, pens });
     });
     return displayRows;
@@ -276,10 +268,8 @@ function getRowsGrouped(compatibilityRows, tabletDefs, penDefs) {
 function getRowsUngrouped(compatibilityRows, tabletDefs, penDefs) {
     const displayRows = [];
     compatibilityRows.forEach(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        const tablets = sortItems(extractItems(tabletNode), tabletDefs);
-        const pens = sortItems(extractItems(penNode), penDefs);
+        const tablets = sortItems(row.tablets, tabletDefs);
+        const pens = sortItems(row.pens, penDefs);
 
         tablets.forEach(t => {
             pens.forEach(p => {
@@ -290,11 +280,7 @@ function getRowsUngrouped(compatibilityRows, tabletDefs, penDefs) {
     return displayRows;
 }
 
-function extractItems(node) {
-    if (!node) return [];
-    const text = node.textContent || '';
-    return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-}
+
 
 function formatItems(items, className, defsMap, showNames, onePerLine, organizeByFamily, familyDefs) {
     const separator = onePerLine ? '<br>' : '';
