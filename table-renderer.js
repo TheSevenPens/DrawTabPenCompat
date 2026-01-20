@@ -8,12 +8,14 @@
 function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
     const showIdsOnlyCheckbox = document.getElementById('show-ids-only');
     const onePerLineCheckbox = document.getElementById('one-per-line');
+    const organizeByFamilyCheckbox = document.getElementById('organize-by-family');
     const searchInput = document.getElementById('search-input');
     const viewModeSelect = document.getElementById('view-mode-select');
     const statsBar = document.getElementById('stats-bar');
 
     const showNames = showIdsOnlyCheckbox ? !showIdsOnlyCheckbox.checked : true;
     const onePerLine = onePerLineCheckbox ? onePerLineCheckbox.checked : false;
+    const organizeByFamily = organizeByFamilyCheckbox ? organizeByFamilyCheckbox.checked : false;
     const viewMode = viewModeSelect ? viewModeSelect.value : 'grouped';
     const rawSearchTerm = searchInput ? searchInput.value.trim() : '';
 
@@ -94,8 +96,8 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs) {
     filteredRows.forEach((row, index) => {
         const tr = document.createElement('tr');
 
-        const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine);
-        const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine);
+        const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine, organizeByFamily);
+        const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine, organizeByFamily);
 
         const copyBtn = `<button class="copy-btn" onclick="copyRowToClipboard(${index})">Copy</button>`;
 
@@ -294,8 +296,66 @@ function extractItems(node) {
     return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
 }
 
-function formatItems(items, className, defsMap, showNames, onePerLine) {
+function formatItems(items, className, defsMap, showNames, onePerLine, organizeByFamily) {
     const separator = onePerLine ? '<br>' : '';
+
+    if (organizeByFamily && defsMap && items.length > 0) {
+        const groups = new Map();
+        const ungrouped = [];
+
+        items.forEach(item => {
+            const def = defsMap.get(item);
+            if (def && def.familyId) {
+                if (!groups.has(def.familyId)) groups.set(def.familyId, []);
+                groups.get(def.familyId).push(item);
+            } else {
+                ungrouped.push(item);
+            }
+        });
+
+        // If we have groups, render them
+        if (groups.size > 0) {
+            let html = '';
+
+            // Sort by familyId for consistency
+            const sortedFamilies = Array.from(groups.keys()).sort();
+
+            sortedFamilies.forEach(familyId => {
+                const groupItems = groups.get(familyId);
+                const formattedItems = groupItems.map(item => {
+                    let label = item;
+                    if (showNames && defsMap.has(item)) {
+                        const def = defsMap.get(item);
+                        if (def.name) label = `${def.name} (${item})`;
+                    }
+                    return `<span class="${className}">${label}</span>`;
+                }).join(separator);
+
+                html += `<div class="family-group">`;
+                html += `<div class="family-group-label">${familyId}</div>`;
+                html += formattedItems;
+                html += `</div>`;
+            });
+
+            if (ungrouped.length > 0) {
+                const formattedUngrouped = ungrouped.map(item => {
+                    let label = item;
+                    if (showNames && defsMap.has(item)) {
+                        const def = defsMap.get(item);
+                        if (def.name) label = `${def.name} (${item})`;
+                    }
+                    return `<span class="${className}">${label}</span>`;
+                }).join(separator);
+
+                html += `<div class="family-group">`;
+                html += `<div class="family-group-label">Other</div>`;
+                html += formattedUngrouped;
+                html += `</div>`;
+            }
+            return html;
+        }
+    }
+
     return items.map(item => {
         let label = item;
         if (showNames && defsMap && defsMap.has(item)) {

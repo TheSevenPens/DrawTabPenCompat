@@ -94,3 +94,20 @@
         .copy-btn:hover {
             background: #ddd;
         }
+
+        .family-group {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin: 4px 0;
+            background-color: #f9f9f9;
+        }
+
+        .family-group-label {
+            font-size: 0.75em;
+            color: #888;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }

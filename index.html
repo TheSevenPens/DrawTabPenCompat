@@ -18,6 +18,8 @@
             <label for="show-ids-only" style="margin-right: 15px;">Show ids only</label>
             <input type="checkbox" id="one-per-line" checked>
             <label for="one-per-line">One item per line</label>
+            <input type="checkbox" id="organize-by-family" style="margin-left: 15px;">
+            <label for="organize-by-family">Organize by family</label>
             <label for="view-mode-select"
                 style="margin-left: 15px; border-left: 1px solid #ccc; padding-left: 15px;">View:</label>
             <select id="view-mode-select" style="margin-left: 5px; padding: 4px;">
@@ -70,6 +72,7 @@
             showIdsOnlyCheckbox.addEventListener('change', updateTable);
             onePerLineCheckbox.addEventListener('change', updateTable);
             document.getElementById('view-mode-select').addEventListener('change', updateTable);
+            document.getElementById('organize-by-family').addEventListener('change', updateTable);
             searchInput.addEventListener('input', updateTable);
 
             // Try to fetch automatically
