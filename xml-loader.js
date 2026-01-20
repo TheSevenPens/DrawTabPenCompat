@@ -49,15 +49,17 @@ async function fetchAndParseXML(url) {
 
     // Check for missing tablet definitions and pen definitions
     const missingTabletDefs = new Set();
-    const missingPenDefs = new Set();
+    const missingPenDefs = new Map(); // Map<PenID, Set<TabletID>>
     const usedTablets = new Set();
     const usedPens = new Set();
 
     rows.forEach(row => {
         const tabletNode = row.querySelector('tablet');
+        let currentRowTablets = [];
         if (tabletNode) {
             const text = tabletNode.textContent || '';
             const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            currentRowTablets = items;
             items.forEach(item => {
                 usedTablets.add(item);
                 if (!tabletDefs.has(item)) {
@@ -73,7 +75,10 @@ async function fetchAndParseXML(url) {
             items.forEach(item => {
                 usedPens.add(item);
                 if (!penDefs.has(item)) {
-                    missingPenDefs.add(item);
+                    if (!missingPenDefs.has(item)) {
+                        missingPenDefs.set(item, new Set());
+                    }
+                    currentRowTablets.forEach(t => missingPenDefs.get(item).add(t));
                 }
             });
         }
@@ -84,7 +89,12 @@ async function fetchAndParseXML(url) {
     }
 
     if (missingPenDefs.size > 0) {
-        console.warn('Missing pen definitions:', Array.from(missingPenDefs).sort());
+        console.warn('Missing pen definitions:');
+        const sortedMissing = Array.from(missingPenDefs.keys()).sort();
+        sortedMissing.forEach(penId => {
+            const tablets = Array.from(missingPenDefs.get(penId)).sort().join(', ');
+            console.warn(`  - ${penId} (referenced by: ${tablets})`);
+        });
     }
 
     // Check for unused tablet definitions
