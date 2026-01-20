@@ -20,20 +20,24 @@
                 style="width: 100%; max-width: 800px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
         </div>
         <div id="options-area" style="display:none; margin-bottom: 5px;">
-            <input type="checkbox" id="show-ids-only">
-            <label for="show-ids-only" style="margin-right: 15px;">Show ids only</label>
-            <input type="checkbox" id="one-per-line" checked>
-            <label for="one-per-line">One item per line</label>
-            <input type="checkbox" id="organize-by-family" style="margin-left: 15px;">
-            <label for="organize-by-family">Organize by family</label>
-            <label for="view-mode-select"
-                style="margin-left: 15px; border-left: 1px solid #ccc; padding-left: 15px;">View:</label>
+
+            <label for="view-mode-select" style="margin-left: 15px; padding-left: 15px;">View:</label>
             <select id="view-mode-select" style="margin-left: 5px; padding: 4px;">
                 <option value="grouped">Compact Grouped</option>
                 <option value="by-tablet">Group by tablet</option>
                 <option value="by-pen">Group by pen</option>
                 <option value="ungrouped">Ungrouped</option>
             </select>
+
+
+            <input type="checkbox" id="organize-by-family" style="margin-left: 15px;">
+            <label for="organize-by-family">Organize by family</label>
+
+            <input type="checkbox" id="one-per-line" checked>
+            <label for="one-per-line">One item per line</label>
+
+            <input type="checkbox" id="show-ids-only">
+            <label for="show-ids-only" style="margin-right: 15px;">Show ids only</label>
         </div>
     </div>
     <p id="error-msg"></p>

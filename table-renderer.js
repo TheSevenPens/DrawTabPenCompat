@@ -77,7 +77,7 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, pe
     });
 
     if (statsBar) {
-        statsBar.textContent = `Showing ${filteredRows.length} rows | ${visibleTablets.size} of ${totalUniqueTablets.size} Tablets | ${visiblePens.size} of ${totalUniquePens.size} Pens`;
+        statsBar.textContent = `${filteredRows.length} rows | ${visibleTablets.size} of ${totalUniqueTablets.size} tablets | ${visiblePens.size} of ${totalUniquePens.size} pens`;
     }
 
     // Update Header
