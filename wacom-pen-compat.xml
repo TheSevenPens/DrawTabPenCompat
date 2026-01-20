@@ -120,7 +120,9 @@
             <tablet>DTH-135</tablet>
             <pen>
                 ACP-500
-                    CP-913 CP-923
+                KP-504E KP-301E KP-505 
+                KP-501E KP-300E KP-400E KP-701E KP-503E
+                CP-913 CP-923
             </pen>
         </compatrow>
         <compatrow>
@@ -206,19 +208,25 @@
         </compatrow>
     </pairs>
     <tabletfamilydefs>
-        <tabletfamilydef id="WacomIntuosProGen8" name="Wacom Intuos Pro 2025" />
-        <tabletfamilydef id="WacomIntuosProGen7" name="Wacom Intuos Pro 2017"/>
-        <tabletfamilydef id="WacomIntuosProGen6" name="Wacom Intuos Pro 2013" />
-        <tabletfamilydef id="WacomIntuosProGen5" name="Wacom Intuos5" />
-        <tabletfamilydef id="WacomIntuosProGen4" name="Wacom Intuos4" />
-        <tabletfamilydef id="WacomIntuosProGen3" name="Wacom Intuos3" />
-        <tabletfamilydef id="WacomIntuosProGen2" name="Wacom Intuos2" />
-        <tabletfamilydef id="WacomIntuosProGen1" name="Wacom Intuos1" />
-        <tabletfamilydef id="WacomSDSeries" name="Wacom SD Series" />
-        <tabletfamilydef id="CTL-x72" name="One By Wacom" />
+        <tabletfamilydef id="WacomIntuosProGen8" name="Wacom Intuos Pro 2025 series" />
+        <tabletfamilydef id="WacomIntuosProGen7" name="Wacom Intuos Pro 2017 series"/>
+        <tabletfamilydef id="WacomIntuosProGen6" name="Wacom Intuos Pro 2013 series" />
+        <tabletfamilydef id="WacomIntuosProGen5" name="Wacom Intuos5 series" />
+        <tabletfamilydef id="WacomIntuosProGen4" name="Wacom Intuos4 series" />
+        <tabletfamilydef id="WacomIntuosProGen3" name="Wacom Intuos3 series" />
+        <tabletfamilydef id="WacomIntuosProGen2" name="Wacom Intuos2 series" />
+        <tabletfamilydef id="WacomIntuosProGen1" name="Wacom Intuos1 series" />
+        <tabletfamilydef id="WacomSDSeries" name="Wacom SD series" />
+        <tabletfamilydef id="CTL-x72" name="One By Wacom series" />
+        <tabletfamilydef id="CTx-x90" name="CTx-x90 series" />
+        <tabletfamilydef id="CTx-x60" name="CTx-x60 series" />
+        <tabletfamilydef id="CTH-x61" name="CTH-x61 series" />
+        <tabletfamilydef id="CTx-x70" name="CTx-x70 series" />
+        <tabletfamilydef id="CTx-x71" name="CTx-x71 series" />
+        <tabletfamilydef id="CTx-x80" name="CTx-x80 series" />
 
-        <tabletfamilydef id="WacomOndPenDisplayGen1" name="Wacom One Pen Display Gen 1" />
-        <tabletfamilydef id="WacomOndPenDisplayGen2" name="Wacom One Pen Display Gen 2" />
+        <tabletfamilydef id="WacomOndPenDisplayGen1" name="Wacom One Pen Display Gen 1 series" />
+        <tabletfamilydef id="WacomOndPenDisplayGen2" name="Wacom One Pen Display Gen 2 series" />
     </tabletfamilydefs>
 
     <tabletdefs>
@@ -323,33 +331,42 @@
         <tabletdef familyid="WacomIntuosProGen8" id="PTK-670" name="Wacom Intuos Pro M 2025" type="pentab"/>
         <tabletdef familyid="WacomIntuosProGen8" id="PTK-470" name="Wacom Intuos Pro S 2025" type="pentab"/>
 
-        <tabletdef familyid="" id="CTH-460" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-461" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-470" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-480" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-490" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-661" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-670" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-680" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTH-690" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-460" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-470" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-471" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-480" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-490" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-660" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-671" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-680" name="" type="pentab"/>
-        <tabletdef familyid="" id="CTL-690" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x60" id="CTH-460" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x60" id="CTL-460" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x60" id="CTL-660" name="" type="pentab"/>
+
+        <tabletdef familyid="CTH-x60" id="CTH-661" name="" type="pentab"/>
+        <tabletdef familyid="CTH-x60" id="CTH-461" name="" type="pentab"/>
+
+
+        <tabletdef familyid="CTx-x70" id="CTL-470" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x70" id="CTH-670" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x70" id="CTH-470" name="" type="pentab"/>
+
+
+        <tabletdef familyid="CTx-x71" id="CTL-671" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x71" id="CTL-471" name="" type="pentab"/>
+
+        <tabletdef familyid="CTx-x80" id="CTL-680" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x80" id="CTH-680" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x80" id="CTL-480" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x80" id="CTH-480" name="" type="pentab"/>
+
+        <tabletdef familyid="CTx-x90" id="CTH-690" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x90" id="CTH-490" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x90" id="CTL-490" name="" type="pentab"/>
+        <tabletdef familyid="CTx-x90" id="CTL-690" name="" type="pentab"/>
 
     </tabletdefs>
 
     <penfamilydefs>
-        <penfamilydef id="WacomProPenGen1" name="Wacom Pro Pens Gen1" />
-        <penfamilydef id="WacomProPenGen2" name="Wacom Pro Pens Gen2" />
-        <penfamilydef id="WacomProPenGen3" name="Wacom Pro Pens Gen3" />
-        <penfamilydef id="WacomIntuos3Pen" name="Wacom Intuos3 Pens" />        
-        <penfamilydef id="SPSeriesPens" name="Wacom SP Series Pens" />
+        <penfamilydef id="WacomProPenGen3" name="Wacom KP GEN3 pen series" />
+        <penfamilydef id="WacomProPenGen2" name="Wacom KP GEN2 pen series" />
+        <penfamilydef id="WacomProPenGen1" name="Wacom KP GEN1 pen series" />
+        <penfamilydef id="WacomIntuos3Pen" name="Wacom ZP pen series" />        
+        <penfamilydef id="WacomIntuos2Pen" name="Wacom XP pen series" />        
+        <penfamilydef id="WacomIntuos1Pen" name="Wacom GP pen series" />        
+        <penfamilydef id="SPSeriesPens"    name="Wacom SP pen series" />
     </penfamilydefs>
 
     <pendefs>
