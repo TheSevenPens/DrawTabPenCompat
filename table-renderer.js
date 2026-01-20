@@ -97,7 +97,7 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, pe
         const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine, organizeByFamily, tabletFamilyDefs);
         const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine, organizeByFamily, penFamilyDefs);
 
-        const copyBtn = `<button class="copy-btn" onclick="copyRowToClipboard(${index})">Copy</button>`;
+        const copyBtn = `<button class="copy-btn" onclick="copyRowToClipboard(${index})">COPY</button>`;
 
         if (viewMode === 'by-pen') {
             tr.innerHTML = `
