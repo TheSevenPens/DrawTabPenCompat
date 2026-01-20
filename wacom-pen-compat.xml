@@ -195,7 +195,6 @@
         <tabletfamilydef id="WacomIntuosProGen2" name="Wacom Intuos2" />
         <tabletfamilydef id="WacomIntuosProGen1" name="Wacom Intuos1" />
         <tabletfamilydef id="CTL-x72" name="One By Wacom" />
-        <tabletfamilydef id="WacomIntuos5" name="Wacom Intuos5" />
     </tabletfamilydefs>
 
     <tabletdefs>

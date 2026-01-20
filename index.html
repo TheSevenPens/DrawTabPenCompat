@@ -67,8 +67,9 @@
             let tabletDefs = new Map();
             let penDefs = new Map();
             let penFamilyDefs = new Map();
+            let tabletFamilyDefs = new Map();
 
-            const updateTable = () => renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, penFamilyDefs);
+            const updateTable = () => renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs);
 
             showIdsOnlyCheckbox.addEventListener('change', updateTable);
             onePerLineCheckbox.addEventListener('change', updateTable);
@@ -83,6 +84,7 @@
                     tabletDefs = data.tabletDefs;
                     penDefs = data.penDefs;
                     penFamilyDefs = data.penFamilyDefs;
+                    tabletFamilyDefs = data.tabletFamilyDefs;
                     updateTable();
                     document.querySelector('.controls p').style.display = 'none'; // Hide loading text
                     optionsArea.style.display = 'block';

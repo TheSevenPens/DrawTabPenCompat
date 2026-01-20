@@ -22,6 +22,7 @@ async function fetchAndParseXML(url) {
     const tabletDefs = new Map();
     const penDefs = new Map();
     const penFamilyDefs = new Map();
+    const tabletFamilyDefs = new Map();
 
     // Parse Definitions
     xmlDoc.querySelectorAll('tabletdef').forEach(def => {
@@ -40,6 +41,10 @@ async function fetchAndParseXML(url) {
 
     xmlDoc.querySelectorAll('penfamilydef').forEach(def => {
         penFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
+    });
+
+    xmlDoc.querySelectorAll('tabletfamilydef').forEach(def => {
+        tabletFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
     });
 
     // Check for missing tablet definitions and pen definitions
@@ -106,5 +111,5 @@ async function fetchAndParseXML(url) {
         console.warn('Unused pen definitions:', unusedPenDefs.sort());
     }
 
-    return { rows, tabletDefs, penDefs, penFamilyDefs };
+    return { rows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs };
 }

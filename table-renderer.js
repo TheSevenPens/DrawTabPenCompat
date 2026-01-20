@@ -5,7 +5,7 @@
  * @param {Map} tabletDefs - Map of tablet definitions.
  * @param {Map} penDefs - Map of pen definitions.
  */
-function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, penFamilyDefs) {
+function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs) {
     const showIdsOnlyCheckbox = document.getElementById('show-ids-only');
     const onePerLineCheckbox = document.getElementById('one-per-line');
     const organizeByFamilyCheckbox = document.getElementById('organize-by-family');
@@ -96,7 +96,7 @@ function renderCompatTable(tableBody, compatibilityRows, tabletDefs, penDefs, pe
     filteredRows.forEach((row, index) => {
         const tr = document.createElement('tr');
 
-        const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine, organizeByFamily, penFamilyDefs);
+        const tabletCell = formatItems(row.tablets, 'device-tag tablet', tabletDefs, showNames, onePerLine, organizeByFamily, tabletFamilyDefs);
         const penCell = formatItems(row.pens, 'device-tag', penDefs, showNames, onePerLine, organizeByFamily, penFamilyDefs);
 
         const copyBtn = `<button class="copy-btn" onclick="copyRowToClipboard(${index})">Copy</button>`;
@@ -296,7 +296,7 @@ function extractItems(node) {
     return text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
 }
 
-function formatItems(items, className, defsMap, showNames, onePerLine, organizeByFamily, penFamilyDefs) {
+function formatItems(items, className, defsMap, showNames, onePerLine, organizeByFamily, familyDefs) {
     const separator = onePerLine ? '<br>' : '';
 
     if (organizeByFamily && defsMap && items.length > 0) {
@@ -332,9 +332,8 @@ function formatItems(items, className, defsMap, showNames, onePerLine, organizeB
                 }).join(separator);
 
                 html += `<div class="family-group">`;
-                const familyLabel = (penFamilyDefs && penFamilyDefs.has(familyId))
-                    ? penFamilyDefs.get(familyId)
-                    : familyId;
+                const familyName = (familyDefs && familyDefs.has(familyId)) ? familyDefs.get(familyId) : null;
+                const familyLabel = familyName || familyId;
                 html += `<div class="family-group-label">${familyLabel}</div>`;
                 html += formattedItems;
                 html += `</div>`;
