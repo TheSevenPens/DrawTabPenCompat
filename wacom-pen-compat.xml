@@ -141,6 +141,26 @@
         </compatrow>
         <compatrow>
             <tablet>
+                SD-510C
+                SD-420E
+                SD-421E
+                SD-422E
+                SD-320E
+                SD-321E
+                SD-322E
+                SD-310E
+                SD-311E
+                SD-312E
+                SD-210L
+                SD-013A
+                SD-013L
+            </tablet>
+            <pen>
+                SP-200 SP-210 SP-200A SP-210A SP-300 SP-310
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
                 GD-0405-U
                 GD-0405-R
                 GD-0405-A
@@ -194,7 +214,11 @@
         <tabletfamilydef id="WacomIntuosProGen3" name="Wacom Intuos3" />
         <tabletfamilydef id="WacomIntuosProGen2" name="Wacom Intuos2" />
         <tabletfamilydef id="WacomIntuosProGen1" name="Wacom Intuos1" />
+        <tabletfamilydef id="WacomSDSeries" name="Wacom SD Series" />
         <tabletfamilydef id="CTL-x72" name="One By Wacom" />
+
+        <tabletfamilydef id="WacomOndPenDisplayGen1" name="Wacom One Pen Display Gen 1" />
+        <tabletfamilydef id="WacomOndPenDisplayGen2" name="Wacom One Pen Display Gen 2" />
     </tabletfamilydefs>
 
     <tabletdefs>
@@ -207,9 +231,9 @@
         <tabletdef familyid="" id="DTH-271" name="Wacom Cintiq 27" type="pendisplay"/>
         <tabletdef familyid="" id="DTH-167" name="Wacom Cintiq 16 2021" type="pendisplay"/>
         <tabletdef familyid="" id="DTH-135" name="Wacom Movink 13" type="pendisplay"/>
-        <tabletdef familyid="" id="DTH-134" name="Wacom One 13 touch" type="pendisplay"/>
-        <tabletdef familyid="" id="DTC-121" name="Wacom One 12" type="pendisplay"/>
-        <tabletdef familyid="" id="DTC-133" name="Wacom One 13" type="pendisplay"/>
+        <tabletdef familyid="WacomOndPenDisplayGen2" id="DTH-134" name="Wacom One 13 touch" type="pendisplay"/>
+        <tabletdef familyid="WacomOndPenDisplayGen2" id="DTC-121" name="Wacom One 12" type="pendisplay"/>
+        <tabletdef familyid="WacomOndPenDisplayGen1" id="DTC-133" name="Wacom One 13" type="pendisplay"/>
 
         <tabletdef familyid="" id="DTK-1660" name="Wacom Cintiq 16" type="pendisplay"/>
         <tabletdef familyid="" id="DTK-2260" name="Wacom Cintiq 22" type="pendisplay"/>
@@ -225,6 +249,20 @@
 
         <tabletdef familyid="CTC-x110" id="CTC-4110WL" name="Wacom One S" type="pentablet"/>
         <tabletdef familyid="CTC-x110" id="CTC-6110WL" name="Wacom One M" type="pentablet"/>
+
+        <tabletdef familyid="WacomSDSeries" id="SD-510C" name="Wacom SD-510C" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-420E" name="Wacom SD-420E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-421E" name="Wacom SD-421E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-422E" name="Wacom SD-422E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-320E" name="Wacom SD-320E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-321E" name="Wacom SD-321E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-322E" name="Wacom SD-322E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-310E" name="Wacom SD-310E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-311E" name="Wacom SD-311E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-312E" name="Wacom SD-312E" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-210L" name="Wacom SD-210L" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-013A" name="Wacom SD-013A" type="pentab"/>
+        <tabletdef familyid="WacomSDSeries" id="SD-013L" name="Wacom SD-013L" type="pentab"/>
 
         <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-U" name="Wacom Intuos 4x5 (USB)" type="pentab"/>
         <tabletdef familyid="WacomIntuosProGen1" id="GD-0405-R" name="Wacom Intuos 4x5 (Serial)" type="pentab"/>
@@ -311,9 +349,19 @@
         <penfamilydef id="WacomProPenGen2" name="Wacom Pro Pens Gen2" />
         <penfamilydef id="WacomProPenGen3" name="Wacom Pro Pens Gen3" />
         <penfamilydef id="WacomIntuos3Pen" name="Wacom Intuos3 Pens" />        
+        <penfamilydef id="SPSeriesPens" name="Wacom SP Series Pens" />
     </penfamilydefs>
 
     <pendefs>
+
+        <pendef familyid="SPSeriesPens" id="SP-200" name="SP-200" year=""/>
+        <pendef familyid="SPSeriesPens" id="SP-210" name="SP-210" year=""/>
+        <pendef familyid="SPSeriesPens" id="SP-200A" name="SP-200A" year=""/>
+        <pendef familyid="SPSeriesPens" id="SP-210A" name="SP-210A" year=""/>
+        <pendef familyid="SPSeriesPens" id="SP-300" name="SP-300" year=""/>
+        <pendef familyid="SPSeriesPens" id="SP-310" name="SP-310" year=""/>
+
+
         <pendef familyid="" id="KP-132" name="Wacom Finetip Pen for Intuos Pro" year=""/>
 
         <pendef familyid="" id="EP-150E" name="Wacom Bamboo Pen" year="2007"/>
