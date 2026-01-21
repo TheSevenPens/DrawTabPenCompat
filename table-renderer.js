@@ -141,8 +141,8 @@ function copyRowToClipboard(index) {
     const row = rows[index];
     if (!row) return;
 
-    const tablets = formatItemsText(row.tablets, tabletDefs, showNames, onePerLine);
-    const pens = formatItemsText(row.pens, penDefs, showNames, onePerLine);
+    const tablets = formatItemsText(row.tablets, tabletDefs, showNames, onePerLine, '  ');
+    const pens = formatItemsText(row.pens, penDefs, showNames, onePerLine, '  ');
 
     let textToCopy = '';
     if (viewMode === 'by-pen') {
@@ -162,9 +162,9 @@ function copyRowToClipboard(index) {
 /**
  * Formats items as plain text for clipboard.
  */
-function formatItemsText(items, defsMap, showNames, onePerLine) {
-    const separator = onePerLine ? '\n' : ', ';
-    return items.map(item => {
+function formatItemsText(items, defsMap, showNames, onePerLine, indent = '') {
+    const separator = onePerLine ? `\n${indent}` : ', ';
+    const text = items.map(item => {
         let label = item;
         if (showNames && defsMap && defsMap.has(item)) {
             const def = defsMap.get(item);
@@ -174,6 +174,7 @@ function formatItemsText(items, defsMap, showNames, onePerLine) {
         }
         return label;
     }).join(separator);
+    return items.length > 0 ? `${indent}${text}` : '';
 }
 
 /**
