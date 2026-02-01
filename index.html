@@ -85,13 +85,18 @@
             searchInput.addEventListener('input', updateTable);
 
             // Try to fetch automatically
-            fetchAndParseXML('wacom-pen-compat.xml')
-                .then(data => {
+            const filesToLoad = ['wacom-pen-compat.xml', 'huion-pen-compat.xml'];
+            document.querySelector('.controls p').innerHTML = `Loading <code>${filesToLoad.join('</code>, <code>')}</code>...`;
+
+            Promise.all(filesToLoad.map(url => fetchAndParseXML(url)))
+                .then(results => {
+                    const data = mergeCompatData(results);
                     compatibilityRows = data.rows;
                     tabletDefs = data.tabletDefs;
                     penDefs = data.penDefs;
                     penFamilyDefs = data.penFamilyDefs;
                     tabletFamilyDefs = data.tabletFamilyDefs;
+
                     updateTable();
                     document.querySelector('.controls p').style.display = 'none'; // Hide loading text
                     optionsArea.style.display = 'block';

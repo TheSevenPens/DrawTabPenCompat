@@ -1,0 +1,89 @@
+﻿<compat>
+    <pairs>
+        <compatrow>
+            <tabletfamily>HuionFrego</tabletfamily>
+            <penfamily>PenTech3Plus</penfamily>
+        </compatrow>
+        <compatrow>
+            <tabletfamily>HuionInspiroy2</tabletfamily>
+            <pen>PW110</pen>
+        </compatrow>
+        <compatrow>
+            <tabletfamily>HuionRTx</tabletfamily>
+            <pen>PW400</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>WH1409V2</tablet>
+            <pen>PW500</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>WH1409_8192</tablet>
+            <pen>PE150</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>H950P</tablet>
+            <pen>PW100</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>H430P</tablet>
+            <pen>PW201</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>H1060P</tablet>
+            <pen>PW100</pen>
+        </compatrow>
+    </pairs>
+
+    <tabletfamilydefs>
+        <tabletfamilydef brand="huion" id="HuionFrego" name="Huion Frego tablet series" />
+        <tabletfamilydef brand="huion" id="HuionInspiroy2" name="Huion Inspiroy2 tablet series" />
+        <tabletfamilydef brand="huion" id="HuionRTx" name="Huion RT tablet series" />
+    </tabletfamilydefs>
+
+    <tabletdefs>
+        <tabletdef brand="huion" familyid="HuionFrego" id="L310" name="Huion Frego S" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionFrego" id="L610" name="Huion Frego M" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionInspiroy2" id="H641P" name="Huion Inspiroy 2 S" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionInspiroy2" id="H951P" name="Huion Inspiroy 2 M" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionInspiroy2" id="H1061P" name="Huion Inspiroy 2 L" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionRTx" id="RTE-100" name="Huion RTE-100" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionRTx" id="RTP-700" name="Huion RTP-700" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionRTx" id="RTM-500" name="Huion RTM-500" type="pentablet"/>
+        <tabletdef brand="huion" familyid="HuionRTx" id="RTS-300" name="Huion RTS-300" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="WH1409V2" name="Huion WH1409 V2" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="WH1409_8192" name="Huion WH1409 (8192)" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H950P" name="Huion H950P" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H430P" name="Huion H430P" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H1060P" name="Huion H1060P" type="pentablet"/>
+       
+
+        
+    </tabletdefs>
+
+    <penfamilydefs>
+        <penfamilydef brand="huion" id="PenTech3Plus" name="Huion PenTech 3.0+ pen series" />
+        <penfamilydef brand="huion" id="PenTech3" name="Huion PenTech 3.0 pen series" />
+        <penfamilydef brand="huion" id="PenTech2" name="Huion PenTech 2.0 pen series" />
+        <penfamilydef brand="huion" id="PenTech1" name="Huion PenTech 1.0 pen series" />
+    </penfamilydefs>
+
+    <pendefs>
+        <pendef brand="huion" familyid="PenTech3Plus" id="PW550S" name="Huion PW550S" year=""/>
+        <pendef brand="huion" familyid="PenTech3Plus" id="PW550" name="Huion PW550" year=""/>
+        <pendef brand="huion" familyid="PenTech3" id="PW515" name="Huion PW515" year=""/>
+        <pendef brand="huion" familyid="PenTech3" id="PW517" name="Huion PW517" year=""/>
+        <pendef brand="huion" familyid="PenTech3" id="PW110" name="Huion PW110" year=""/>
+        <pendef brand="huion" familyid="PenTech2" id="PW400" name="Huion PW400" year=""/>
+        <pendef brand="huion" familyid="PenTech2" id="PW100" name="Huion PW100" year=""/>
+        <pendef brand="huion" familyid="PenTech2" id="PW500" name="Huion PW500" year=""/>
+        <pendef brand="huion" familyid="PenTech2" id="PW507" name="Huion PW507" year=""/>
+        <pendef brand="huion" familyid="PenTech2" id="PW201" name="Huion PW201" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PE150" name="Huion PE150" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PE330" name="Huion PE330" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PF150" name="Huion PF150" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PEN80" name="Huion PEN80" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PEN68" name="Huion PEN68" year=""/>
+        <pendef brand="huion" familyid="PenTech1" id="PEN68D" name="Huion PEN68D" year=""/>
+
+    </pendefs>
+</compat>

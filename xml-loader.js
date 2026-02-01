@@ -1,7 +1,7 @@
 /**
- * Fetches and parses the Wacom compatibility XML file.
+ * Fetches and parses a compatibility XML file.
  * @param {string} url - The URL to the XML file.
- * @returns {Promise<{rows: Element[], tabletDefs: Map, penDefs: Map}>}
+ * @returns {Promise<{rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map}>}
  */
 async function fetchAndParseXML(url) {
     const response = await fetch(url);
@@ -24,14 +24,22 @@ async function fetchAndParseXML(url) {
     const penFamilyDefs = new Map();
     const tabletFamilyDefs = new Map();
     const familyToPens = new Map(); // Map<FamilyID, Set<PenID>>
+    const familyToTablets = new Map(); // Map<FamilyID, Set<TabletID>>
 
     // Parse Definitions
     xmlDoc.querySelectorAll('tabletdef').forEach(def => {
         const id = def.getAttribute('id');
+        const familyId = def.getAttribute('familyid') || '';
         tabletDefs.set(id, {
             name: def.getAttribute('name'),
-            familyId: def.getAttribute('familyid') || ''
+            familyId: familyId
         });
+        if (familyId) {
+            if (!familyToTablets.has(familyId)) {
+                familyToTablets.set(familyId, new Set());
+            }
+            familyToTablets.get(familyId).add(id);
+        }
     });
 
     xmlDoc.querySelectorAll('pendef').forEach(def => {
@@ -67,15 +75,29 @@ async function fetchAndParseXML(url) {
         const tabletNode = row.querySelector('tablet');
         const penNode = row.querySelector('pen');
         const penFamilyNode = row.querySelector('penfamily');
+        const tabletFamilyNode = row.querySelector('tabletfamily');
 
         const rowTablets = new Set();
         const rowPens = new Set();
 
-        // Tablets
+        // Tablets (Direct)
         if (tabletNode) {
             const text = tabletNode.textContent || '';
             const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
             items.forEach(id => rowTablets.add(id));
+        }
+
+        // Tablet Families (Expansion)
+        if (tabletFamilyNode) {
+            const text = tabletFamilyNode.textContent || '';
+            const families = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
+            families.forEach(familyId => {
+                if (familyToTablets.has(familyId)) {
+                    familyToTablets.get(familyId).forEach(tabletId => rowTablets.add(tabletId));
+                } else {
+                    console.warn(`Unknown tablet family '${familyId}' used in compatibility row.`);
+                }
+            });
         }
 
         // Pens (Direct)
@@ -123,11 +145,11 @@ async function fetchAndParseXML(url) {
     });
 
     if (missingTabletDefs.size > 0) {
-        console.warn('Missing tablet definitions:', Array.from(missingTabletDefs).sort());
+        console.warn(`[${url}] Missing tablet definitions:`, Array.from(missingTabletDefs).sort());
     }
 
     if (missingPenDefs.size > 0) {
-        console.warn('Missing pen definitions:');
+        console.warn(`[${url}] Missing pen definitions:`);
         const sortedMissing = Array.from(missingPenDefs.keys()).sort();
         sortedMissing.forEach(penId => {
             const tablets = Array.from(missingPenDefs.get(penId)).sort().join(', ');
@@ -144,7 +166,7 @@ async function fetchAndParseXML(url) {
     });
 
     if (unusedTabletDefs.length > 0) {
-        console.warn('Unused tablet definitions:', unusedTabletDefs.sort());
+        console.warn(`[${url}] Unused tablet definitions:`, unusedTabletDefs.sort());
     }
 
     // Check for unused pen definitions
@@ -156,8 +178,37 @@ async function fetchAndParseXML(url) {
     });
 
     if (unusedPenDefs.length > 0) {
-        console.warn('Unused pen definitions:', unusedPenDefs.sort());
+        console.warn(`[${url}] Unused pen definitions:`, unusedPenDefs.sort());
     }
 
     return { rows: processedRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs };
+}
+
+/**
+ * Merges multiple compatibility data objects.
+ * @param {Array<Object>} dataList 
+ * @returns {Object} Merged data
+ */
+function mergeCompatData(dataList) {
+    let allRows = [];
+    const mergedTabletDefs = new Map();
+    const mergedPenDefs = new Map();
+    const mergedPenFamilyDefs = new Map();
+    const mergedTabletFamilyDefs = new Map();
+
+    dataList.forEach(data => {
+        allRows = allRows.concat(data.rows);
+        data.tabletDefs.forEach((val, key) => mergedTabletDefs.set(key, val));
+        data.penDefs.forEach((val, key) => mergedPenDefs.set(key, val));
+        data.penFamilyDefs.forEach((val, key) => mergedPenFamilyDefs.set(key, val));
+        data.tabletFamilyDefs.forEach((val, key) => mergedTabletFamilyDefs.set(key, val));
+    });
+
+    return {
+        rows: allRows,
+        tabletDefs: mergedTabletDefs,
+        penDefs: mergedPenDefs,
+        penFamilyDefs: mergedPenFamilyDefs,
+        tabletFamilyDefs: mergedTabletFamilyDefs
+    };
 }
