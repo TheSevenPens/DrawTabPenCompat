@@ -92,6 +92,8 @@
         <tabletfamilydef brand="huion" id="HuionFrego" name="Huion Frego tablet series" />
         <tabletfamilydef brand="huion" id="HuionInspiroy2" name="Huion Inspiroy2 tablet series" />
         <tabletfamilydef brand="huion" id="HuionRTx" name="Huion RT tablet series" />
+        <tabletfamilydef brand="huion" id="HuionKamvas" name="Huion Kamvas tablet series" />
+        <tabletfamilydef brand="huion" id="HuionKamvasPro" name="Huion Kamvas Pro tablet series" />
     </tabletfamilydefs>
 
     <tabletdefs>
@@ -122,6 +124,35 @@
        
 
         
+        <tabletdef brand="huion" familyid="HuionKamvas" id="RDS220" name="Huion Kamvas RDS-220" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="RDS160" name="Huion Kamvas RDS-160" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1161" name="Huion Kamvas 12" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1331" name="Huion Kamvas 13" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1333" name="Huion Kamvas 13 GEN3" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1561" name="Huion Kamvas 16" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1562" name="Huion Kamvas 16 2021" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1563" name="Huion Kamvas 16 GEN3" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS1901" name="Huion Kamvas 20" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS2201" name="Huion Kamvas 22" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS2202" name="Huion Kamvas 22 Plus" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS2401" name="Huion Kamvas 24" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvas" id="GS2402" name="Huion Kamvas 24 Plus" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT116" name="Huion Kamvas Pro 12" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT133" name="Huion Kamvas Pro 13" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1392" name="Huion Kamvas Pro 13 2.5K" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT156" name="Huion Kamvas Pro 16" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1602" name="Huion Kamvas Pro 16 2.5K" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1561" name="Huion Kamvas Pro 16 4K" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1562" name="Huion Kamvas Pro 16 Plus 4K" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT156P" name="Huion Kamvas Pro 16 Premium" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1902" name="Huion Kamvas Pro 19" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT192" name="Huion Kamvas Pro 20" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT1901" name="Huion Kamvas Pro 20 2019" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT221" name="Huion Kamvas Pro 22" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT2201" name="Huion Kamvas Pro 22 2019" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT240" name="Huion Kamvas Pro 24" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT2401" name="Huion Kamvas Pro 24 4K" type="pendisplay"/>
+        <tabletdef brand="huion" familyid="HuionKamvasPro" id="GT2701" name="Huion Kamvas Pro 27" type="pendisplay"/>
     </tabletdefs>
 
     <penfamilydefs>
