@@ -32,6 +32,60 @@
             <tablet>H1060P</tablet>
             <pen>PW100</pen>
         </compatrow>
+        <compatrow>
+            <tablet>Q11KV2</tablet>
+            <pen>PW500</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>Q620M</tablet>
+            <pen>PW500</pen>
+        </compatrow>
+
+        <compatrow>
+            <tablet>420</tablet>
+            <pen>PEN68</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>H420</tablet>
+            <pen>PEN68</pen>
+        </compatrow>
+
+        <compatrow>
+            <tablet>NEW1060PLUS</tablet>
+            <pen>PEN80</pen>
+        </compatrow>
+        <compatrow>
+            <tablet>H1060PRO</tablet>
+            <pen>PEN80</pen>
+        </compatrow>
+
+
+        <compatrow>
+            <tablet>DWH69</tablet>
+            <pen>PEN80</pen>
+        </compatrow>
+
+        <compatrow>
+            <tablet>H610</tablet>
+            <pen>PW100</pen>
+        </compatrow>
+
+        <compatrow>
+            <tablet>H64</tablet>
+            <pen>PW100</pen>
+        </compatrow>
+
+        <compatrow>
+            <tablet>H611</tablet>
+            <pen>PW500</pen>
+        </compatrow>
+
+
+        <compatrow>
+            <tablet>DWH69</tablet>
+            <pen>PEN80</pen>
+        </compatrow>
+
     </pairs>
 
     <tabletfamilydefs>
@@ -55,6 +109,16 @@
         <tabletdef brand="huion" familyid="" id="H950P" name="Huion H950P" type="pentablet"/>
         <tabletdef brand="huion" familyid="" id="H430P" name="Huion H430P" type="pentablet"/>
         <tabletdef brand="huion" familyid="" id="H1060P" name="Huion H1060P" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="Q11KV2" name="Huion Q11K V2" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="Q620M" name="Huion Q620M" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="NEW1060PLUS" name="Huion NEW 1060 PLUS" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H1060PRO" name="Huion H1060 PRO" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H1060PRO" name="Huion H1060 PRO" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H1060PROV2" name="Huion H1060 PRO V2" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="DWH69" name="Huion DWH69" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="H610" name="Huion H610" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="HS64" name="Huion HS64" type="pentablet"/>
+        <tabletdef brand="huion" familyid="" id="HS611" name="Huion HS611" type="pentablet"/>
        
 
         
