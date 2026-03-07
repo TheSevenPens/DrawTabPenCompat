@@ -5,7 +5,7 @@
  * @param {string} pensUrl - The URL to the pens JSON file.
  * @returns {Promise<{rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map}>}
  */
-async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
+export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
     const [compatRes, tabletsRes, pensRes] = await Promise.all([
         fetch(compatUrl),
         fetch(tabletsUrl),

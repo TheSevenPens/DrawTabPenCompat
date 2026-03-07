@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "@sveltejs/vite-plugin-svelte-inspector": "^5.0.2",
+    "svelte": "^5.53.7",
     "vite": "^6.0.0"
   }
 }
