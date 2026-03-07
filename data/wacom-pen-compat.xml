@@ -59,10 +59,10 @@
             <tablet>
                 PTH-460 PTH-660 PTH-860
             </tablet>
-            <penfamily>
-                WacomKPGEN2
-                WacomKPGEN1
-            </penfamily>
+            <pen>
+                KP-505 KP-301E KP-504E
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>
@@ -78,9 +78,9 @@
             <tablet>
                 PTZ-430 PTZ-431W PTZ-630 PTZ-631W PTZ-930 PTZ-1230 PTZ-1231W
             </tablet>
-            <penfamily>
-                WacomZP
-            </penfamily>
+            <pen>
+                ZP-130 ZP-600 ZP-300E ZP-400E ZP-501E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>
@@ -124,18 +124,16 @@
             <tablet>DTH-271</tablet>
             <pen>
                 ACP-500
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+                KP-505 KP-301E KP-504E
             </pen>
-            <penfamily>
-                WacomKPGEN1
-                WacomKPGEN2
-            </penfamily>
         </compatrow>
         <compatrow>
             <tablet>DTH-167</tablet>
-            <penfamily>
-                WacomKPGEN1
-                WacomKPGEN2
-            </penfamily>
+            <pen>
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+                KP-505 KP-301E KP-504E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>DTC-133</tablet>
@@ -149,25 +147,25 @@
         </compatrow>
         <compatrow>
             <tablet>DTH-135</tablet>
-            <penfamily>
-                WacomKPGEN1
-                WacomKPGEN2
-                WacomKPGEN3
-            </penfamily>
+            <pen>
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+                KP-505 KP-301E KP-504E
+                ACP-500 ACP-501E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>DTK-1660</tablet>
-            <penfamily>
-                WacomKPGEN1
-                WacomKPGEN2
-            </penfamily>
+            <pen>
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+                KP-505 KP-301E KP-504E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>DTK-2260</tablet>
-            <penfamily>
-                WacomKPGEN1
-                WacomKPGEN2
-            </penfamily>
+            <pen>
+                KP-503E KP-300E KP-701E KP-400E KP-501E
+                KP-505 KP-301E KP-504E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>
@@ -185,9 +183,9 @@
                 SD-013A
                 SD-013L
             </tablet>
-            <penfamily>
-                WacomSP
-            </penfamily>
+            <pen>
+                SP-200 SP-210 SP-200A SP-210A SP-300 SP-310
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>
@@ -205,9 +203,9 @@
                 GD-1218-U
                 GD-1218-R
             </tablet>
-            <penfamily>
-                WacomGP
-            </penfamily>
+            <pen>
+                GP-110 GP-120 GP-300E GP-400E
+            </pen>
         </compatrow>
         <compatrow>
             <tablet>
@@ -222,9 +220,9 @@
                 XD-1218-U
                 XD-1218-R
             </tablet>
-            <penfamily>
-                WacomXP
-            </penfamily>
+            <pen>
+                XP-110 XP-120 XP-300E XP-400E XP-501E
+            </pen>
         </compatrow>
       <compatrow>
             <tablet>
@@ -236,9 +234,9 @@
                 PTZ-1230
                 PTZ-1231W
             </tablet>
-            <penfamily>
-                WacomZP
-            </penfamily>
+            <pen>
+                ZP-130 ZP-600 ZP-300E ZP-400E ZP-501E
+            </pen>
         </compatrow>
     </pairs>
 
