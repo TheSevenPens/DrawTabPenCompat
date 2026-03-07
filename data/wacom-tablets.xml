@@ -22,8 +22,8 @@
     </tabletfamilydefs>
 
     <tabletdefs>
-        <tabletdef brand="wacom" familyid="" id="DTK-1200" name="Wacom Cintiq 21UX 2010" type="pendisplay"/>
-        <tabletdef brand="wacom" familyid="" id="DTZ-1200" name="Wacom Cintiq 21UX 2005" type="pendisplay"/>
+        <tabletdef brand="wacom" familyid="" id="DTK-2100" name="Wacom Cintiq 21UX 2010" type="pendisplay"/>
+        <tabletdef brand="wacom" familyid="" id="DTZ-2100" name="Wacom Cintiq 21UX 2005" type="pendisplay"/>
 
         <tabletdef brand="wacom" familyid="" id="DTH-A116" name="Wacom MovinkPad 11" type="standalone"/>
         <tabletdef brand="wacom" familyid="" id="DTH-A140" name="Wacom MovinkPad Pro 14" type="standalone"/>
@@ -40,7 +40,6 @@
 
         <tabletdef brand="wacom" familyid="" id="DTK-1660" name="Wacom Cintiq 16" type="pendisplay"/>
         <tabletdef brand="wacom" familyid="" id="DTK-2260" name="Wacom Cintiq 22" type="pendisplay"/>
-        <tabletdef brand="wacom" familyid="" id="DTK-2100" name="Wacom Cintiq 21UX" type="pendisplay"/>
 
         <tabletdef brand="wacom" familyid="CTL-x72" id="CTL-472" name="One by Wacom S" type="pendisplay"/>
         <tabletdef brand="wacom" familyid="CTL-x72" id="CTL-672" name="One by Wacom M" type="pendisplay"/>
