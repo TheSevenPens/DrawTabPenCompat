@@ -1,8 +1,9 @@
 <script>
-  import { onMount } from 'svelte';
-  import Controls from './components/Controls.svelte';
-  import CompatTable from './components/CompatTable.svelte';
-  import { fetchAndParseJSON } from './lib/data-loader.js';
+  import { onMount } from "svelte";
+  import Controls from "./components/Controls.svelte";
+  import CompatTable from "./components/CompatTable.svelte";
+  import DisclaimerBanner from "./components/DisclaimerBanner.svelte";
+  import { fetchAndParseJSON } from "./lib/data-loader.js";
 
   let compatibilityRows = [];
   let tabletDefs = new Map();
@@ -11,20 +12,20 @@
   let tabletFamilyDefs = new Map();
 
   let loading = true;
-  let errorMsg = '';
+  let errorMsg = "";
 
-  let viewMode = 'grouped';
+  let viewMode = "grouped";
   let organizeByFamily = false;
   let onePerLine = true;
   let showIdsOnly = false;
-  let searchTerm = '';
+  let searchTerm = "";
 
   onMount(async () => {
     try {
       const data = await fetchAndParseJSON(
-        'data/wacom-pen-compat.json',
-        'data/wacom-tablets.json',
-        'data/wacom-pens.json'
+        "data/wacom-pen-compat.json",
+        "data/wacom-tablets.json",
+        "data/wacom-pens.json",
       );
       compatibilityRows = data.rows;
       tabletDefs = data.tabletDefs;
@@ -33,28 +34,27 @@
       tabletFamilyDefs = data.tabletFamilyDefs;
       loading = false;
     } catch (err) {
-      console.error('Failed to load data:', err);
+      console.error("Failed to load data:", err);
       errorMsg = err.message;
       loading = false;
     }
   });
-
 </script>
 
 <div class="app-container">
   <h1>SevenPens Wacom Pen Compatibility</h1>
-  <div class="disclaimer-banner">
-    Don't trust random internet pen compatibility lists. Not even this one. CONTACT CUSTOMER SUPPORT to verify compatibility.
-  </div>
+  <DisclaimerBanner />
 
   {#if loading}
     <div class="controls">
       <p>Loading <code>data/wacom-pen-compat.json</code>...</p>
     </div>
   {:else if errorMsg}
-    <p class="error-msg" style="display: block;">Failed to load compatibility data: {errorMsg}</p>
+    <p class="error-msg" style="display: block;">
+      Failed to load compatibility data: {errorMsg}
+    </p>
   {:else}
-    <Controls 
+    <Controls
       bind:viewMode
       bind:organizeByFamily
       bind:onePerLine
@@ -65,7 +65,7 @@
       {penDefs}
     />
 
-    <CompatTable 
+    <CompatTable
       {viewMode}
       {organizeByFamily}
       {onePerLine}

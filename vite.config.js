@@ -3,11 +3,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 export default defineConfig({
     base: '', // Use relative paths for assets inside Github Pages
+    server: {
+        port: 8080,
+    },
     plugins: [
         svelte({
             compilerOptions: {
-                dev: true,
-                enableSourcemap: true,
+                dev: true
             },
             inspector: {
                 toggleKeyCombo: 'meta-shift',

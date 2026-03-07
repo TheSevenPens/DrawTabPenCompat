@@ -5,7 +5,6 @@ export default {
     // for more information about preprocessors
     preprocess: vitePreprocess(),
     compilerOptions: {
-        dev: true,
-        enableSourcemap: true
+        dev: true
     }
 }
