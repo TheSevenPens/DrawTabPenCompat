@@ -2,6 +2,29 @@
     <pairs>
         <compatrow>
             <tablet>
+                DTZ-2100
+            </tablet>
+            <pen>
+                ZP-501E
+                ZP-400E
+                ZP-600
+                ZP-300E
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
+                DTK-2100
+            </tablet>
+            <pen>
+                KP-501E
+                KP-400E
+                KP-701E
+                KP-301E
+                KP-130
+            </pen>
+        </compatrow>
+        <compatrow>
+            <tablet>
                 DTH-A116 DTH-A140
             </tablet>
             <pen>
@@ -241,6 +264,9 @@
     </tabletfamilydefs>
 
     <tabletdefs>
+        <tabletdef brand="wacom" familyid="" id="DTK-1200" name="Wacom Cintiq 21UX 2010" type="pendisplay"/>
+        <tabletdef brand="wacom" familyid="" id="DTZ-1200" name="Wacom Cintiq 21UX 2005" type="pendisplay"/>
+
         <tabletdef brand="wacom" familyid="" id="DTH-A116" name="Wacom MovinkPad 11" type="standalone"/>
         <tabletdef brand="wacom" familyid="" id="DTH-A140" name="Wacom MovinkPad Pro 14" type="standalone"/>
 
