@@ -1,11 +1,11 @@
 /**
- * Fetches and parses the Wacom compatibility XML files.
- * @param {string} compatUrl - The URL to the compatibility XML file.
- * @param {string} tabletsUrl - The URL to the tablets XML file.
- * @param {string} pensUrl - The URL to the pens XML file.
- * @returns {Promise<{rows: Element[], tabletDefs: Map, penDefs: Map}>}
+ * Fetches and parses the Wacom compatibility JSON files.
+ * @param {string} compatUrl - The URL to the compatibility JSON file.
+ * @param {string} tabletsUrl - The URL to the tablets JSON file.
+ * @param {string} pensUrl - The URL to the pens JSON file.
+ * @returns {Promise<{rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map}>}
  */
-async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
+async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
     const [compatRes, tabletsRes, pensRes] = await Promise.all([
         fetch(compatUrl),
         fetch(tabletsUrl),
@@ -16,16 +16,10 @@ async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
         throw new Error(`Network response was not ok`);
     }
 
-    const parser = new DOMParser();
-    const compatDoc = parser.parseFromString(await compatRes.text(), "text/xml");
-    const tabletsDoc = parser.parseFromString(await tabletsRes.text(), "text/xml");
-    const pensDoc = parser.parseFromString(await pensRes.text(), "text/xml");
+    const compatData = await compatRes.json();
+    const tabletsData = await tabletsRes.json();
+    const pensData = await pensRes.json();
 
-    if (compatDoc.querySelector('parsererror') || tabletsDoc.querySelector('parsererror') || pensDoc.querySelector('parsererror')) {
-        throw new Error('XML parsing failed');
-    }
-
-    const rows = Array.from(compatDoc.querySelectorAll('compatrow'));
     const tabletDefs = new Map();
     const penDefs = new Map();
     const penFamilyDefs = new Map();
@@ -33,19 +27,18 @@ async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
     const familyToPens = new Map(); // Map<FamilyID, Set<PenID>>
 
     // Parse Definitions
-    tabletsDoc.querySelectorAll('tabletdef').forEach(def => {
-        const id = def.getAttribute('id');
-        tabletDefs.set(id, {
-            name: def.getAttribute('name'),
-            familyId: def.getAttribute('familyid') || ''
+    tabletsData.tabletdefs.forEach(def => {
+        tabletDefs.set(def.id, {
+            name: def.name || '',
+            familyId: def.familyid || ''
         });
     });
 
-    pensDoc.querySelectorAll('pendef').forEach(def => {
-        const id = def.getAttribute('id');
-        const familyId = def.getAttribute('familyid') || '';
+    pensData.pendefs.forEach(def => {
+        const id = def.id;
+        const familyId = def.familyid || '';
         penDefs.set(id, {
-            name: def.getAttribute('name'),
+            name: def.name || '',
             familyId: familyId
         });
         if (familyId) {
@@ -56,13 +49,17 @@ async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
         }
     });
 
-    pensDoc.querySelectorAll('penfamilydef').forEach(def => {
-        penFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
-    });
+    if (pensData.penfamilydefs) {
+        pensData.penfamilydefs.forEach(def => {
+            penFamilyDefs.set(def.id, def.name);
+        });
+    }
 
-    tabletsDoc.querySelectorAll('tabletfamilydef').forEach(def => {
-        tabletFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
-    });
+    if (tabletsData.tabletfamilydefs) {
+        tabletsData.tabletfamilydefs.forEach(def => {
+            tabletFamilyDefs.set(def.id, def.name);
+        });
+    }
 
     // Process Rows & Validation
     const missingTabletDefs = new Set();
@@ -70,33 +67,12 @@ async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
     const usedTablets = new Set();
     const usedPens = new Set();
 
-    const processedRows = rows.map(row => {
-        const tabletNode = row.querySelector('tablet');
-        const penNode = row.querySelector('pen');
-        const penFamilyNode = row.querySelector('penfamily');
+    const processedRows = compatData.compatrows.map(row => {
+        const rowTablets = new Set(row.tablets || []);
+        const rowPens = new Set(row.pens || []);
 
-        const rowTablets = new Set();
-        const rowPens = new Set();
-
-        // Tablets
-        if (tabletNode) {
-            const text = tabletNode.textContent || '';
-            const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-            items.forEach(id => rowTablets.add(id));
-        }
-
-        // Pens (Direct)
-        if (penNode) {
-            const text = penNode.textContent || '';
-            const items = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-            items.forEach(id => rowPens.add(id));
-        }
-
-        // Pen Families (Expansion)
-        if (penFamilyNode) {
-            const text = penFamilyNode.textContent || '';
-            const families = text.replace(/[\n\r]+/g, ' ').trim().split(/\s+/).filter(s => s.length > 0);
-            families.forEach(familyId => {
+        if (row.penfamilies) {
+            row.penfamilies.forEach(familyId => {
                 if (familyToPens.has(familyId)) {
                     familyToPens.get(familyId).forEach(penId => rowPens.add(penId));
                 } else {
