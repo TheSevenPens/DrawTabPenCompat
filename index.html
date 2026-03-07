@@ -84,8 +84,11 @@
             document.getElementById('organize-by-family').addEventListener('change', updateTable);
             searchInput.addEventListener('input', updateTable);
 
-            // Try to fetch automatically
-            fetchAndParseXML('data/wacom-pen-compat.xml')
+            fetchAndParseXML(
+                'data/wacom-pen-compat.xml',
+                'data/wacom-tablets.xml',
+                'data/wacom-pens.xml'
+            )
                 .then(data => {
                     compatibilityRows = data.rows;
                     tabletDefs = data.tabletDefs;

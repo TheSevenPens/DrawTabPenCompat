@@ -1,24 +1,31 @@
 /**
- * Fetches and parses the Wacom compatibility XML file.
- * @param {string} url - The URL to the XML file.
+ * Fetches and parses the Wacom compatibility XML files.
+ * @param {string} compatUrl - The URL to the compatibility XML file.
+ * @param {string} tabletsUrl - The URL to the tablets XML file.
+ * @param {string} pensUrl - The URL to the pens XML file.
  * @returns {Promise<{rows: Element[], tabletDefs: Map, penDefs: Map}>}
  */
-async function fetchAndParseXML(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
+async function fetchAndParseXML(compatUrl, tabletsUrl, pensUrl) {
+    const [compatRes, tabletsRes, pensRes] = await Promise.all([
+        fetch(compatUrl),
+        fetch(tabletsUrl),
+        fetch(pensUrl)
+    ]);
+
+    if (!compatRes.ok || !tabletsRes.ok || !pensRes.ok) {
+        throw new Error(`Network response was not ok`);
     }
-    const xmlText = await response.text();
 
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    const compatDoc = parser.parseFromString(await compatRes.text(), "text/xml");
+    const tabletsDoc = parser.parseFromString(await tabletsRes.text(), "text/xml");
+    const pensDoc = parser.parseFromString(await pensRes.text(), "text/xml");
 
-    const parserError = xmlDoc.querySelector('parsererror');
-    if (parserError) {
+    if (compatDoc.querySelector('parsererror') || tabletsDoc.querySelector('parsererror') || pensDoc.querySelector('parsererror')) {
         throw new Error('XML parsing failed');
     }
 
-    const rows = Array.from(xmlDoc.querySelectorAll('compatrow'));
+    const rows = Array.from(compatDoc.querySelectorAll('compatrow'));
     const tabletDefs = new Map();
     const penDefs = new Map();
     const penFamilyDefs = new Map();
@@ -26,7 +33,7 @@ async function fetchAndParseXML(url) {
     const familyToPens = new Map(); // Map<FamilyID, Set<PenID>>
 
     // Parse Definitions
-    xmlDoc.querySelectorAll('tabletdef').forEach(def => {
+    tabletsDoc.querySelectorAll('tabletdef').forEach(def => {
         const id = def.getAttribute('id');
         tabletDefs.set(id, {
             name: def.getAttribute('name'),
@@ -34,7 +41,7 @@ async function fetchAndParseXML(url) {
         });
     });
 
-    xmlDoc.querySelectorAll('pendef').forEach(def => {
+    pensDoc.querySelectorAll('pendef').forEach(def => {
         const id = def.getAttribute('id');
         const familyId = def.getAttribute('familyid') || '';
         penDefs.set(id, {
@@ -49,11 +56,11 @@ async function fetchAndParseXML(url) {
         }
     });
 
-    xmlDoc.querySelectorAll('penfamilydef').forEach(def => {
+    pensDoc.querySelectorAll('penfamilydef').forEach(def => {
         penFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
     });
 
-    xmlDoc.querySelectorAll('tabletfamilydef').forEach(def => {
+    tabletsDoc.querySelectorAll('tabletfamilydef').forEach(def => {
         tabletFamilyDefs.set(def.getAttribute('id'), def.getAttribute('name'));
     });
 
