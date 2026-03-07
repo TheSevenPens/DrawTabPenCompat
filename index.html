@@ -15,7 +15,7 @@
         CUSTOMER SUPPORT to verify compatibility.</div>
 
     <div class="controls">
-        <p>Loading <code>wacom-pen-compat.xml</code>...</p>
+        <p>Loading <code>data/wacom-pen-compat.xml</code>...</p>
         <div id="search-area" style="display:none; margin-bottom: 5px;">
             <input type="text" id="search-input" placeholder="Search ..."
                 style="width: 100%; max-width: 800px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
@@ -85,7 +85,7 @@
             searchInput.addEventListener('input', updateTable);
 
             // Try to fetch automatically
-            fetchAndParseXML('wacom-pen-compat.xml')
+            fetchAndParseXML('data/wacom-pen-compat.xml')
                 .then(data => {
                     compatibilityRows = data.rows;
                     tabletDefs = data.tabletDefs;
