@@ -13,7 +13,7 @@
     data files.
   </p>
   <p>
-    Main table: <a href={`${base}/`}>Compatibility Table</a>
+    <a href={`${base}/`}>Pen compatibility</a>
   </p>
 </div>
 
