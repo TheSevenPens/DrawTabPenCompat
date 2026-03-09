@@ -164,16 +164,16 @@
     }
 
     // Format Helpers
-    function getItemLabel(item, defsMap) {
-        if (showIdsOnly) return item;
+    function getItemLabel(item, defsMap, showIdsOnlyFlag) {
+        if (showIdsOnlyFlag) return item;
         const def = defsMap.get(item);
         if (def && def.name && def.name !== item)
             return `${def.name} (${item})`;
         return item;
     }
 
-    function getGroupedItems(items, defsMap) {
-        if (!organizeByFamily || items.length === 0)
+    function getGroupedItems(items, defsMap, organizeByFamilyFlag) {
+        if (!organizeByFamilyFlag || items.length === 0)
             return [{ label: null, items }];
 
         const groups = new Map();
@@ -206,8 +206,8 @@
     }
 
     function copyRowToClipboard(row) {
-        const tabletsText = formatItemsText(row.tablets, tabletDefs);
-        const pensText = formatItemsText(row.pens, penDefs);
+        const tabletsText = formatItemsText(row.tablets, tabletDefs, showIdsOnly);
+        const pensText = formatItemsText(row.pens, penDefs, showIdsOnly);
 
         let textToCopy =
             viewMode === "by-pen"
@@ -219,9 +219,9 @@
             .catch((err) => console.error("Clipboard err", err));
     }
 
-    function formatItemsText(items, defsMap) {
+    function formatItemsText(items, defsMap, showIdsOnlyFlag) {
         const separator = onePerLine ? `\n  ` : ", ";
-        const text = items.map((i) => getItemLabel(i, defsMap)).join(separator);
+        const text = items.map((i) => getItemLabel(i, defsMap, showIdsOnlyFlag)).join(separator);
         return items.length > 0 ? (onePerLine ? `  ${text}` : text) : "";
     }
 </script>
@@ -258,7 +258,7 @@
                 <!-- First column -->
                 <td>
                     {#if viewMode === "by-pen"}
-                        {#each getGroupedItems(row.pens, penDefs) as group}
+                        {#each getGroupedItems(row.pens, penDefs, organizeByFamily) as group}
                             {#if group.familyId}
                                 <div class="family-group">
                                     <div class="family-group-label">
@@ -267,20 +267,20 @@
                                     </div>
                                     {#each group.items as item}
                                         <span class="device-tag"
-                                            >{getItemLabel(item, penDefs)}</span
+                                            >{getItemLabel(item, penDefs, showIdsOnly)}</span
                                         >{#if onePerLine}<br />{/if}
                                     {/each}
                                 </div>
                             {:else}
                                 {#each group.items as item}
                                     <span class="device-tag"
-                                        >{getItemLabel(item, penDefs)}</span
+                                        >{getItemLabel(item, penDefs, showIdsOnly)}</span
                                     >{#if onePerLine}<br />{/if}
                                 {/each}
                             {/if}
                         {/each}
                     {:else}
-                        {#each getGroupedItems(row.tablets, tabletDefs) as group}
+                        {#each getGroupedItems(row.tablets, tabletDefs, organizeByFamily) as group}
                             {#if group.familyId}
                                 <div class="family-group">
                                     <div class="family-group-label">
@@ -292,6 +292,7 @@
                                             >{getItemLabel(
                                                 item,
                                                 tabletDefs,
+                                                showIdsOnly,
                                             )}</span
                                         >{#if onePerLine}<br />{/if}
                                     {/each}
@@ -299,7 +300,7 @@
                             {:else}
                                 {#each group.items as item}
                                     <span class="device-tag tablet"
-                                        >{getItemLabel(item, tabletDefs)}</span
+                                        >{getItemLabel(item, tabletDefs, showIdsOnly)}</span
                                     >{#if onePerLine}<br />{/if}
                                 {/each}
                             {/if}
@@ -310,7 +311,7 @@
                 <!-- Second column -->
                 <td>
                     {#if viewMode === "by-pen"}
-                        {#each getGroupedItems(row.tablets, tabletDefs) as group}
+                        {#each getGroupedItems(row.tablets, tabletDefs, organizeByFamily) as group}
                             {#if group.familyId}
                                 <div class="family-group">
                                     <div class="family-group-label">
@@ -322,6 +323,7 @@
                                             >{getItemLabel(
                                                 item,
                                                 tabletDefs,
+                                                showIdsOnly,
                                             )}</span
                                         >{#if onePerLine}<br />{/if}
                                     {/each}
@@ -329,13 +331,13 @@
                             {:else}
                                 {#each group.items as item}
                                     <span class="device-tag tablet"
-                                        >{getItemLabel(item, tabletDefs)}</span
+                                        >{getItemLabel(item, tabletDefs, showIdsOnly)}</span
                                     >{#if onePerLine}<br />{/if}
                                 {/each}
                             {/if}
                         {/each}
                     {:else}
-                        {#each getGroupedItems(row.pens, penDefs) as group}
+                        {#each getGroupedItems(row.pens, penDefs, organizeByFamily) as group}
                             {#if group.familyId}
                                 <div class="family-group">
                                     <div class="family-group-label">
@@ -344,14 +346,14 @@
                                     </div>
                                     {#each group.items as item}
                                         <span class="device-tag"
-                                            >{getItemLabel(item, penDefs)}</span
+                                            >{getItemLabel(item, penDefs, showIdsOnly)}</span
                                         >{#if onePerLine}<br />{/if}
                                     {/each}
                                 </div>
                             {:else}
                                 {#each group.items as item}
                                     <span class="device-tag"
-                                        >{getItemLabel(item, penDefs)}</span
+                                        >{getItemLabel(item, penDefs, showIdsOnly)}</span
                                     >{#if onePerLine}<br />{/if}
                                 {/each}
                             {/if}
