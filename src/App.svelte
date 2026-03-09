@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { base } from "$app/paths";
   import Controls from "./components/Controls.svelte";
   import CompatTable from "./components/CompatTable.svelte";
   import DisclaimerBanner from "./components/DisclaimerBanner.svelte";
@@ -23,9 +24,9 @@
   onMount(async () => {
     try {
       const data = await fetchAndParseJSON(
-        "data/wacom-pen-compat.json",
-        "data/wacom-tablets.json",
-        "data/wacom-pens.json",
+        `${base}/data/wacom-pen-compat.json`,
+        `${base}/data/wacom-tablets.json`,
+        `${base}/data/wacom-pens.json`,
       );
       compatibilityRows = data.rows;
       tabletDefs = data.tabletDefs;
