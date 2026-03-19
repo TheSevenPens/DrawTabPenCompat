@@ -9,16 +9,10 @@
   let compatibilityRows = [];
   let tabletDefs = new Map();
   let penDefs = new Map();
-  let penFamilyDefs = new Map();
-  let tabletFamilyDefs = new Map();
 
   let loading = true;
   let errorMsg = "";
 
-  let viewMode = "grouped";
-  let organizeByFamily = false;
-  let onePerLine = true;
-  let showIdsOnly = false;
   let searchTerm = "";
 
   onMount(async () => {
@@ -31,8 +25,6 @@
       compatibilityRows = data.rows;
       tabletDefs = data.tabletDefs;
       penDefs = data.penDefs;
-      penFamilyDefs = data.penFamilyDefs;
-      tabletFamilyDefs = data.tabletFamilyDefs;
       loading = false;
     } catch (err) {
       console.error("Failed to load data:", err);
@@ -43,7 +35,6 @@
 </script>
 
 <div class="app-container">
-  <h1>SevenPens Wacom Pen Compatibility</h1>
   <DisclaimerBanner />
 
   {#if loading}
@@ -56,10 +47,6 @@
     </p>
   {:else}
     <Controls
-      bind:viewMode
-      bind:organizeByFamily
-      bind:onePerLine
-      bind:showIdsOnly
       bind:searchTerm
       {compatibilityRows}
       {tabletDefs}
@@ -67,16 +54,10 @@
     />
 
     <CompatTable
-      {viewMode}
-      {organizeByFamily}
-      {onePerLine}
-      {showIdsOnly}
       {searchTerm}
       {compatibilityRows}
       {tabletDefs}
       {penDefs}
-      {penFamilyDefs}
-      {tabletFamilyDefs}
     />
   {/if}
 </div>

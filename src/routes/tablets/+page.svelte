@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
+  import DeviceTable from '../../components/DeviceTable.svelte';
 
   let tablets = [];
   let loading = true;
@@ -66,27 +67,7 @@
     <p class="error-msg">Failed to load tablets: {errorMsg}</p>
   {:else}
     <p class="count">{tablets.length} unique tablets</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Tablet</th>
-          <th>Tablet Family</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each tablets as tablet}
-          <tr>
-            <td>
-              <strong>{tablet.id}</strong>
-              {#if tablet.name && tablet.name !== tablet.id}
-                <span> - {tablet.name}</span>
-              {/if}
-            </td>
-            <td>{tablet.family}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <DeviceTable items={tablets} itemLabel="Tablet" familyLabel="Tablet Family" />
   {/if}
 </div>
 
@@ -107,23 +88,5 @@
   .count {
     color: #666;
     margin-bottom: 10px;
-  }
-
-  .tablets-page table {
-    box-shadow: none;
-  }
-
-  .tablets-page th:first-child,
-  .tablets-page td:first-child {
-    width: 72%;
-  }
-
-  .tablets-page th:first-child {
-    text-align: left;
-  }
-
-  .tablets-page th:last-child,
-  .tablets-page td:last-child {
-    width: 28%;
   }
 </style>

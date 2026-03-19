@@ -1,11 +1,12 @@
 <script>
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
+  import DeviceTable from '../../components/DeviceTable.svelte';
 
   let pens = [];
   let loading = true;
   let errorMsg = '';
-  let sortKey = 'pen';
+  let sortKey = 'item';
   let sortDirection = 'asc';
 
   $: sortedPens = [...pens].sort((a, b) => {
@@ -116,35 +117,14 @@
     <p class="error-msg">Failed to load pens: {errorMsg}</p>
   {:else}
     <p class="count">{pens.length} unique pens</p>
-    <table>
-      <thead>
-        <tr>
-          <th>
-            <button class="sort-btn" on:click={() => toggleSort('pen')}>
-              Pen{sortIndicator('pen')}
-            </button>
-          </th>
-          <th>
-            <button class="sort-btn" on:click={() => toggleSort('family')}>
-              Pen Family{sortIndicator('family')}
-            </button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each sortedPens as pen}
-          <tr>
-            <td>
-              <strong>{pen.id}</strong>
-              {#if pen.name && pen.name !== pen.id}
-                <span> - {pen.name}</span>
-              {/if}
-            </td>
-            <td>{pen.family}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <DeviceTable
+      items={sortedPens}
+      itemLabel="Pen"
+      familyLabel="Pen Family"
+      sortable={true}
+      onToggleSort={toggleSort}
+      {sortIndicator}
+    />
   {/if}
 </div>
 
@@ -165,35 +145,5 @@
   .count {
     color: #666;
     margin-bottom: 10px;
-  }
-
-  .pens-page table {
-    box-shadow: none;
-  }
-
-  .pens-page th:first-child,
-  .pens-page td:first-child {
-    width: 72%;
-  }
-
-  .pens-page th:last-child,
-  .pens-page td:last-child {
-    width: 28%;
-  }
-
-  .sort-btn {
-    text-align: left;
-    width: 100%;
-    font: inherit;
-    color: inherit;
-    font-weight: 600;
-    border: 0;
-    background: transparent;
-    padding: 0;
-    cursor: pointer;
-  }
-
-  .sort-btn:hover {
-    text-decoration: underline;
   }
 </style>

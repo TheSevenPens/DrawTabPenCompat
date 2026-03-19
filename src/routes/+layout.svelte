@@ -4,10 +4,10 @@
 </script>
 
 <nav class="site-nav">
-  <a href={`${base}/`}>Pen compatibility</a>
+  <a href={`${base}/`}>Home</a>
+  <a href={`${base}/tabletspens/`}>Browse compatibility</a>
   <a href={`${base}/tablets/`}>Tablets</a>
   <a href={`${base}/pens/`}>Pens</a>
-  <a href={`${base}/about/`}>About</a>
 </nav>
 
 <slot />
