@@ -1,4 +1,5 @@
 <script>
+  import DisclaimerBanner from '../../../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../../../components/DeviceTable.svelte';
 
   export let data;
@@ -14,6 +15,7 @@
 
 <div class="tablet-detail-page">
   <h1>{pageTitle}</h1>
+  <DisclaimerBanner />
 
   <section class="tablet-summary">
     <div><strong>Tablet ID:</strong> {data.tablet.id}</div>

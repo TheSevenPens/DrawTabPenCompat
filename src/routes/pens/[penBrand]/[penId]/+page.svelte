@@ -1,4 +1,5 @@
 <script>
+  import DisclaimerBanner from '../../../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../../../components/DeviceTable.svelte';
 
   export let data;
@@ -14,6 +15,7 @@
 
 <div class="pen-detail-page">
   <h1>{pageTitle}</h1>
+  <DisclaimerBanner />
 
   <section class="pen-summary">
     <div><strong>Pen ID:</strong> {data.pen.id}</div>

@@ -1,5 +1,6 @@
 <script>
   import { base } from '$app/paths';
+  import DisclaimerBanner from '../components/DisclaimerBanner.svelte';
 </script>
 
 <svelte:head>
@@ -7,31 +8,28 @@
 </svelte:head>
 
 <section class="home-page">
-  <h1>Welcome to SevenPens Wacom Compatibility</h1>
-  <p class="intro">
-    Explore Wacom pen and tablet compatibility data with dedicated views for the full matrix,
-    individual tablets, and individual pens.
-  </p>
+  <h1>Wacom pen compatibility</h1>
+  <DisclaimerBanner />
 
   <div class="home-grid">
     <a class="home-card" href={`${base}/pencompat/`}>
       <h2>Browse compatibility</h2>
-      <p>Open the full compatibility matrix with search and grouping controls.</p>
+      <p>Open the full compatibility list.</p>
     </a>
 
     <a class="home-card" href={`${base}/tablets/`}>
       <h2>Tablets</h2>
-      <p>Browse unique tablets and their family groupings.</p>
+      <p>Browse tablets.</p>
     </a>
 
     <a class="home-card" href={`${base}/pens/`}>
       <h2>Pens</h2>
-      <p>Browse unique pens and sort by pen or family.</p>
+      <p>Browse pens.</p>
     </a>
 
     <a class="home-card" href={`${base}/log/`}>
       <h2>Log</h2>
-      <p>Review data quality warnings from the source JSON load.</p>
+      <p>Review data quality warnings from the source JSON load. You don't need to look at this :-)</p>
     </a>
   </div>
 </section>

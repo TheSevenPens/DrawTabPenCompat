@@ -1,11 +1,17 @@
 <script>
+  import Controls from '../../components/Controls.svelte';
+  import DisclaimerBanner from '../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../components/DeviceTable.svelte';
+  import { matchesDeviceSearch } from '../../lib/device-search.js';
 
   export let data;
+  let searchTerm = '';
   let sortKey = 'item';
   let sortDirection = 'asc';
 
-  $: sortedPens = [...data.pens].sort((a, b) => {
+  $: filteredPens = data.pens.filter((pen) => matchesDeviceSearch(pen, searchTerm));
+
+  $: sortedPens = [...filteredPens].sort((a, b) => {
     let left = '';
     let right = '';
 
@@ -49,7 +55,9 @@
 
 <div class="pens-page">
   <h1>Unique Pens</h1>
-  <p class="count">{data.pens.length} unique pens</p>
+  <DisclaimerBanner />
+  <Controls bind:searchTerm placeholder="Search pens ..." />
+  <p class="count">{filteredPens.length} of {data.pens.length} pens</p>
   <DeviceTable
     items={sortedPens}
     itemLabel="Pen"

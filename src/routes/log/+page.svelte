@@ -1,4 +1,6 @@
 <script>
+  import DisclaimerBanner from '../../components/DisclaimerBanner.svelte';
+
   export let data;
 
   $: totalWarnings =
@@ -31,6 +33,8 @@
       {totalWarnings} warnings
     </span>
   </div>
+
+  <DisclaimerBanner />
 
   <p class="loaded-at">Last loaded: {loadedAtText}</p>
 
