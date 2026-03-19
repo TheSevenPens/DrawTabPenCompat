@@ -1,39 +1,7 @@
 <script>
-  import { onMount } from 'svelte';
-  import { base } from '$app/paths';
   import DeviceTable from '../../components/DeviceTable.svelte';
-  import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
 
-  let tablets = [];
-  let loading = true;
-  let errorMsg = '';
-
-  onMount(async () => {
-    try {
-      const data = await getCompatibilityData(base);
-
-      const uniqueTabletIds = new Set();
-      for (const pair of data.pairs) {
-        uniqueTabletIds.add(pair.tabletId);
-      }
-
-      tablets = Array.from(uniqueTabletIds)
-        .map((id) => {
-          const def = data.tabletDefs.get(id);
-          const familyId = def?.familyId || '';
-          return {
-            id,
-            name: def?.name || id,
-            family: data.tabletFamilyDefs.get(familyId) || familyId || 'Unspecified'
-          };
-        })
-        .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
-    } catch (err) {
-      errorMsg = err?.message || 'Unknown error';
-    } finally {
-      loading = false;
-    }
-  });
+  export let data;
 </script>
 
 <svelte:head>
@@ -42,15 +10,8 @@
 
 <div class="tablets-page">
   <h1>Unique Tablets</h1>
-
-  {#if loading}
-    <p>Loading tablet list...</p>
-  {:else if errorMsg}
-    <p class="error-msg">Failed to load tablets: {errorMsg}</p>
-  {:else}
-    <p class="count">{tablets.length} unique tablets</p>
-    <DeviceTable items={tablets} itemLabel="Tablet" familyLabel="Tablet Family" />
-  {/if}
+  <p class="count">{data.tablets.length} unique tablets</p>
+  <DeviceTable items={data.tablets} itemLabel="Tablet" familyLabel="Tablet Family" />
 </div>
 
 <style>

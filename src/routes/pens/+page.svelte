@@ -1,16 +1,11 @@
 <script>
-  import { onMount } from 'svelte';
-  import { base } from '$app/paths';
   import DeviceTable from '../../components/DeviceTable.svelte';
-  import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
 
-  let pens = [];
-  let loading = true;
-  let errorMsg = '';
+  export let data;
   let sortKey = 'item';
   let sortDirection = 'asc';
 
-  $: sortedPens = [...pens].sort((a, b) => {
+  $: sortedPens = [...data.pens].sort((a, b) => {
     let left = '';
     let right = '';
 
@@ -46,32 +41,6 @@
     return sortDirection === 'asc' ? ' ▲' : ' ▼';
   }
 
-  onMount(async () => {
-    try {
-      const data = await getCompatibilityData(base);
-
-      const uniquePenIds = new Set();
-      for (const pair of data.pairs) {
-        uniquePenIds.add(pair.penId);
-      }
-
-      pens = Array.from(uniquePenIds)
-        .map((id) => {
-          const def = data.penDefs.get(id);
-          const familyId = def?.familyId || '';
-          return {
-            id,
-            name: def?.name || id,
-            family: data.penFamilyDefs.get(familyId) || familyId || 'Unspecified'
-          };
-        })
-        .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
-    } catch (err) {
-      errorMsg = err?.message || 'Unknown error';
-    } finally {
-      loading = false;
-    }
-  });
 </script>
 
 <svelte:head>
@@ -80,22 +49,15 @@
 
 <div class="pens-page">
   <h1>Unique Pens</h1>
-
-  {#if loading}
-    <p>Loading pen list...</p>
-  {:else if errorMsg}
-    <p class="error-msg">Failed to load pens: {errorMsg}</p>
-  {:else}
-    <p class="count">{pens.length} unique pens</p>
-    <DeviceTable
-      items={sortedPens}
-      itemLabel="Pen"
-      familyLabel="Pen Family"
-      sortable={true}
-      onToggleSort={toggleSort}
-      {sortIndicator}
-    />
-  {/if}
+  <p class="count">{data.pens.length} unique pens</p>
+  <DeviceTable
+    items={sortedPens}
+    itemLabel="Pen"
+    familyLabel="Pen Family"
+    sortable={true}
+    onToggleSort={toggleSort}
+    {sortIndicator}
+  />
 </div>
 
 <style>

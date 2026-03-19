@@ -1,26 +1,13 @@
 <script>
-  import { onMount } from 'svelte';
-  import { base } from '$app/paths';
-  import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
-
-  let loading = true;
-  let errorMsg = '';
-  let diagnostics = {
-    pensWithoutTablets: [],
-    tabletsWithoutPens: [],
-    duplicatePairs: []
-  };
-  let loadedAtIso = '';
-  let penDefs = new Map();
-  let tabletDefs = new Map();
+  export let data;
 
   $: totalWarnings =
-    diagnostics.pensWithoutTablets.length +
-    diagnostics.tabletsWithoutPens.length +
-    diagnostics.duplicatePairs.length;
+    data.diagnostics.pensWithoutTablets.length +
+    data.diagnostics.tabletsWithoutPens.length +
+    data.diagnostics.duplicatePairs.length;
 
-  $: loadedAtText = loadedAtIso
-    ? new Date(loadedAtIso).toLocaleString()
+  $: loadedAtText = data.loadedAtIso
+    ? new Date(data.loadedAtIso).toLocaleString()
     : 'Unknown';
 
   function labelFor(id, defsMap) {
@@ -31,19 +18,6 @@
     return id;
   }
 
-  onMount(async () => {
-    try {
-      const data = await getCompatibilityData(base);
-      diagnostics = data.diagnostics || diagnostics;
-      penDefs = data.penDefs;
-      tabletDefs = data.tabletDefs;
-      loadedAtIso = data.loadedAtIso || '';
-    } catch (err) {
-      errorMsg = err?.message || 'Unknown error';
-    } finally {
-      loading = false;
-    }
-  });
 </script>
 
 <svelte:head>
@@ -53,29 +27,22 @@
 <div class="log-page">
   <div class="log-header">
     <h1>Data Load Log</h1>
-    {#if !loading && !errorMsg}
-      <span class="warning-badge" aria-label="total warning count">
-        {totalWarnings} warnings
-      </span>
-    {/if}
+    <span class="warning-badge" aria-label="total warning count">
+      {totalWarnings} warnings
+    </span>
   </div>
 
-  {#if loading}
-    <p>Loading diagnostics...</p>
-  {:else if errorMsg}
-    <p class="error-msg">Failed to load diagnostics: {errorMsg}</p>
-  {:else}
-    <p class="loaded-at">Last loaded: {loadedAtText}</p>
+  <p class="loaded-at">Last loaded: {loadedAtText}</p>
 
     <section class="log-section">
       <h2>Pens Defined But No Tablets Listed</h2>
-      {#if diagnostics.pensWithoutTablets.length === 0}
+      {#if data.diagnostics.pensWithoutTablets.length === 0}
         <p class="ok">None found.</p>
       {:else}
-        <p>{diagnostics.pensWithoutTablets.length} pens found.</p>
+        <p>{data.diagnostics.pensWithoutTablets.length} pens found.</p>
         <ul>
-          {#each diagnostics.pensWithoutTablets as penId}
-            <li>{labelFor(penId, penDefs)}</li>
+          {#each data.diagnostics.pensWithoutTablets as penId}
+            <li>{labelFor(penId, data.penDefs)}</li>
           {/each}
         </ul>
       {/if}
@@ -83,13 +50,13 @@
 
     <section class="log-section">
       <h2>Tablets Defined But No Pens Listed</h2>
-      {#if diagnostics.tabletsWithoutPens.length === 0}
+      {#if data.diagnostics.tabletsWithoutPens.length === 0}
         <p class="ok">None found.</p>
       {:else}
-        <p>{diagnostics.tabletsWithoutPens.length} tablets found.</p>
+        <p>{data.diagnostics.tabletsWithoutPens.length} tablets found.</p>
         <ul>
-          {#each diagnostics.tabletsWithoutPens as tabletId}
-            <li>{labelFor(tabletId, tabletDefs)}</li>
+          {#each data.diagnostics.tabletsWithoutPens as tabletId}
+            <li>{labelFor(tabletId, data.tabletDefs)}</li>
           {/each}
         </ul>
       {/if}
@@ -97,10 +64,10 @@
 
     <section class="log-section">
       <h2>Duplicate (Tablet, Pen) Pairs In Source</h2>
-      {#if diagnostics.duplicatePairs.length === 0}
+      {#if data.diagnostics.duplicatePairs.length === 0}
         <p class="ok">None found.</p>
       {:else}
-        <p>{diagnostics.duplicatePairs.length} duplicate pair keys found.</p>
+        <p>{data.diagnostics.duplicatePairs.length} duplicate pair keys found.</p>
         <table class="dup-table">
           <thead>
             <tr>
@@ -110,10 +77,10 @@
             </tr>
           </thead>
           <tbody>
-            {#each diagnostics.duplicatePairs as pair}
+            {#each data.diagnostics.duplicatePairs as pair}
               <tr>
-                <td>{labelFor(pair.tabletId, tabletDefs)}</td>
-                <td>{labelFor(pair.penId, penDefs)}</td>
+                <td>{labelFor(pair.tabletId, data.tabletDefs)}</td>
+                <td>{labelFor(pair.penId, data.penDefs)}</td>
                 <td>{pair.occurrences}</td>
               </tr>
             {/each}
@@ -121,7 +88,6 @@
         </table>
       {/if}
     </section>
-  {/if}
 </div>
 
 <style>

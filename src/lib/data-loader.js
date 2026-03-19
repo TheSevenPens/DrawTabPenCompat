@@ -3,13 +3,14 @@
  * @param {string} compatUrl - The URL to the compatibility JSON file.
  * @param {string} tabletsUrl - The URL to the tablets JSON file.
  * @param {string} pensUrl - The URL to the pens JSON file.
- * @returns {Promise<{pairs: Object[], rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map, diagnostics: Object}>}
+ * @param {(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>} fetchImpl
+ * @returns {Promise<{pairs: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map, diagnostics: Object}>}
  */
-export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
+export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImpl = fetch) {
     const [compatRes, tabletsRes, pensRes] = await Promise.all([
-        fetch(compatUrl),
-        fetch(tabletsUrl),
-        fetch(pensUrl)
+        fetchImpl(compatUrl),
+        fetchImpl(tabletsUrl),
+        fetchImpl(pensUrl)
     ]);
 
     if (!compatRes.ok || !tabletsRes.ok || !pensRes.ok) {
@@ -168,16 +169,11 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
             return a.penId.localeCompare(b.penId, undefined, { numeric: true, sensitivity: 'base' });
         });
 
-    const rows = pairRows.map(({ tabletId, penId }) => ({
-        tablets: [tabletId],
-        pens: [penId]
-    }));
-
     const diagnostics = {
         pensWithoutTablets: unusedPenDefs.sort(),
         tabletsWithoutPens: unusedTabletDefs.sort(),
         duplicatePairs,
     };
 
-    return { pairs: pairRows, rows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs, diagnostics };
+    return { pairs: pairRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs, diagnostics };
 }

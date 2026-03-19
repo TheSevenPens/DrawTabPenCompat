@@ -14,7 +14,7 @@
   </p>
 
   <div class="home-grid">
-    <a class="home-card" href={`${base}/tabletspens/`}>
+    <a class="home-card" href={`${base}/pencompat/`}>
       <h2>Browse compatibility</h2>
       <p>Open the full compatibility matrix with search and grouping controls.</p>
     </a>

@@ -6,8 +6,9 @@ const promiseCache = new Map();
 /**
  * Returns parsed compatibility data, cached by base path for client-side route reuse.
  * @param {string} basePath
+ * @param {(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>} fetchImpl
  */
-export function getCompatibilityData(basePath = '') {
+export function getCompatibilityData(basePath = '', fetchImpl = fetch) {
   const key = String(basePath || '');
 
   if (dataCache.has(key)) {
@@ -21,10 +22,14 @@ export function getCompatibilityData(basePath = '') {
   const promise = fetchAndParseJSON(
     `${key}/data/wacom-pen-compat.json`,
     `${key}/data/wacom-tablets.json`,
-    `${key}/data/wacom-pens.json`
+    `${key}/data/wacom-pens.json`,
+    fetchImpl
   )
-    .then((data) => {
-      data.loadedAtIso = new Date().toISOString();
+    .then((parsedData) => {
+      const data = {
+        ...parsedData,
+        loadedAtIso: new Date().toISOString()
+      };
       dataCache.set(key, data);
       promiseCache.delete(key);
       return data;
