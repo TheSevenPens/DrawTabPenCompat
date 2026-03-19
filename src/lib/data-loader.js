@@ -3,7 +3,7 @@
  * @param {string} compatUrl - The URL to the compatibility JSON file.
  * @param {string} tabletsUrl - The URL to the tablets JSON file.
  * @param {string} pensUrl - The URL to the pens JSON file.
- * @returns {Promise<{rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map}>}
+ * @returns {Promise<{pairs: Object[], rows: Object[], tabletDefs: Map, penDefs: Map, penFamilyDefs: Map, tabletFamilyDefs: Map, diagnostics: Object}>}
  */
 export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
     const [compatRes, tabletsRes, pensRes] = await Promise.all([
@@ -62,12 +62,10 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
     }
 
     // Process Rows & Validation
-    const missingTabletDefs = new Set();
-    const missingPenDefs = new Map(); // Map<PenID, Set<TabletID>>
-    const usedTablets = new Set();
-    const usedPens = new Set();
-
-    const processedRows = compatData.compatrows.map(row => {
+    const pairRows = [];
+    const seenPairs = new Set();
+    const pairOccurrences = new Map();
+    (compatData.compatrows || []).forEach(row => {
         const rowTablets = new Set(row.tablets || []);
         const rowPens = new Set(row.pens || []);
 
@@ -81,28 +79,44 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
             });
         }
 
-        const tabletArray = Array.from(rowTablets);
-        const penArray = Array.from(rowPens);
-
-        // Validation Logic
-        tabletArray.forEach(id => {
-            usedTablets.add(id);
-            if (!tabletDefs.has(id)) {
-                missingTabletDefs.add(id);
-            }
+        rowTablets.forEach(tabletId => {
+            rowPens.forEach(penId => {
+                const key = `${tabletId}\u0000${penId}`;
+                const nextCount = (pairOccurrences.get(key) || 0) + 1;
+                pairOccurrences.set(key, nextCount);
+                if (seenPairs.has(key)) return;
+                seenPairs.add(key);
+                pairRows.push({ tabletId, penId });
+            });
         });
+    });
 
-        penArray.forEach(id => {
-            usedPens.add(id);
-            if (!penDefs.has(id)) {
-                if (!missingPenDefs.has(id)) {
-                    missingPenDefs.set(id, new Set());
-                }
-                tabletArray.forEach(t => missingPenDefs.get(id).add(t));
+    pairRows.sort((a, b) => {
+        const tabletCompared = a.tabletId.localeCompare(b.tabletId, undefined, { numeric: true, sensitivity: 'base' });
+        if (tabletCompared !== 0) return tabletCompared;
+        return a.penId.localeCompare(b.penId, undefined, { numeric: true, sensitivity: 'base' });
+    });
+
+    const missingTabletDefs = new Set();
+    const missingPenDefs = new Map(); // Map<PenID, Set<TabletID>>
+    const usedTablets = new Set();
+    const usedPens = new Set();
+
+    // Validation Logic against flat pair source
+    pairRows.forEach(({ tabletId, penId }) => {
+        usedTablets.add(tabletId);
+        usedPens.add(penId);
+
+        if (!tabletDefs.has(tabletId)) {
+            missingTabletDefs.add(tabletId);
+        }
+
+        if (!penDefs.has(penId)) {
+            if (!missingPenDefs.has(penId)) {
+                missingPenDefs.set(penId, new Set());
             }
-        });
-
-        return { tablets: tabletArray, pens: penArray };
+            missingPenDefs.get(penId).add(tabletId);
+        }
     });
 
     if (missingTabletDefs.size > 0) {
@@ -142,5 +156,28 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl) {
         console.warn('Unused pen definitions:', unusedPenDefs.sort());
     }
 
-    return { rows: processedRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs };
+    const duplicatePairs = Array.from(pairOccurrences.entries())
+        .filter(([, occurrences]) => occurrences > 1)
+        .map(([key, occurrences]) => {
+            const [tabletId, penId] = key.split('\u0000');
+            return { tabletId, penId, occurrences };
+        })
+        .sort((a, b) => {
+            const tabletCompared = a.tabletId.localeCompare(b.tabletId, undefined, { numeric: true, sensitivity: 'base' });
+            if (tabletCompared !== 0) return tabletCompared;
+            return a.penId.localeCompare(b.penId, undefined, { numeric: true, sensitivity: 'base' });
+        });
+
+    const rows = pairRows.map(({ tabletId, penId }) => ({
+        tablets: [tabletId],
+        pens: [penId]
+    }));
+
+    const diagnostics = {
+        pensWithoutTablets: unusedPenDefs.sort(),
+        tabletsWithoutPens: unusedTabletDefs.sort(),
+        duplicatePairs,
+    };
+
+    return { pairs: pairRows, rows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs, diagnostics };
 }

@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import DeviceTable from '../../components/DeviceTable.svelte';
+  import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
 
   let tablets = [];
   let loading = true;
@@ -9,40 +10,21 @@
 
   onMount(async () => {
     try {
-      const [compatRes, tabletsRes] = await Promise.all([
-        fetch(`${base}/data/wacom-pen-compat.json`),
-        fetch(`${base}/data/wacom-tablets.json`)
-      ]);
-
-      if (!compatRes.ok || !tabletsRes.ok) {
-        throw new Error('Failed to fetch tablet data');
-      }
-
-      const compatData = await compatRes.json();
-      const tabletsData = await tabletsRes.json();
-
-      const tabletFamilyDefs = new Map(
-        (tabletsData.tabletfamilydefs || []).map((def) => [def.id, def.name])
-      );
-      const tabletDefs = new Map(
-        (tabletsData.tabletdefs || []).map((def) => [def.id, def])
-      );
+      const data = await getCompatibilityData(base);
 
       const uniqueTabletIds = new Set();
-      for (const row of compatData.compatrows || []) {
-        for (const tabletId of row.tablets || []) {
-          uniqueTabletIds.add(tabletId);
-        }
+      for (const pair of data.pairs) {
+        uniqueTabletIds.add(pair.tabletId);
       }
 
       tablets = Array.from(uniqueTabletIds)
         .map((id) => {
-          const def = tabletDefs.get(id);
-          const familyId = def?.familyid || '';
+          const def = data.tabletDefs.get(id);
+          const familyId = def?.familyId || '';
           return {
             id,
             name: def?.name || id,
-            family: tabletFamilyDefs.get(familyId) || familyId || 'Unspecified'
+            family: data.tabletFamilyDefs.get(familyId) || familyId || 'Unspecified'
           };
         })
         .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));

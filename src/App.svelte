@@ -4,9 +4,9 @@
   import Controls from "./components/Controls.svelte";
   import CompatTable from "./components/CompatTable.svelte";
   import DisclaimerBanner from "./components/DisclaimerBanner.svelte";
-  import { fetchAndParseJSON } from "./lib/data-loader.js";
+  import { getCompatibilityData } from "./lib/compatibility-data-store.js";
 
-  let compatibilityRows = [];
+  let compatibilityPairs = [];
   let tabletDefs = new Map();
   let penDefs = new Map();
 
@@ -17,12 +17,8 @@
 
   onMount(async () => {
     try {
-      const data = await fetchAndParseJSON(
-        `${base}/data/wacom-pen-compat.json`,
-        `${base}/data/wacom-tablets.json`,
-        `${base}/data/wacom-pens.json`,
-      );
-      compatibilityRows = data.rows;
+      const data = await getCompatibilityData(base);
+      compatibilityPairs = data.pairs;
       tabletDefs = data.tabletDefs;
       penDefs = data.penDefs;
       loading = false;
@@ -48,14 +44,11 @@
   {:else}
     <Controls
       bind:searchTerm
-      {compatibilityRows}
-      {tabletDefs}
-      {penDefs}
     />
 
     <CompatTable
       {searchTerm}
-      {compatibilityRows}
+      {compatibilityPairs}
       {tabletDefs}
       {penDefs}
     />

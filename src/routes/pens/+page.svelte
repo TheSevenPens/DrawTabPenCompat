@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
   import DeviceTable from '../../components/DeviceTable.svelte';
+  import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
 
   let pens = [];
   let loading = true;
@@ -47,52 +48,21 @@
 
   onMount(async () => {
     try {
-      const [compatRes, pensRes] = await Promise.all([
-        fetch(`${base}/data/wacom-pen-compat.json`),
-        fetch(`${base}/data/wacom-pens.json`)
-      ]);
-
-      if (!compatRes.ok || !pensRes.ok) {
-        throw new Error('Failed to fetch pen data');
-      }
-
-      const compatData = await compatRes.json();
-      const pensData = await pensRes.json();
-
-      const penDefs = new Map((pensData.pendefs || []).map((def) => [def.id, def]));
-      const penFamilyDefs = new Map((pensData.penfamilydefs || []).map((def) => [def.id, def.name]));
-      const familyToPens = new Map();
-
-      for (const def of pensData.pendefs || []) {
-        if (!def.familyid) continue;
-        if (!familyToPens.has(def.familyid)) {
-          familyToPens.set(def.familyid, new Set());
-        }
-        familyToPens.get(def.familyid).add(def.id);
-      }
+      const data = await getCompatibilityData(base);
 
       const uniquePenIds = new Set();
-      for (const row of compatData.compatrows || []) {
-        for (const penId of row.pens || []) {
-          uniquePenIds.add(penId);
-        }
-        for (const familyId of row.penfamilies || []) {
-          const familyPens = familyToPens.get(familyId);
-          if (!familyPens) continue;
-          for (const penId of familyPens) {
-            uniquePenIds.add(penId);
-          }
-        }
+      for (const pair of data.pairs) {
+        uniquePenIds.add(pair.penId);
       }
 
       pens = Array.from(uniquePenIds)
         .map((id) => {
-          const def = penDefs.get(id);
-          const familyId = def?.familyid || '';
+          const def = data.penDefs.get(id);
+          const familyId = def?.familyId || '';
           return {
             id,
             name: def?.name || id,
-            family: penFamilyDefs.get(familyId) || familyId || 'Unspecified'
+            family: data.penFamilyDefs.get(familyId) || familyId || 'Unspecified'
           };
         })
         .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));

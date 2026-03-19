@@ -1,7 +1,7 @@
 <script>
     export let searchTerm = "";
 
-    export let compatibilityRows = [];
+    export let compatibilityPairs = [];
     export let tabletDefs = new Map();
     export let penDefs = new Map();
 
@@ -27,8 +27,11 @@
         return new RegExp(globPattern, "i");
     }
 
-    // Always render ungrouped rows for browse compatibility.
-    $: structuredRows = getRowsUngrouped();
+    // Browse compatibility always uses the flat tablet-pen pair source.
+    $: structuredRows = compatibilityPairs.map(({ tabletId, penId }) => ({
+        tablets: [tabletId],
+        pens: [penId],
+    }));
 
     // Filter structured rows
     $: filteredRows = structuredRows.filter((row) => {
@@ -56,9 +59,9 @@
 
         const totalUniqueTablets = new Set();
         const totalUniquePens = new Set();
-        compatibilityRows.forEach((row) => {
-            row.tablets.forEach((t) => totalUniqueTablets.add(t));
-            row.pens.forEach((p) => totalUniquePens.add(p));
+        compatibilityPairs.forEach(({ tabletId, penId }) => {
+            totalUniqueTablets.add(tabletId);
+            totalUniquePens.add(penId);
         });
 
         return {
@@ -69,34 +72,6 @@
             totalPens: totalUniquePens.size,
         };
     })();
-
-    function getRowsUngrouped() {
-        const result = [];
-        compatibilityRows.forEach((row) => {
-            const tablets = sortItems(row.tablets, tabletDefs);
-            const pens = sortItems(row.pens, penDefs);
-            tablets.forEach((t) => {
-                pens.forEach((p) => {
-                    result.push({ tablets: [t], pens: [p] });
-                });
-            });
-        });
-        return result;
-    }
-
-    function compareDeviceIds(a, b, defsMap) {
-        const defA = defsMap.get(a) || { familyId: "", name: "" };
-        const defB = defsMap.get(b) || { familyId: "", name: "" };
-        if (defA.familyId < defB.familyId) return -1;
-        if (defA.familyId > defB.familyId) return 1;
-        if (a < b) return -1;
-        if (a > b) return 1;
-        return 0;
-    }
-
-    function sortItems(items, defsMap) {
-        return items.sort((a, b) => compareDeviceIds(a, b, defsMap));
-    }
 
     // Format Helpers
     function getItemLabel(item, defsMap) {

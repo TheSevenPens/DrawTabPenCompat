@@ -28,6 +28,11 @@
       <h2>Pens</h2>
       <p>Browse unique pens and sort by pen or family.</p>
     </a>
+
+    <a class="home-card" href={`${base}/log/`}>
+      <h2>Log</h2>
+      <p>Review data quality warnings from the source JSON load.</p>
+    </a>
   </div>
 </section>
 
