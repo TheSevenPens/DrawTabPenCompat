@@ -22,9 +22,19 @@
       <p>Browse tablets.</p>
     </a>
 
+    <a class="home-card" href={`${base}/tabletfamilies/`}>
+      <h2>Tablet families</h2>
+      <p>Browse tablet families.</p>
+    </a>
+
     <a class="home-card" href={`${base}/pens/`}>
       <h2>Pens</h2>
       <p>Browse pens.</p>
+    </a>
+
+    <a class="home-card" href={`${base}/penfamilies/`}>
+      <h2>Pen families</h2>
+      <p>Browse pen families.</p>
     </a>
 
     <a class="home-card" href={`${base}/log/`}>
@@ -46,11 +56,6 @@
   .home-page h1 {
     margin: 0 0 8px;
     text-align: left;
-  }
-
-  .intro {
-    color: #444;
-    margin: 0 0 14px;
   }
 
   .home-grid {
