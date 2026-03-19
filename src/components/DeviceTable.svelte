@@ -35,9 +35,18 @@
     {#each items as item}
       <tr>
         <td>
-          <strong>{item.id}</strong>
-          {#if item.name && item.name !== item.id}
-            <span> - {item.name}</span>
+          {#if item.href}
+            <a class="item-link" href={item.href}>
+              <strong>{item.id}</strong>
+              {#if item.name && item.name !== item.id}
+                <span> - {item.name}</span>
+              {/if}
+            </a>
+          {:else}
+            <strong>{item.id}</strong>
+            {#if item.name && item.name !== item.id}
+              <span> - {item.name}</span>
+            {/if}
           {/if}
         </td>
         <td>{item.family}</td>
@@ -78,6 +87,15 @@
   }
 
   .sort-btn:hover {
+    text-decoration: underline;
+  }
+
+  .item-link {
+    color: #0d47a1;
+    text-decoration: none;
+  }
+
+  .item-link:hover {
     text-decoration: underline;
   }
 </style>

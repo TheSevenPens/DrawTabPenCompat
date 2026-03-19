@@ -1,5 +1,6 @@
 import { base } from '$app/paths';
 import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
+import { buildTabletDetailHref } from '../../lib/tablet-url.js';
 
 export async function load({ fetch }) {
   const data = await getCompatibilityData(base, fetch);
@@ -16,7 +17,12 @@ export async function load({ fetch }) {
       return {
         id,
         name: def?.name || id,
-        family: data.tabletFamilyDefs.get(familyId) || familyId || 'Unspecified'
+        family: data.tabletFamilyDefs.get(familyId) || familyId || 'Unspecified',
+        href: buildTabletDetailHref(base, {
+          id,
+          brand: def?.brand || '',
+          name: def?.name || id
+        })
       };
     })
     .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));

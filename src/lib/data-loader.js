@@ -30,6 +30,7 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
     // Parse Definitions
     tabletsData.tabletdefs.forEach(def => {
         tabletDefs.set(def.id, {
+            brand: def.brand || '',
             name: def.name || '',
             familyId: def.familyid || ''
         });
@@ -39,6 +40,7 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
         const id = def.id;
         const familyId = def.familyid || '';
         penDefs.set(id, {
+            brand: def.brand || '',
             name: def.name || '',
             familyId: familyId
         });
