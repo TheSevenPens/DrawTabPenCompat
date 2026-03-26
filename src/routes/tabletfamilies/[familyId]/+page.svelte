@@ -11,17 +11,12 @@
 <div class="tabletfamily-detail-page">
   <h1>{data.family.name}</h1>
 
-  <section class="family-summary">
-    <div><strong>Family ID:</strong> {data.family.id}</div>
-    <div><strong>Defined Tablets:</strong> {data.tablets.length}</div>
-  </section>
-
   <section class="family-members">
-    <h2>Tablets In This Family</h2>
+    <h2>Tablets In This Family ({data.tablets.length})</h2>
     {#if data.tablets.length === 0}
       <p>No tablets found in this family.</p>
     {:else}
-      <DeviceTable items={data.tablets} itemLabel="Tablet" familyLabel="Tablet Family" />
+      <DeviceTable items={data.tablets} itemLabel="Tablet" hideFamily />
     {/if}
   </section>
 </div>

@@ -11,13 +11,8 @@
 <div class="penfamily-detail-page">
   <h1>{data.family.name}</h1>
 
-  <section class="family-summary">
-    <div><strong>Family ID:</strong> {data.family.id}</div>
-    <div><strong>Defined Pens:</strong> {data.pens.length}</div>
-  </section>
-
   <section class="family-members">
-    <h2>Pens In This Family</h2>
+    <h2>Pens In This Family ({data.pens.length})</h2>
     {#if data.pens.length === 0}
       <p>No pens found in this family.</p>
     {:else}
