@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import { base } from '$app/paths';
 import { getCompatibilityData } from '../../../../lib/compatibility-data-store.js';
 import { buildTabletDetailHref } from '../../../../lib/tablet-url.js';
+import { getDisplayName } from '../../../../lib/device-display.js';
 
 export async function load({ fetch, params }) {
   const data = await getCompatibilityData(base, fetch);
@@ -24,9 +25,11 @@ export async function load({ fetch, params }) {
     .map((id) => {
       const def = data.tabletDefs.get(id);
       const tabletFamilyId = def?.familyId || '';
+      const name = def?.name || id;
+      const displayName = getDisplayName(id, name);
       return {
-        id,
-        name: def?.name || id,
+        id: displayName,
+        name: displayName,
         family: data.tabletFamilyDefs.get(tabletFamilyId) || tabletFamilyId || 'Unspecified',
         href: buildTabletDetailHref(base, {
           id,

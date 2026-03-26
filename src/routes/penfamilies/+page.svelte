@@ -1,7 +1,7 @@
 <script>
   import Controls from '../../components/Controls.svelte';
   import DeviceTable from '../../components/DeviceTable.svelte';
-  import DisclaimerBanner from '../../components/DisclaimerBanner.svelte';
+
   import { matchesDeviceSearch } from '../../lib/device-search.js';
 
   export let data;
@@ -19,7 +19,6 @@
 
 <div class="penfamilies-page">
   <h1>Pen Families</h1>
-  <DisclaimerBanner />
   <Controls bind:searchTerm placeholder="Search pen families ..." />
   <p class="count">{filteredFamilies.length} of {data.families.length} pen families</p>
   <DeviceTable items={filteredFamilies} itemLabel="Pen Family" familyLabel="Pens" />

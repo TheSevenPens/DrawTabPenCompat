@@ -1,5 +1,6 @@
 import { base } from '$app/paths';
 import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
+import { getDisplayName } from '../../lib/device-display.js';
 import { buildTabletDetailHref } from '../../lib/tablet-url.js';
 
 export async function load({ fetch }) {
@@ -14,9 +15,11 @@ export async function load({ fetch }) {
     .map((id) => {
       const def = data.tabletDefs.get(id);
       const familyId = def?.familyId || '';
+      const name = def?.name || id;
+      const displayName = getDisplayName(id, name);
       return {
-        id,
-        name: def?.name || id,
+        id: displayName,
+        name: displayName,
         family: data.tabletFamilyDefs.get(familyId) || familyId || 'Unspecified',
         href: buildTabletDetailHref(base, {
           id,

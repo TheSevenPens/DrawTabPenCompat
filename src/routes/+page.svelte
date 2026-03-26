@@ -1,6 +1,6 @@
 <script>
   import { base } from '$app/paths';
-  import DisclaimerBanner from '../components/DisclaimerBanner.svelte';
+
 </script>
 
 <svelte:head>
@@ -9,7 +9,6 @@
 
 <section class="home-page">
   <h1>Wacom pen compatibility</h1>
-  <DisclaimerBanner />
 
   <div class="home-grid">
     <a class="home-card" href={`${base}/pencompat/`}>

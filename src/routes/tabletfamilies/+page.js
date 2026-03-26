@@ -14,7 +14,7 @@ export async function load({ fetch }) {
     .map(([id, name]) => {
       const count = tabletCountsByFamily.get(id) || 0;
       return {
-        id,
+        id: name,
         name,
         family: `${count} tablets`,
         href: `${base}/tabletfamilies/${encodeURIComponent(id)}/`

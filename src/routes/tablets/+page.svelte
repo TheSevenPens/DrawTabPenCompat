@@ -1,6 +1,5 @@
 <script>
   import Controls from '../../components/Controls.svelte';
-  import DisclaimerBanner from '../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../components/DeviceTable.svelte';
   import { matchesDeviceSearch } from '../../lib/device-search.js';
 
@@ -18,8 +17,7 @@
 </svelte:head>
 
 <div class="tablets-page">
-  <h1>Unique Tablets</h1>
-  <DisclaimerBanner />
+  <h1>Tablets</h1>
   <Controls bind:searchTerm placeholder="Search tablets ..." />
   <p class="count">{filteredTablets.length} of {data.tablets.length} tablets</p>
   <DeviceTable items={filteredTablets} itemLabel="Tablet" familyLabel="Tablet Family" />

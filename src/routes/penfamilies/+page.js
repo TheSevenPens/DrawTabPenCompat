@@ -14,7 +14,7 @@ export async function load({ fetch }) {
     .map(([id, name]) => {
       const count = penCountsByFamily.get(id) || 0;
       return {
-        id,
+        id: name,
         name,
         family: `${count} pens`,
         href: `${base}/penfamilies/${encodeURIComponent(id)}/`

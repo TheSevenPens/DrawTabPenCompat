@@ -15,16 +15,15 @@
 
 <div class="pen-detail-page">
   <h1>{pageTitle}</h1>
-  <DisclaimerBanner />
 
   <section class="pen-summary">
     <div><strong>Pen ID:</strong> {data.pen.id}</div>
     <div><strong>Pen Family:</strong> {data.pen.family}</div>
-    <div><strong>Compatible Tablets:</strong> {data.tablets.length}</div>
   </section>
 
   <section class="pen-tablets">
-    <h2>Compatible Tablets</h2>
+    <h2>Compatible Tablets ({data.tablets.length})</h2>
+    <DisclaimerBanner />
     {#if data.tablets.length === 0}
       <p>No compatible tablets found for this pen.</p>
     {:else}

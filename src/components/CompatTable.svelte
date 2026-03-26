@@ -1,4 +1,9 @@
 <script>
+    import { base } from '$app/paths';
+    import { buildTabletDetailHref } from '../lib/tablet-url.js';
+    import { buildPenDetailHref } from '../lib/pen-url.js';
+    import { getDisplayName } from '../lib/device-display.js';
+
     export let searchTerm = "";
 
     export let compatibilityPairs = [];
@@ -76,9 +81,17 @@
     // Format Helpers
     function getItemLabel(item, defsMap) {
         const def = defsMap.get(item);
-        if (def && def.name && def.name !== item)
-            return `${def.name} (${item})`;
-        return item;
+        return getDisplayName(item, def?.name);
+    }
+
+    function getTabletHref(id) {
+        const def = tabletDefs.get(id);
+        return buildTabletDetailHref(base, { id, brand: def?.brand || '', name: def?.name || id });
+    }
+
+    function getPenHref(id) {
+        const def = penDefs.get(id);
+        return buildPenDetailHref(base, { id, brand: def?.brand || '', name: def?.name || id });
     }
 
 </script>
@@ -106,21 +119,28 @@
                 <!-- First column -->
                 <td>
                     {#each row.tablets as item}
-                        <span class="device-tag tablet"
-                            >{getItemLabel(item, tabletDefs)}</span
-                        ><br />
+                        <a class="item-link" href={getTabletHref(item)}>{getItemLabel(item, tabletDefs)}</a>
                     {/each}
                 </td>
 
                 <!-- Second column -->
                 <td>
                     {#each row.pens as item}
-                        <span class="device-tag"
-                            >{getItemLabel(item, penDefs)}</span
-                        ><br />
+                        <a class="item-link" href={getPenHref(item)}>{getItemLabel(item, penDefs)}</a>
                     {/each}
                 </td>
             </tr>
         {/each}
     </tbody>
 </table>
+
+<style>
+  .item-link {
+    color: #0d47a1;
+    text-decoration: none;
+  }
+
+  .item-link:hover {
+    text-decoration: underline;
+  }
+</style>
