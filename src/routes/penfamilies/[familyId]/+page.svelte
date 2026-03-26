@@ -21,7 +21,7 @@
     {#if data.pens.length === 0}
       <p>No pens found in this family.</p>
     {:else}
-      <DeviceTable items={data.pens} itemLabel="Pen" familyLabel="Pen Family" />
+      <DeviceTable items={data.pens} itemLabel="Pen" hideFamily />
     {/if}
   </section>
 </div>

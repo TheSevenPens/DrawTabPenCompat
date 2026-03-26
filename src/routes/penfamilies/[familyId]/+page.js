@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import { base } from '$app/paths';
 import { getCompatibilityData } from '../../../lib/compatibility-data-store.js';
 import { buildPenDetailHref } from '../../../lib/pen-url.js';
+import { getDisplayName } from '../../../lib/device-display.js';
 
 export async function load({ fetch, params }) {
   const data = await getCompatibilityData(base, fetch);
@@ -14,16 +15,19 @@ export async function load({ fetch, params }) {
 
   const pens = Array.from(data.penDefs.entries())
     .filter(([, def]) => def.familyId === familyId)
-    .map(([id, def]) => ({
-      id,
-      name: def.name || id,
+    .map(([id, def]) => {
+      const name = def.name || id;
+      const displayName = getDisplayName(id, name);
+      return {
+      id: displayName,
+      name: displayName,
       family: familyName,
       href: buildPenDetailHref(base, {
         id,
         brand: def.brand || '',
         name: def.name || id
       })
-    }))
+    };})
     .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
   return {

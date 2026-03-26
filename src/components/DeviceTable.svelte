@@ -3,6 +3,7 @@
   export let itemLabel = 'Device';
   export let familyLabel = 'Family';
 
+  export let hideFamily = false;
   export let sortable = false;
   export let onToggleSort = () => {};
   export let sortIndicator = () => '';
@@ -20,6 +21,7 @@
           {itemLabel}
         {/if}
       </th>
+      {#if !hideFamily}
       <th>
         {#if sortable}
           <button class="sort-btn" on:click={() => onToggleSort('family')}>
@@ -29,6 +31,7 @@
           {familyLabel}
         {/if}
       </th>
+      {/if}
     </tr>
   </thead>
   <tbody>
@@ -49,7 +52,7 @@
             {/if}
           {/if}
         </td>
-        <td>{item.family}</td>
+        {#if !hideFamily}<td>{item.family}</td>{/if}
       </tr>
     {/each}
   </tbody>
