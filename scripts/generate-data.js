@@ -3,7 +3,9 @@
  * Run: node scripts/generate-data.js
  */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+
+mkdirSync('static/data', { recursive: true });
 
 const DATA_DIR = 'data-repo/data';
 
