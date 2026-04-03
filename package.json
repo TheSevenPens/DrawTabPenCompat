@@ -4,8 +4,9 @@
   "type": "module",
   "description": "",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "generate-data": "node scripts/generate-data.js",
+    "dev": "node scripts/generate-data.js && vite dev",
+    "build": "node scripts/generate-data.js && vite build",
     "preview": "vite preview"
   },
   "keywords": [],
