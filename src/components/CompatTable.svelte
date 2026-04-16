@@ -2,7 +2,7 @@
     import { base } from '$app/paths';
     import { buildTabletDetailHref } from '../lib/tablet-url.js';
     import { buildPenDetailHref } from '../lib/pen-url.js';
-    import { getDisplayName } from '../lib/device-display.js';
+
 
     export let searchTerm = "";
     export let selectedBrand = "";
@@ -91,7 +91,7 @@
     // Format Helpers
     function getItemLabel(item, defsMap) {
         const def = defsMap.get(item);
-        return getDisplayName(item, def?.name);
+        return def?.fullName || def?.name || item;
     }
 
     function getTabletHref(id) {

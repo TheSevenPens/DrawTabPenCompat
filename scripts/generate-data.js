@@ -23,6 +23,16 @@ function tryLoadJSON(path) {
 }
 
 // --- Brand configuration ---
+// Matches BRAND_NAMES from data-repo/lib/drawtab-loader.ts
+const BRAND_DISPLAY_NAMES = {
+  WACOM: "Wacom", HUION: "Huion", XPPEN: "XP-Pen",
+  UGEE: "Ugee", XENCELABS: "Xencelabs", SAMSUNG: "Samsung",
+};
+
+function brandDisplayName(prefix) {
+  return BRAND_DISPLAY_NAMES[prefix] ?? prefix;
+}
+
 // File prefix -> brand id used in the app
 const BRANDS = [
   { prefix: 'WACOM',     brandId: 'wacom' },
@@ -43,12 +53,18 @@ for (const { prefix, brandId } of BRANDS) {
   // --- Pens ---
   const pensData = tryLoadJSON(`${DATA_DIR}/pens/${prefix}-pens.json`);
   if (pensData?.Pens) {
+    const bdn = brandDisplayName(prefix);
     for (const p of pensData.Pens) {
+      // FullName logic from data-repo pen-fields.ts
+      const penFullName = p.PenName === p.PenId
+        ? `${bdn} ${p.PenId}`
+        : `${bdn} ${p.PenName} (${p.PenId})`;
       allPenDefs.push({
         brand: brandId,
         familyid: p.PenFamily || "",
         id: p.PenId,
         name: p.PenName,
+        fullname: penFullName,
         year: p.PenYear || "",
       });
     }
@@ -69,12 +85,18 @@ for (const { prefix, brandId } of BRANDS) {
   // --- Tablets ---
   const tabletsData = tryLoadJSON(`${DATA_DIR}/tablets/${prefix}-tablets.json`);
   if (tabletsData?.DrawingTablets) {
+    const bdn = brandDisplayName(prefix);
     for (const t of tabletsData.DrawingTablets) {
+      const id = t.Model ? t.Model.Id : t.ModelId;
+      const name = t.Model ? t.Model.Name : t.ModelName;
+      // FullName logic from data-repo tablet-fields.ts
+      const tabletFullName = `${bdn} ${name} (${id})`;
       allTabletDefs.push({
         brand: brandId,
         familyid: (t.Model ? t.Model.Family : t.ModelFamily) || "",
-        id: t.Model ? t.Model.Id : t.ModelId,
-        name: t.Model ? t.Model.Name : t.ModelName,
+        id,
+        name,
+        fullname: tabletFullName,
         type: ((t.Model ? t.Model.Type : t.ModelType) || "pentablet").toLowerCase(),
       });
     }

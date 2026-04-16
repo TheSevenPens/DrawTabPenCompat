@@ -1,6 +1,5 @@
 import { base } from '$app/paths';
 import { getCompatibilityData } from '../../lib/compatibility-data-store.js';
-import { getDisplayName } from '../../lib/device-display.js';
 import { buildPenDetailHref } from '../../lib/pen-url.js';
 
 export async function load({ fetch }) {
@@ -16,11 +15,10 @@ export async function load({ fetch }) {
       const def = data.penDefs.get(id);
       const familyId = def?.familyId || '';
       const name = def?.name || id;
-      const displayName = getDisplayName(id, name);
       const brand = def?.brand || '';
       return {
-        id: displayName,
-        name: displayName,
+        id,
+        name: def?.fullName || name,
         brand,
         family: data.penFamilyDefs.get(familyId) || familyId || 'Unspecified',
         href: buildPenDetailHref(base, {

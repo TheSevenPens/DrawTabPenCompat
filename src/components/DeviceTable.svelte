@@ -39,17 +39,9 @@
       <tr>
         <td>
           {#if item.href}
-            <a class="item-link" href={item.href}>
-              <strong>{item.id}</strong>
-              {#if item.name && item.name !== item.id}
-                <span> - {item.name}</span>
-              {/if}
-            </a>
+            <a class="item-link" href={item.href}>{item.name || item.id}</a>
           {:else}
-            <strong>{item.id}</strong>
-            {#if item.name && item.name !== item.id}
-              <span> - {item.name}</span>
-            {/if}
+            {item.name || item.id}
           {/if}
         </td>
         {#if !hideFamily}<td>{item.family}</td>{/if}

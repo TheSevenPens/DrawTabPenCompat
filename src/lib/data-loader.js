@@ -34,6 +34,7 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
         tabletDefs.set(def.id, {
             brand: def.brand || '',
             name: def.name || '',
+            fullName: def.fullname || '',
             familyId: def.familyid || ''
         });
     });
@@ -44,6 +45,7 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
         penDefs.set(id, {
             brand: def.brand || '',
             name: def.name || '',
+            fullName: def.fullname || '',
             familyId: familyId
         });
         if (familyId) {
