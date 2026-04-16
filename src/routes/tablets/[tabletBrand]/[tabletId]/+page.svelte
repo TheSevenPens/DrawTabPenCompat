@@ -1,20 +1,26 @@
 <script>
   import DisclaimerBanner from '../../../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../../../components/DeviceTable.svelte';
+  import CopyButton from '../../../../components/CopyButton.svelte';
 
   export let data;
 
   $: pageTitle = data.tablet.name && data.tablet.name !== data.tablet.id
     ? `${data.tablet.name} (${data.tablet.id})`
     : data.tablet.id;
+
+  $: tabletSummaryText = `${pageTitle}\nTablet ID: ${data.tablet.id}\nTablet Family: ${data.tablet.family}\nCompatible Pens: ${data.pens.map(p => p.id).join(', ')}`;
 </script>
 
 <svelte:head>
-  <title>{pageTitle} | SevenPens Wacom Compatibility</title>
+  <title>{pageTitle} | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="tablet-detail-page">
-  <h1>{pageTitle}</h1>
+  <div class="title-row">
+    <h1>{pageTitle}</h1>
+    <CopyButton text={tabletSummaryText} label="Copy" />
+  </div>
 
   <section class="tablet-summary">
     <div><strong>Tablet ID:</strong> {data.tablet.id}</div>
@@ -41,9 +47,16 @@
     margin: 0 auto;
   }
 
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
   .tablet-detail-page h1 {
     text-align: left;
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .tablet-summary {

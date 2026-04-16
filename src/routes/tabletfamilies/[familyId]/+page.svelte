@@ -1,15 +1,21 @@
 <script>
   import DeviceTable from '../../../components/DeviceTable.svelte';
+  import CopyButton from '../../../components/CopyButton.svelte';
 
   export let data;
+
+  $: familySummaryText = `${data.family.name} (${data.family.id})\nTablets: ${data.tablets.map(t => t.id).join(', ')}`;
 </script>
 
 <svelte:head>
-  <title>{data.family.name} ({data.family.id}) | SevenPens Wacom Compatibility</title>
+  <title>{data.family.name} ({data.family.id}) | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="tabletfamily-detail-page">
-  <h1>{data.family.name}</h1>
+  <div class="title-row">
+    <h1>{data.family.name}</h1>
+    <CopyButton text={familySummaryText} label="Copy" />
+  </div>
 
   <section class="family-members">
     <h2>Tablets In This Family ({data.tablets.length})</h2>
@@ -30,9 +36,16 @@
     margin: 0 auto;
   }
 
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
   .tabletfamily-detail-page h1 {
     text-align: left;
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .family-summary {

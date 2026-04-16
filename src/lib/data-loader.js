@@ -1,5 +1,5 @@
 /**
- * Fetches and parses the Wacom compatibility JSON files.
+ * Fetches and parses the compatibility JSON files.
  * @param {string} compatUrl - The URL to the compatibility JSON file.
  * @param {string} tabletsUrl - The URL to the tablets JSON file.
  * @param {string} pensUrl - The URL to the pens JSON file.
@@ -25,6 +25,8 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
     const penDefs = new Map();
     const penFamilyDefs = new Map();
     const tabletFamilyDefs = new Map();
+    const penFamilyBrands = new Map();
+    const tabletFamilyBrands = new Map();
     const familyToPens = new Map(); // Map<FamilyID, Set<PenID>>
 
     // Parse Definitions
@@ -55,12 +57,14 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
     if (pensData.penfamilydefs) {
         pensData.penfamilydefs.forEach(def => {
             penFamilyDefs.set(def.id, def.name);
+            if (def.brand) penFamilyBrands.set(def.id, def.brand);
         });
     }
 
     if (tabletsData.tabletfamilydefs) {
         tabletsData.tabletfamilydefs.forEach(def => {
             tabletFamilyDefs.set(def.id, def.name);
+            if (def.brand) tabletFamilyBrands.set(def.id, def.brand);
         });
     }
 
@@ -177,5 +181,5 @@ export async function fetchAndParseJSON(compatUrl, tabletsUrl, pensUrl, fetchImp
         duplicatePairs,
     };
 
-    return { pairs: pairRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs, diagnostics };
+    return { pairs: pairRows, tabletDefs, penDefs, penFamilyDefs, tabletFamilyDefs, penFamilyBrands, tabletFamilyBrands, diagnostics };
 }

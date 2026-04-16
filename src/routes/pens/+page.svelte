@@ -5,10 +5,15 @@
 
   export let data;
   let searchTerm = '';
+  let selectedBrand = '';
+  let groupBy = 'none';
   let sortKey = 'item';
   let sortDirection = 'asc';
 
-  $: filteredPens = data.pens.filter((pen) => matchesDeviceSearch(pen, searchTerm));
+  $: filteredPens = data.pens.filter((pen) => {
+    if (selectedBrand && pen.brand !== selectedBrand) return false;
+    return matchesDeviceSearch(pen, searchTerm);
+  });
 
   $: sortedPens = [...filteredPens].sort((a, b) => {
     let left = '';
@@ -26,8 +31,24 @@
     return sortDirection === 'asc' ? compared : -compared;
   });
 
+  $: groups = buildGroups(sortedPens, groupBy);
+
+  function buildGroups(items, mode) {
+    if (mode === 'none') return [{ label: '', items }];
+    const map = new Map();
+    for (const item of items) {
+      const key = mode === 'brand'
+        ? (item.brand ? item.brand.charAt(0).toUpperCase() + item.brand.slice(1) : 'Unknown')
+        : (item.family || 'Unspecified');
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(item);
+    }
+    return Array.from(map.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([label, items]) => ({ label, items }));
+  }
+
   function getPenSortValue(pen) {
-    // Sort by id first, then name for stable and intuitive ordering.
     return `${pen.id} ${pen.name || ''}`;
   }
 
@@ -36,7 +57,6 @@
       sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
       return;
     }
-
     sortKey = nextKey;
     sortDirection = 'asc';
   }
@@ -45,25 +65,37 @@
     if (sortKey !== columnKey) return '';
     return sortDirection === 'asc' ? ' ▲' : ' ▼';
   }
-
 </script>
 
 <svelte:head>
-  <title>Pens | SevenPens Wacom Compatibility</title>
+  <title>Pens | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="pens-page">
   <h1>Pens</h1>
-  <Controls bind:searchTerm placeholder="Search pens ..." />
-  <p class="count">{filteredPens.length} of {data.pens.length} pens</p>
-  <DeviceTable
-    items={sortedPens}
-    itemLabel="Pen"
-    familyLabel="Pen Family"
-    sortable={true}
-    onToggleSort={toggleSort}
-    {sortIndicator}
+  <Controls
+    bind:searchTerm
+    placeholder="Search pens ..."
+    brands={data.brands}
+    bind:selectedBrand
+    bind:groupBy
+    showGroupBy={true}
   />
+  <p class="count">{filteredPens.length} of {data.pens.length} pens</p>
+
+  {#each groups as group}
+    {#if group.label}
+      <h2 class="group-heading">{group.label} <span class="group-count">({group.items.length})</span></h2>
+    {/if}
+    <DeviceTable
+      items={group.items}
+      itemLabel="Pen"
+      familyLabel="Pen Family"
+      sortable={groupBy === 'none'}
+      onToggleSort={toggleSort}
+      {sortIndicator}
+    />
+  {/each}
 </div>
 
 <style>
@@ -83,5 +115,19 @@
   .count {
     color: #666;
     margin-bottom: 10px;
+  }
+
+  .group-heading {
+    font-size: 1.1em;
+    margin: 16px 0 4px;
+    color: #2c3e50;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 4px;
+  }
+
+  .group-count {
+    font-weight: normal;
+    color: #888;
+    font-size: 0.9em;
   }
 </style>

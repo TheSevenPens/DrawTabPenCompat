@@ -6,18 +6,23 @@
   export let compatibilityPairs = [];
   export let tabletDefs = new Map();
   export let penDefs = new Map();
+  export let brands = [];
 
   let searchTerm = "";
+  let selectedBrand = "";
 </script>
 
 <div class="app-container">
   <DisclaimerBanner />
   <Controls
     bind:searchTerm
+    {brands}
+    bind:selectedBrand
   />
 
   <CompatTable
     {searchTerm}
+    {selectedBrand}
     {compatibilityPairs}
     {tabletDefs}
     {penDefs}

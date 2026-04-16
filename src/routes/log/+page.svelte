@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-  <title>Log | SevenPens Wacom Compatibility</title>
+  <title>Log | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="log-page">

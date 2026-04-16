@@ -17,18 +17,22 @@ export async function load({ fetch }) {
       const familyId = def?.familyId || '';
       const name = def?.name || id;
       const displayName = getDisplayName(id, name);
+      const brand = def?.brand || '';
       return {
         id: displayName,
         name: displayName,
+        brand,
         family: data.penFamilyDefs.get(familyId) || familyId || 'Unspecified',
         href: buildPenDetailHref(base, {
           id,
-          brand: def?.brand || '',
+          brand,
           name: def?.name || id
         })
       };
     })
     .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
-  return { pens };
+  const brands = [...new Set(pens.map(p => p.brand))].filter(Boolean).sort();
+
+  return { pens, brands };
 }

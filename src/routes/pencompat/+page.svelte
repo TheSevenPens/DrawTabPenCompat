@@ -5,11 +5,12 @@
 </script>
 
 <svelte:head>
-  <title>Browse Compatibility | SevenPens Wacom Compatibility</title>
+  <title>Browse Compatibility | DrawTabData Explorer</title>
 </svelte:head>
 
 <App
   compatibilityPairs={data.compatibilityPairs}
   tabletDefs={data.tabletDefs}
   penDefs={data.penDefs}
+  brands={data.brands}
 />

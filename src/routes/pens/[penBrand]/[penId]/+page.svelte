@@ -1,20 +1,26 @@
 <script>
   import DisclaimerBanner from '../../../../components/DisclaimerBanner.svelte';
   import DeviceTable from '../../../../components/DeviceTable.svelte';
+  import CopyButton from '../../../../components/CopyButton.svelte';
 
   export let data;
 
   $: pageTitle = data.pen.name && data.pen.name !== data.pen.id
     ? `${data.pen.name} (${data.pen.id})`
     : data.pen.id;
+
+  $: penSummaryText = `${pageTitle}\nPen ID: ${data.pen.id}\nPen Family: ${data.pen.family}\nCompatible Tablets: ${data.tablets.map(t => t.id).join(', ')}`;
 </script>
 
 <svelte:head>
-  <title>{pageTitle} | SevenPens Wacom Compatibility</title>
+  <title>{pageTitle} | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="pen-detail-page">
-  <h1>{pageTitle}</h1>
+  <div class="title-row">
+    <h1>{pageTitle}</h1>
+    <CopyButton text={penSummaryText} label="Copy" />
+  </div>
 
   <section class="pen-summary">
     <div><strong>Pen ID:</strong> {data.pen.id}</div>
@@ -41,9 +47,16 @@
     margin: 0 auto;
   }
 
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
   .pen-detail-page h1 {
     text-align: left;
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .pen-summary {

@@ -4,11 +4,11 @@
 </script>
 
 <svelte:head>
-  <title>Home | SevenPens Wacom Compatibility</title>
+  <title>Home | DrawTabData Explorer</title>
 </svelte:head>
 
 <section class="home-page">
-  <h1>Wacom pen compatibility</h1>
+  <h1>Drawing tablet pen compatibility</h1>
 
   <div class="home-grid">
     <a class="home-card" href={`${base}/pencompat/`}>

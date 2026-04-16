@@ -7,19 +7,21 @@
   export let data;
 
   let searchTerm = '';
+  let selectedBrand = '';
 
-  $: filteredFamilies = data.families.filter((family) =>
-    matchesDeviceSearch(family, searchTerm)
-  );
+  $: filteredFamilies = data.families.filter((family) => {
+    if (selectedBrand && family.brand !== selectedBrand) return false;
+    return matchesDeviceSearch(family, searchTerm);
+  });
 </script>
 
 <svelte:head>
-  <title>Pen Families | SevenPens Wacom Compatibility</title>
+  <title>Pen Families | DrawTabData Explorer</title>
 </svelte:head>
 
 <div class="penfamilies-page">
   <h1>Pen Families</h1>
-  <Controls bind:searchTerm placeholder="Search pen families ..." />
+  <Controls bind:searchTerm placeholder="Search pen families ..." brands={data.brands} bind:selectedBrand />
   <p class="count">{filteredFamilies.length} of {data.families.length} pen families</p>
   <DeviceTable items={filteredFamilies} itemLabel="Pen Family" familyLabel="Pens" />
 </div>

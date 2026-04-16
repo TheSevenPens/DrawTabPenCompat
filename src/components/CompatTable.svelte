@@ -5,6 +5,7 @@
     import { getDisplayName } from '../lib/device-display.js';
 
     export let searchTerm = "";
+    export let selectedBrand = "";
 
     export let compatibilityPairs = [];
     export let tabletDefs = new Map();
@@ -40,6 +41,15 @@
 
     // Filter structured rows
     $: filteredRows = structuredRows.filter((row) => {
+        // Brand filter: row matches if any tablet or pen belongs to the selected brand
+        if (selectedBrand) {
+            const hasBrand = [...row.tablets, ...row.pens].some((item) => {
+                const def = tabletDefs.get(item) || penDefs.get(item);
+                return def?.brand === selectedBrand;
+            });
+            if (!hasBrand) return false;
+        }
+
         if (searchRegexes.length === 0) return true;
         const allItems = [...row.tablets, ...row.pens];
 
