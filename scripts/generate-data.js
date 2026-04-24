@@ -25,8 +25,9 @@ function tryLoadJSON(path) {
 // --- Brand configuration ---
 // Matches BRAND_NAMES from data-repo/lib/drawtab-loader.ts
 const BRAND_DISPLAY_NAMES = {
-  WACOM: "Wacom", HUION: "Huion", XPPEN: "XP-Pen",
-  UGEE: "Ugee", XENCELABS: "Xencelabs", SAMSUNG: "Samsung",
+  APPLE: "Apple", ASUS: "Asus", DIGIDRAW: "DigiDraw", GAOMON: "Gaomon",
+  HUION: "Huion", SAMSUNG: "Samsung", STAEDTLER: "Staedtler",
+  UGEE: "Ugee", WACOM: "Wacom", XENCELABS: "Xencelabs", XPPEN: "XP-Pen",
 };
 
 function brandDisplayName(prefix) {
@@ -35,12 +36,17 @@ function brandDisplayName(prefix) {
 
 // File prefix -> brand id used in the app
 const BRANDS = [
-  { prefix: 'WACOM',     brandId: 'wacom' },
+  { prefix: 'APPLE',     brandId: 'apple' },
+  { prefix: 'ASUS',      brandId: 'asus' },
+  { prefix: 'DIGIDRAW',  brandId: 'digidraw' },
+  { prefix: 'GAOMON',    brandId: 'gaomon' },
   { prefix: 'HUION',     brandId: 'huion' },
-  { prefix: 'XPPEN',     brandId: 'xppen' },
-  { prefix: 'UGEE',      brandId: 'ugee' },
-  { prefix: 'XENCELABS', brandId: 'xencelabs' },
   { prefix: 'SAMSUNG',   brandId: 'samsung' },
+  { prefix: 'STAEDTLER', brandId: 'staedtler' },
+  { prefix: 'UGEE',      brandId: 'ugee' },
+  { prefix: 'WACOM',     brandId: 'wacom' },
+  { prefix: 'XENCELABS', brandId: 'xencelabs' },
+  { prefix: 'XPPEN',     brandId: 'xppen' },
 ];
 
 const allPenFamilyDefs = [];
