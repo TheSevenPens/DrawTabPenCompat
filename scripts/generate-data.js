@@ -82,7 +82,7 @@ for (const { prefix, brandId } of BRANDS) {
     for (const f of penFamiliesData.PenFamilies) {
       allPenFamilyDefs.push({
         brand: brandId,
-        id: f.FamilyId,
+        id: f.EntityId || f.FamilyId,
         name: f.FamilyName,
       });
     }
@@ -114,7 +114,7 @@ for (const { prefix, brandId } of BRANDS) {
     for (const f of tabletFamiliesData.TabletFamilies) {
       allTabletFamilyDefs.push({
         brand: brandId,
-        id: f.FamilyId,
+        id: f.EntityId || f.FamilyId,
         name: f.FamilyName,
       });
     }
