@@ -1,7 +1,10 @@
 <script>
   import '../app.css';
   import { base } from '$app/paths';
+  import MovedBanner from '../components/MovedBanner.svelte';
 </script>
+
+<MovedBanner />
 
 <nav class="site-nav">
   <a href={`${base}/`}>Home</a>
